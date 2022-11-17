@@ -10,8 +10,36 @@ Fyll i 'check-listan', så att du visar att du tagit hänsyn till respektive kra
 Den ifyllda Rapportmallen lämnas in tillsammans med Programmeringsprojektet. Spara rapporten som en PDF med namnet CPROG_RAPPORT_GRUPP_NR.pdf (där NR är gruppnumret).
 
 1.	Beskrivning
+Spelmotor:
+Ett plattformsspel, likt icy tower, där plattformarna genereras allt eftersom bilden rör sig uppåt.där spelaren kontrollerar figuren med tangentbord. Högerpil och vänsterpil (kanske asdw?), 
+space för att hoppa. 
 
-Skriv beskrivningen här…
+Förväntas göra i spelet: bilden panorerar konstant uppåt, i ökande takt och det primära målet är att hoppa uppåt.
+Målet är även att undvika/döda fienden som går fram och tillbaka på vissa plattformar. Kan döda dem genom att hoppa på dem/skjuta(rakt upp). 
+Kan finnas olika typer av fiender. Kan finnas fienden som kan skjuta mot spelaren och ta ett liv. 
+Fienden (en annan typ) kan "frysa spelaren" om denne träffas av frys-skott.
+
+När spelaren har hoppat x högt så når denne en ny level (måste kunna räkna/hålla koll på hur högt upp man har kommit). 
+
+Ska kunna samla grejer(coins).
+
+När spelaren går på/pixlarna överlappas så plockar spelaren upp det. 
+(Ex går/hoppar på en jetpack = plockar upp och åker iväg. Går på coins = plocka upp)
+
+(Kan köpa coolare sprites med coins)
+
+Finns en highscore-lista, där både höjd och coins räknas in. (Sortera lista på coins/höjd?)
+Kan skriva in namn för highscore. 
+
+Spelimplementation:
+Om spelaren blir ifatt-kommen, och hamnar ur bild (längre än en x pixlar av bilden) då förlorar den.
+Spelaren kan överleva (3) skott. Spelaren blir skadad eller "fryser" om denne vidrör en fiende (undantag att hoppa på dem). 
+
+Sprite-figur har 2 sidor, höger & vänstersida i profil.
+Finns jetpack som dyker upp då och då. Den gör att spelaren flyger uppåt och igenom plattformar & fiender (kan ej skadas) i x antal sekunder.
+
+När en ny level nås får spelaren tillbaka ett liv (om spelaren inte redan har fullt). Bakgrund ändras. Fyverkerier?
+
 
 2.	Instruktion för att bygga och testa
 
