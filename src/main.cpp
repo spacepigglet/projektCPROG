@@ -7,22 +7,22 @@
 #include <SDL2/SDL_mixer.h> 
 #include <SDL2/SDL_ttf.h>
 
-void jump(SDL_Rect& rect, SDL_Renderer& ren) {
-bool jumping = true;
-int orginalheight = rect.x;
-int height = rect.x + 50;
-while(jumping) {
-  if(rect.x < height) {
-    rect.x+=10;
-  }
-  SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, bg_tex, NULL, NULL);
-    SDL_RenderCopy(renderer, spacepig_tex, NULL, &spacepig_rect);
-    SDL_RenderPresent(renderer);
-}
-jumping = false;
+// void jump(SDL_Rect& rect, SDL_Renderer& ren) {
+// bool jumping = true;
+// int orginalheight = rect.x;
+// int height = rect.x + 50;
+// while(jumping) {
+//   if(rect.x < height) {
+//     rect.x+=10;
+//   }
+//   SDL_RenderClear(renderer);
+//     SDL_RenderCopy(renderer, bg_tex, NULL, NULL);
+//     SDL_RenderCopy(renderer, spacepig_tex, NULL, &spacepig_rect);
+//     SDL_RenderPresent(renderer);
+// }
+// jumping = false;
 
-}
+// }
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
@@ -40,12 +40,13 @@ int main(int argc, char* argv[]) {
 	SDL_Window* window 	= SDL_CreateWindow("Window", 100, 100, 800, 600, 0);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
-	SDL_Surface* bg_sur = IMG_Load( (constants::gResPath + "images/bg.jpg").c_str() );
-	SDL_Surface* spacepig_sur = IMG_Load( (constants::gResPath + "images/spacepig2.png").c_str() );
+	//SDL_Surface* bg_sur = IMG_Load( (constants::gResPath + "images/bg.jpg").c_str() );
+	SDL_Surface* bg_sur = IMG_Load( (constants::gResPath + "images/space-background-vector-21179778.jpg").c_str() );
+	SDL_Surface* spacepig_sur = IMG_Load( (constants::gResPath + "images/spacepig3.png").c_str() );
 
   SDL_Rect spacepig_rect = {100, 100, (spacepig_sur->w)/2, (spacepig_sur->h)/2};
-  Uint32 white = SDL_MapRGB(spacepig_sur->format, 255, 255, 255);
-  SDL_SetColorKey(spacepig_sur, true, white);
+  Uint32 red = SDL_MapRGB(spacepig_sur->format, 255, 0, 0);
+  SDL_SetColorKey(spacepig_sur, true, red);
  
 	SDL_Texture* bg_tex = SDL_CreateTextureFromSurface(renderer, bg_sur);
 	SDL_Texture* spacepig_tex = SDL_CreateTextureFromSurface(renderer, spacepig_sur);
@@ -66,9 +67,9 @@ int main(int argc, char* argv[]) {
           switch(event.key.keysym.sym) {
             case SDLK_RIGHT: spacepig_rect.x+=10; break;
             case SDLK_LEFT: spacepig_rect.x-=10; break;
-            //case SDLK_UP:spacepig_rect.y-=10; break;
-            //case SDLK_DOWN:spacepig_rect.y+=10; break;
-            case SDLK_SPACE: jump(spacepig_rect, renderer);
+            case SDLK_UP:spacepig_rect.y-=10; break;
+            case SDLK_DOWN:spacepig_rect.y+=10; break;
+            // case SDLK_SPACE: jump(spacepig_rect, renderer);
           } break;
       if (event.key.keysym.sym == SDLK_END)
       running = true;
