@@ -24,9 +24,12 @@ int main(int argc, char* argv[]) {
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
 	SDL_Surface* bg_sur = IMG_Load( (constants::gResPath + "images/bg.jpg").c_str() );
+	SDL_Surface* spacepig_sur = IMG_Load( (constants::gResPath + "images/spacepig2.png").c_str() );
 
 	SDL_Texture* bg_tex = SDL_CreateTextureFromSurface(renderer, bg_sur);
+	SDL_Texture* spacepig_tex = SDL_CreateTextureFromSurface(renderer, spacepig_sur);
 	SDL_FreeSurface(bg_sur);
+	SDL_FreeSurface(spacepig_sur);
 
 	 std::cout << "End Program using the application\'s windows menu \"quit\" or just close the window!" << std::endl;
 
@@ -42,12 +45,14 @@ int main(int argc, char* argv[]) {
 
 		SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, bg_tex, NULL, NULL);
+		SDL_RenderCopy(renderer, spacepig_tex, NULL, NULL);
 		SDL_RenderPresent(renderer);
 	}
 
 	// Städa innan programmet avslutas!
 
 	SDL_DestroyTexture(bg_tex);
+	SDL_DestroyTexture(spacepig_tex);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 
