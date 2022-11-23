@@ -10,7 +10,7 @@ using namespace std;
 #define FPS 65
 
 
-void jump(SDL_Rect& rect, SDL_Renderer*& ren, SDL_Texture*& bg_tex, SDL_Texture*& figure_tex) {
+/*void jump(SDL_Rect& rect, SDL_Renderer*& ren, SDL_Texture*& bg_tex, SDL_Texture*& figure_tex) {
 int originalheight = rect.y;
 int height = originalheight - 100;
 const int tickInterval = 10000/FPS;
@@ -20,6 +20,7 @@ while(rect.y > height) {
 	SDL_RenderClear(ren);
     SDL_RenderCopy(ren, bg_tex, NULL, NULL);
     SDL_RenderCopy(ren, figure_tex, NULL, &rect);
+	SDL_RenderCopy(renderer, varvTx, NULL, &varvRect) 
     SDL_RenderPresent(ren);
 	int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 		if (delay > 0)
@@ -37,7 +38,7 @@ while(rect.y < originalheight) {
 			SDL_Delay(delay);
 }
 
-}
+}*/
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) 
@@ -84,7 +85,15 @@ int main(int argc, char* argv[]) {
 		//när nästa varv i loopen ska göras
 		Uint32 nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
 		SDL_Event event;
-    while(SDL_PollEvent(&event)){
+		int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
+    	string varvStr = to_string(varv);
+		SDL_Color white = {255, 255, 255};
+		SDL_Surface* varvSurf = TTF_RenderText_Solid(font, varvStr.c_str(), white);
+		SDL_Texture* varvTx = SDL_CreateTextureFromSurface(renderer, varvSurf);
+		//när vi ritar ut surface behöver vi rektangel
+		SDL_Rect varvRect = {300, 300, varvSurf->w, varvSurf->h};
+		SDL_FreeSurface(varvSurf); //släpper minnet som texture skapar i grafikkortet?
+	while(SDL_PollEvent(&event)){
       switch (event.type) {
         case SDL_QUIT: running = false; break;
         case SDL_KEYDOWN: 
@@ -93,8 +102,36 @@ int main(int argc, char* argv[]) {
             case SDLK_LEFT: spacepig_rect.x-=10; break;
             case SDLK_UP:spacepig_rect.y-=10; break;
             case SDLK_DOWN:spacepig_rect.y+=10; break;
-            case SDLK_SPACE: Mix_PlayChannel(-1, jump_soundEffect ,0);//vilken ljudkanal(-1=1st free channel), musik, antal upprepningar (-1 = loop)
-					jump(spacepig_rect, renderer, bg_tex, spacepig_tex);
+            case SDLK_SPACE: Mix_PlayChannel(-1, jump_soundEffect, 0);//vilken ljudkanal(-1=1st free channel), musik, antal upprepningar (-1 = loop)
+					//jump(spacepig_rect, renderer, bg_tex, spacepig_tex);
+					int originalheight = spacepig_rect.y;
+					int height = originalheight - 100;
+					//const int tickInterval = 10000/FPS;
+
+					while(spacepig_rect.y > height) {
+						spacepig_rect.y-=10;
+						SDL_RenderClear(renderer);
+						SDL_RenderCopy(renderer, bg_tex, NULL, NULL);
+						SDL_RenderCopy(renderer, spacepig_tex, NULL, &spacepig_rect);
+						SDL_RenderCopy(renderer, varvTx, NULL, &varvRect) ;//ska ritas ut på destination & str specificerad av varvRect
+						SDL_RenderPresent(renderer);
+						SDL_DestroyTexture(varvTx); //Blir ingen krash även när vi kör länge
+						varv++; 
+							if (delay > 0)
+								SDL_Delay(delay);
+					} 
+					while(spacepig_rect.y < originalheight) {
+						spacepig_rect.y+=10;
+						SDL_RenderClear(renderer);
+						SDL_RenderCopy(renderer, bg_tex, NULL, NULL);
+						SDL_RenderCopy(renderer, spacepig_tex, NULL, &spacepig_rect);
+						SDL_RenderCopy(renderer, varvTx, NULL, &varvRect) ;//ska ritas ut på destination & str specificerad av varvRect
+						SDL_RenderPresent(renderer);
+						SDL_DestroyTexture(varvTx); //Blir ingen krah även när vi kör länge
+						varv++; 
+							if (delay > 0)
+								SDL_Delay(delay);
+					}
 							
           } break;
       if (event.key.keysym.sym == SDLK_END)
@@ -108,15 +145,9 @@ int main(int argc, char* argv[]) {
 		// 	}
 		// }
 		varv++;    
-		//skriv ut varv, ingen anledning, baa för att se hur man gör för att skriva ut löpande, 
+		//skriv ut varv, ingen anledning, bara för att se hur man gör för att skriva ut löpande, 
 		//Vi vill kanske kunna skriva ut höjd löpande senare
-		string varvStr = to_string(varv);
-		SDL_Color white = {255, 255, 255};
-		SDL_Surface* varvSurf = TTF_RenderText_Solid(font, varvStr.c_str(), white);
-		SDL_Texture* varvTx = SDL_CreateTextureFromSurface(renderer, varvSurf);
-		//när vi ritar ut surface behöver vi rektangel
-		SDL_Rect varvRect = {300, 300, varvSurf->w, varvSurf->h};
-		SDL_FreeSurface(varvSurf); //släpper minnet som texture skapar i grafikkortet?
+		
 
 
 		SDL_RenderClear(renderer);
@@ -127,7 +158,7 @@ int main(int argc, char* argv[]) {
 		SDL_DestroyTexture(varvTx); //Blir ingen krah även när vi kör länge
 		//Mix_FreeChunk(jump_soundEffect);
 
-		int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
+		
 		if (delay > 0)
 			SDL_Delay(delay);
 	}
@@ -149,3 +180,6 @@ int main(int argc, char* argv[]) {
 	
 	return EXIT_SUCCESS;
 }
+
+
+
