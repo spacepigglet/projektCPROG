@@ -1,14 +1,54 @@
+SPELMOTOTR / IMPLEMENTATION
+skapa bilder är en process, ska det hända i spelmotor/implementationen? 
+Vad gäller för uppdelning mellan grafiska och objektet?
+a sprite ha metoder moveUp/down/getRect/getTexture....? Bilden beror på objektet och måste den då skapas i Sprite?
+
+Gubbe::Gubbe? Varför fel? Hur skriver vi? Hur använda superkonstruktor for subklass?
+
+JUMP
+Gravitation? Den behöver ju uppdateras varje punkt längs projektilbanan. 
+hoppa åt sidan och kunna landa på en plattform. (Alltså inte bara kunna återvända till samma y)
+
+MOVE
+Ändra riktning direkt går ej (den pausar)
+Hur sätter man gräns för hur spriten kan röra sig på bilden? vi vill ej att den åker utanför
+
+
+
+
+
+
+
+
+
+
+
+
+
+LJUD
+Ljud funkar ej, varför?
+
+Plattformar sprites
+
+Texture??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 kontrollera sprites hastighet? hackigt?
 
 include error dyker upp då och då, varför?
-
-skapa bilder är en process, ska det hända i spelmotor/implementationen? Vad gäller för uppdelning mellan grafiska och objektet?
-        ska sprite ha en metod moveUp/down....? Bilden beror på objektet och måste den då skapas i Sprite?
-
-hur sätter man gräns för hur spriten kan röra sig på bilden? vi vill ej att den åker utanför
-hoppa? -> har vi tänkt rätt? (loopar etc), renderare mm? Känns lite fel? Hur ska vi göra? Den behöver ju uppdateras varje punkt längs projektilbanan. 
-
-Gravitation?
-hastighet?
-
-Gubbe::Gubbe? Varför fel? Hur skriver vi?

@@ -2,11 +2,15 @@
 #include <string>
 using namespace std;
 
-Sprite::Sprite(int x, int y, string imagePath) {
+Sprite::Sprite(int x, int y, string imagePath) { //width, height for scaling
   gx = x;
   gy = y;
   image = imagePath;
 }
+
+// Sprite::Sprite() {
+  
+// }
 
 void Sprite::moveUp(int steg) {
 }
