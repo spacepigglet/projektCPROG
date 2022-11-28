@@ -3,7 +3,7 @@
 #include "System.h"
 
 #include <iostream>
-
+#define FPS 65
 namespace tower {
 
 	Session::Session(){

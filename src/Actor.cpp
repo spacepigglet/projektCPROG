@@ -15,14 +15,21 @@ namespace tower{
     void Actor::keyDown(const SDL_Event& event) {
         
         switch(event.key.keysym.sym) {
-            // case SDLK_RIGHT: getRect().x+=10; break;
-            // case SDLK_LEFT: getRect().x-=10; break;
-            // case SDLK_UP:getRect().y-=10; break;
-            // case SDLK_DOWN:getRect().y+=10; break;
-            // case SDLK_SPACE: jump(); break;
-        }
+            case SDLK_RIGHT: rectAddX(10); ; break;
+            case SDLK_LEFT: rectSubX(10); break;
+            // case SDLK_UP:rectSubY(10); break;
+            // case SDLK_DOWN:rectAddY(10); break;
+            case SDLK_SPACE: jump(); break;
+
+        //     case SDLK_RIGHT: getRect().x+=10; break;
+        //     case SDLK_LEFT: getRect().x-=10; break;
+        //     case SDLK_UP:getRect().y-=10; break;
+        //     case SDLK_DOWN:getRect().y+=10; break;
+        //     case SDLK_SPACE: jump(); break;
+        // }
         //getRect().x = x;
     }
+}
 
     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
         return new Actor(x, y, w, h, image);
@@ -31,6 +38,10 @@ namespace tower{
     Actor:: ~Actor(){
         SDL_DestroyTexture(texture);
     }
+
+    // void collision(const Component* other){
+
+    // }
 
     void Actor::jump(){
         isJumping = true;

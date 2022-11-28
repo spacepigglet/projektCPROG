@@ -1,13 +1,11 @@
-SPELMOTOR / IMPLEMENTATION
-skapa bilder är en process, ska det hända i spelmotor/implementationen? 
-Vad gäller för uppdelning mellan grafiska och objektet?
-a sprite ha metoder moveUp/down/getRect/getTexture....? Bilden beror på objektet och måste den då skapas i Sprite?
+FLYTTA RECT (COMPONENT)
+modifierbar getRect()?? Vill kunna ändra x och y genom att hämta rect men getRect.
 
-Gubbe::Gubbe? Varför fel? Hur skriver vi? Hur använda superkonstruktor for subklass?
+
+COLLISION error ???
 
 JUMP
-Gravitation? Den behöver ju uppdateras varje punkt längs projektilbanan. 
-hoppa åt sidan och kunna landa på en plattform. (Alltså inte bara kunna återvända till samma y)
+hur rita upp ett jump? Ska jump ta över rendering från Session?
 
 MOVE
 Ändra riktning direkt går ej (den pausar)
@@ -20,9 +18,8 @@ Hur sätter man gräns för hur spriten kan röra sig på bilden? vi vill ej att
 
 
 
-
-
-
+Gravitation? Den behöver ju uppdateras varje punkt längs projektilbanan. 
+hoppa åt sidan och kunna landa på en plattform. (Alltså inte bara kunna återvända till samma y)
 
 
 LJUD

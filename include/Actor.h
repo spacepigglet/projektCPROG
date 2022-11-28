@@ -6,15 +6,16 @@
 namespace tower{
   class Actor : public Component {
     public:
+    ~Actor();
     static Actor* getInstance(int x, int y, int w, int h, std::string image);
-    //using Sprite::Sprite;
     virtual void jump();
     void keyDown(const SDL_Event&);
     void draw() const;
+    //void collision(const Component*);
 
     protected:
     Actor(int x, int y, int w, int h, std::string image);
-    ~Actor();
+    
     private:
     //bool canBeControlledByPlayer;
       SDL_Texture* texture;

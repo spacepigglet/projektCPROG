@@ -5,6 +5,7 @@
 #include "Session.h"
 #include "Button.h"
 #include "Actor.h"
+#include "Platform.h"
 #include <string>
 
 #include <iostream>
@@ -19,16 +20,18 @@
 using namespace std;
 using namespace tower;
 
+
 int main(int argc, char** argv) {
 	std::cout << "*** main()\n";
 
 	Session ses;
 	Actor* a = Actor::getInstance(100, 100, 70, 100, "images/spacepig_transparent.png");
+	Platform* p = Platform::getInstance(200, 100, 100, 10, "images/marble.jpg");
+	
 	
 	ses.add(a);
-
+	ses.add(p);
 	ses.run();
-	
 	
 	return 0;
 }
