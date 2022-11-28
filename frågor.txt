@@ -1,4 +1,4 @@
-SPELMOTOTR / IMPLEMENTATION
+SPELMOTOR / IMPLEMENTATION
 skapa bilder är en process, ska det hända i spelmotor/implementationen? 
 Vad gäller för uppdelning mellan grafiska och objektet?
 a sprite ha metoder moveUp/down/getRect/getTexture....? Bilden beror på objektet och måste den då skapas i Sprite?

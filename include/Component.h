@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace cwing {
+namespace tower {
 	class Component
 	{
 	public:

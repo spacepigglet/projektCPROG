@@ -4,7 +4,7 @@
 #include <vector>
 #include "Component.h"
 
-namespace cwing {
+namespace tower {
 
 	class Session
 	{

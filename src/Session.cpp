@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace cwing {
+namespace tower {
 
 	Session::Session(){
 		std::cout << "*** Session::Session()\n";
@@ -41,8 +41,9 @@ namespace cwing {
 				} // switch
 			} // inre while
 			
-			SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
+			//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
 			SDL_RenderClear(sys.get_ren());
+			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
 			for (Component* c : comps)
 				c->draw();
 			SDL_RenderPresent(sys.get_ren());
