@@ -6,29 +6,27 @@
 #include <SDL2/SDL_image.h>
 #include "Constants.h"
 #include "System.h"
+#include <vector>
+#include "Platform.h"
+using namespace std;
 
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) {
+    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h), upperLeftX(x+10), upperLeftY(y+10),lowerRightX(x+w-10) , lowerRightY(y+h) {
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
     void Actor::keyDown(const SDL_Event& event) {
         
         switch(event.key.keysym.sym) {
-            // case SDLK_RIGHT: rectAddX(10); ; break;
-            // case SDLK_LEFT: rectSubX(10); break;
-            // // case SDLK_UP:rectSubY(10); break;
-            // // case SDLK_DOWN:rectAddY(10); break;
-            // case SDLK_SPACE: jump(); break;
-
-            case SDLK_RIGHT: getRect().x+=10; break;
-            case SDLK_LEFT: getRect().x-=10; break;
-            case SDLK_UP:getRect().y-=10; break;
-            case SDLK_DOWN:getRect().y+=10; break;
+            case SDLK_RIGHT: 
+            moveRight(10); ; break;
+            case SDLK_LEFT: moveLeft(10); break;
+            case SDLK_UP: moveUp(10); break;
+            case SDLK_DOWN:moveDown(10); break;
             case SDLK_SPACE: jump(); break;
-        // }
-        //getRect().x = x;
-    }
+        }
+
+    //collisionDetection(getComps());
 }
 
     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
@@ -39,8 +37,27 @@ namespace tower{
         SDL_DestroyTexture(texture);
     }
 
-    void Actor::collision(const Component* other){
+    bool Actor::collisionCheckPlatform(const Platform* other)const{ //, char c
+        // switch(c){
+        //     case 'l': //check left
+        //     case 'r': //check right
 
+        // }
+        return false;
+    }
+
+    Component* Actor::collisionDetection(const vector<Component*> comps){
+        //std::vector<Component*> comp = ses.getComps();
+        for (Component* c : comps){
+            if(dynamic_cast<Platform*>(c)){
+                const Platform* p = static_cast<Platform*>(c);
+                if(collisionCheckPlatform(p)){
+                    return c;
+                }
+                
+            }
+        }
+        return nullptr;
     }
 
     void Actor::jump(){
@@ -50,7 +67,7 @@ namespace tower{
         int targetHeight = originalheight - 100;
         //while (isJumping){
             while(getRect().y > targetHeight){
-            getRect().y-=10;
+            moveUp(10);
             SDL_RenderClear(sys.get_ren());
 			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
             draw();
@@ -58,7 +75,7 @@ namespace tower{
             }
 
             while(getRect().y < originalheight){
-            getRect().y+=10;
+            moveDown(10);
             SDL_RenderClear(sys.get_ren());
 			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
             draw();
@@ -69,7 +86,7 @@ namespace tower{
     }
 
     void Actor:: draw() const {
-        // if (isRFacingRight)
+        // if (isFacingRight)
 		// 	SDL_RenderCopy(sys.get_ren(), downIcon, NULL, &getRect());
 		// else
 		// 	SDL_RenderCopy(sys.get_ren(), upIcon, NULL, &getRect());

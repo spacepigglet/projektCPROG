@@ -13,8 +13,13 @@ namespace tower {
 		void add(Component* c);
 		void run();
 		~Session();
+		const std::vector<Component*> getComps() const {return comps;}
+		void processInput();
+		void updateGame();
+		void generateOutput();
 	private:
 		std::vector<Component*> comps;
+		bool quit;
 	};
 }
 #endif

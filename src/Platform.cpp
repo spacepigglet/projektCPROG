@@ -6,7 +6,7 @@
 
 namespace tower{
     
-    Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) {
+    Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) , upperLeftX(x), upperLeftY(y),lowerRightX(x+w) , lowerRightY(y+h) {
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 

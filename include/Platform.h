@@ -17,6 +17,10 @@ namespace tower{
     private:
     SDL_Texture* texture;
     std::string image;
+    int upperLeftX;
+    int upperLeftY;
+    int lowerRightX;
+    int lowerRightY;
     };
 }
 #endif
