@@ -1,8 +1,9 @@
 FLYTTA RECT (COMPONENT)
 modifierbar getRect()?? Vill kunna ändra x och y genom att hämta rect men getRect.
+varför går det inte att ta bort 1a const i const SDL_Rect& getRect() const { return rect; }
 
-
-COLLISION error ???
+COLLISION KONSTROLL
+hur ska vi tänka? Ska hitbox vara annan än rect?
 
 JUMP
 hur rita upp ett jump? Ska jump ta över rendering från Session?

@@ -11,7 +11,7 @@ namespace tower{
     virtual void jump();
     void keyDown(const SDL_Event&);
     void draw() const;
-    //void collision(const Component*);
+    void collision(const Component*);
 
     protected:
     Actor(int x, int y, int w, int h, std::string image);

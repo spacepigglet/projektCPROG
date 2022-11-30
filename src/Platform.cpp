@@ -22,8 +22,8 @@ namespace tower{
         SDL_DestroyTexture(texture);
     }
 
-    // void collision(const Component* other){
+    void Platform::collision(const Component* other){
         
-    // }
+    }
 
 }

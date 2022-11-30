@@ -15,17 +15,17 @@ namespace tower{
     void Actor::keyDown(const SDL_Event& event) {
         
         switch(event.key.keysym.sym) {
-            case SDLK_RIGHT: rectAddX(10); ; break;
-            case SDLK_LEFT: rectSubX(10); break;
-            // case SDLK_UP:rectSubY(10); break;
-            // case SDLK_DOWN:rectAddY(10); break;
-            case SDLK_SPACE: jump(); break;
+            // case SDLK_RIGHT: rectAddX(10); ; break;
+            // case SDLK_LEFT: rectSubX(10); break;
+            // // case SDLK_UP:rectSubY(10); break;
+            // // case SDLK_DOWN:rectAddY(10); break;
+            // case SDLK_SPACE: jump(); break;
 
-        //     case SDLK_RIGHT: getRect().x+=10; break;
-        //     case SDLK_LEFT: getRect().x-=10; break;
-        //     case SDLK_UP:getRect().y-=10; break;
-        //     case SDLK_DOWN:getRect().y+=10; break;
-        //     case SDLK_SPACE: jump(); break;
+            case SDLK_RIGHT: getRect().x+=10; break;
+            case SDLK_LEFT: getRect().x-=10; break;
+            case SDLK_UP:getRect().y-=10; break;
+            case SDLK_DOWN:getRect().y+=10; break;
+            case SDLK_SPACE: jump(); break;
         // }
         //getRect().x = x;
     }
@@ -39,26 +39,26 @@ namespace tower{
         SDL_DestroyTexture(texture);
     }
 
-    // void collision(const Component* other){
+    void Actor::collision(const Component* other){
 
-    // }
+    }
 
     void Actor::jump(){
         isJumping = true;
-        SDL_Rect rect = getRect();
-        int originalheight = rect.y;
+        //SDL_Rect rect = getRect();
+        int originalheight = getRect().y;
         int targetHeight = originalheight - 100;
         //while (isJumping){
-            while(rect.y > targetHeight){
-            rect.y-=10;
+            while(getRect().y > targetHeight){
+            getRect().y-=10;
             SDL_RenderClear(sys.get_ren());
 			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
             draw();
             SDL_RenderPresent(sys.get_ren());
             }
 
-            while(rect.y < targetHeight){
-            rect.y+=10;
+            while(getRect().y < originalheight){
+            getRect().y+=10;
             SDL_RenderClear(sys.get_ren());
 			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
             draw();
