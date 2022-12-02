@@ -8,7 +8,7 @@ namespace tower{
     public:
     static Platform* getInstance(int x, int y, int w, int h, std::string image);
     void draw() const;
-    void collision(const Component*);
+    void collisionDetection(const Component*);
     ~Platform();
 
     protected:
@@ -17,10 +17,10 @@ namespace tower{
     private:
     SDL_Texture* texture;
     std::string image;
-    int upperLeftX;
-    int upperLeftY;
-    int lowerRightX;
-    int lowerRightY;
+    int leftX;
+    int upperY;
+    int rightX;
+    int lowerY;
     };
 }
 #endif

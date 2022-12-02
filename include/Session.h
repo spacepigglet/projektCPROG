@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Component.h"
+#include "Platform.h"
 
 namespace tower {
 
@@ -17,9 +18,14 @@ namespace tower {
 		void processInput();
 		void updateGame();
 		void generateOutput();
+
 	private:
 		std::vector<Component*> comps;
+		void collisionDetection();
+		std::vector<Platform*> platforms;
 		bool quit;
 	};
+
+	//extern Session ses;
 }
 #endif

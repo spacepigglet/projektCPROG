@@ -6,7 +6,7 @@
 
 namespace tower{
     
-    Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) , upperLeftX(x), upperLeftY(y),lowerRightX(x+w) , lowerRightY(y+h) {
+    Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h, x, y, (x+w), (y+h+1)) {
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
@@ -22,7 +22,7 @@ namespace tower{
         SDL_DestroyTexture(texture);
     }
 
-    void Platform::collision(const Component* other){
+    void Platform::collisionDetection(const Component* other){
         
     }
 

@@ -1,5 +1,6 @@
 #include "Actor.h"
 //#include "Sprite.h"
+#include <iostream>
 #include <string>
 #include "Component.h"
 #include <SDL2/SDL_ttf.h>
@@ -8,10 +9,11 @@
 #include "System.h"
 #include <vector>
 #include "Platform.h"
+#include "Session.h"
 using namespace std;
 
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h), upperLeftX(x+10), upperLeftY(y+10),lowerRightX(x+w-10) , lowerRightY(y+h) {
+    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h, (x+10), (y+10), (x+w-10), (y+h)) {
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
@@ -19,10 +21,12 @@ namespace tower{
         
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-            moveRight(10); ; break;
-            case SDLK_LEFT: moveLeft(10); break;
-            case SDLK_UP: moveUp(10); break;
-            case SDLK_DOWN:moveDown(10); break;
+            moveRight(speed); ; break;
+            case SDLK_LEFT: moveLeft(speed); 
+            break;
+            case SDLK_UP: moveUp(speed); break;
+            case SDLK_DOWN:moveDown(speed); 
+            break;
             case SDLK_SPACE: jump(); break;
         }
 
@@ -37,7 +41,8 @@ namespace tower{
         SDL_DestroyTexture(texture);
     }
 
-    bool Actor::collisionCheckPlatform(const Platform* other)const{ //, char c
+    bool Actor::handleCollisionWithPlatform(Platform* other)const{ //, char c
+        cout << "Collision" << endl;
         // switch(c){
         //     case 'l': //check left
         //     case 'r': //check right
@@ -46,19 +51,20 @@ namespace tower{
         return false;
     }
 
-    Component* Actor::collisionDetection(const vector<Component*> comps){
-        //std::vector<Component*> comp = ses.getComps();
-        for (Component* c : comps){
-            if(dynamic_cast<Platform*>(c)){
-                const Platform* p = static_cast<Platform*>(c);
-                if(collisionCheckPlatform(p)){
-                    return c;
-                }
-                
+
+    void Actor::collisionDetection(Component* other) {
+        if(other == this) {
+            return;
+        }
+        if(leftX < other->getRightX() && rightX > other->getLeftX() 
+        && upperY < other-> getLowerY() && lowerY > getUpperY()){
+        //collision happened
+            if(Platform *p = dynamic_cast <Platform*>(other)) {
+                handleCollisionWithPlatform(p);
             }
         }
-        return nullptr;
     }
+
 
     void Actor::jump(){
         isJumping = true;

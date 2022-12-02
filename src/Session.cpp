@@ -31,6 +31,7 @@ namespace tower {
 				case SDL_KEYDOWN:
 					for (Component* c : comps)
 						c->keyDown(eve);
+						
 					break;
 				case SDL_KEYUP:
 					for (Component* c : comps)
@@ -41,6 +42,8 @@ namespace tower {
 			} // inre while
 	}
 	void Session::updateGame(){
+		//collisionDetection();
+		
 		//hålla reda på tid
 		//skicka update till actors
 		//flytta plattformar
@@ -58,6 +61,16 @@ namespace tower {
 			SDL_RenderPresent(sys.get_ren());
 	}
 
+
+	void Session::collisionDetection(){
+		for (int i = 0; i<comps.size(); i++) {
+			for(int j = 0; i<comps.size(); j++) {
+				comps[i]->collisionDetection(comps[j]);
+			}
+		}
+        
+    }
+
 	void Session::run() {
 		
 		while (!quit) {
@@ -74,4 +87,6 @@ namespace tower {
 	Session::~Session()
 	{
 	}
+
+	//Session ses;
 }
