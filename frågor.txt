@@ -1,12 +1,11 @@
-FLYTTA RECT (COMPONENT)
-modifierbar getRect()?? Vill kunna ändra x och y genom att hämta rect men getRect.
-varför går det inte att ta bort 1a const i const SDL_Rect& getRect() const { return rect; }
+TICK
+Var sparar vi informationen om föregående tick? 
+I kollisionhanteringen vill vi kunna återställa till föreågende state om det blev kollision. 
+    var sparar vi den? hos Actor-objekt? Session?
 
-COLLISION KONTROLL
-hur ska vi tänka? Ska hitbox vara annan än rect?
 
 JUMP
-hur rita upp ett jump? Ska jump ta över rendering från Session?
+hur rita upp ett jump? 
 
 RITA spriten
 Använda storleken av bilden?
@@ -18,10 +17,6 @@ Hur sätter man gräns för hur spriten kan röra sig på bilden? vi vill ej att
 
 
 
-
-
-
-
 Gravitation? Den behöver ju uppdateras varje punkt längs projektilbanan. 
 hoppa åt sidan och kunna landa på en plattform. (Alltså inte bara kunna återvända till samma y)
 
@@ -29,9 +24,6 @@ hoppa åt sidan och kunna landa på en plattform. (Alltså inte bara kunna åter
 LJUD
 Ljud funkar ej, varför?
 
-Plattformar sprites
-
-Texture??
 
 
 
