@@ -10,6 +10,7 @@
 #include <vector>
 #include "Platform.h"
 #include "Session.h"
+#include "Collision.h"
 using namespace std;
 
 namespace tower{
@@ -20,7 +21,7 @@ namespace tower{
     void Actor::keyDown(const SDL_Event& event) {
         
         switch(event.key.keysym.sym) {
-            case SDLK_RIGHT: 
+            case SDLK_RIGHT:
             moveRight(speed); ; break;
             case SDLK_LEFT: moveLeft(speed); 
             break;
@@ -35,6 +36,17 @@ namespace tower{
 
     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
         return new Actor(x, y, w, h, image);
+    }
+
+    void Actor::collisionWithPlatform(Platform* p) {
+        this->setPosition(0,0);
+        //x, y
+    }
+
+    //Ugly solution... changed getRect() från const -> not const... 
+    void Actor::setPosition(int x, int y) {
+        this->changeRect().x = x;
+        this->changeRect().y = y;
     }
 
     Actor:: ~Actor(){
@@ -57,7 +69,7 @@ namespace tower{
             return;
         }
         if(leftX < other->getRightX() && rightX > other->getLeftX() 
-        && upperY < other-> getLowerY() && lowerY > getUpperY()){
+        && upperY < other-> getLowerY() && lowerY > other->getUpperY()){
         //collision happened
             if(Platform *p = dynamic_cast <Platform*>(other)) {
                 handleCollisionWithPlatform(p);

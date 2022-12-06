@@ -32,7 +32,9 @@ int main(int argc, char** argv) {
 	
 	ses.add(a);
 	ses.add(p);
+	ses.addPlatform(p);
 	ses.add(p2);
+	ses.addPlatform(p2);
 	ses.run();
 	
 	return 0;

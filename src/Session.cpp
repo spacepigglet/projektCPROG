@@ -1,6 +1,8 @@
 #include "Session.h"
 #include <SDL2/SDL.h>
 #include "System.h"
+#include "Component.h"
+#include "Collision.h"
 
 #include <iostream>
 #define FPS 65
@@ -13,6 +15,10 @@ namespace tower {
 
 	void Session::add(Component* c) {
 		comps.push_back(c);
+	}
+
+	void Session::addPlatform(Platform* p) {
+		platforms.push_back(p);
 	}
 
 	void Session::processInput(){
@@ -41,7 +47,19 @@ namespace tower {
 				} // switch
 			} // inre while
 	}
-	void Session::updateGame(){
+	
+	void Session::updateGame() {
+		for( Component* c: comps) {
+			if(Actor *a = dynamic_cast <Actor*>(c)) {
+				for( Platform* p : platforms) {
+					if (Collision::collision(a, p)) {
+						std::cout << "COLLISION!" << std::endl;
+						//a->collisionWithPlatform(p);
+					} 
+			}
+			}
+			//c->update
+		}
 		//collisionDetection();
 		
 		//hålla reda på tid
@@ -56,20 +74,32 @@ namespace tower {
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
 			SDL_RenderClear(sys.get_ren());
 			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
-			for (Component* c : comps)
+			for (Component* c : comps) {
 				c->draw();
+			}
 			SDL_RenderPresent(sys.get_ren());
 	}
 
 
-	void Session::collisionDetection(){
-		for (int i = 0; i<comps.size(); i++) {
-			for(int j = 0; i<comps.size(); j++) {
-				comps[i]->collisionDetection(comps[j]);
+	/*void Session::collisionDetection(){
+		// for (unsigned int i = 0; i<comps.size(); i++) {
+		// 	for(unsigned int j = 0; i<comps.size(); j++) {
+		// 		if(Collision::collision(comps[i], comps[j])) {
+		// 			std::cout << "Collision!" << std::endl;
+		// 		}
+		// 	}
+		// }
+
+
+		for (unsigned int i = 0; i<comps.size(); i++) {
+			for(unsigned int j = 0; i<comps.size(); j++) {
+				if(Collision::collision(comps[i]->getRect(), comps[j]->getRect())) {
+					std::cout << "Collision!" << std::endl;
+				}
 			}
 		}
         
-    }
+    }*/
 
 	void Session::run() {
 		

@@ -13,6 +13,10 @@ namespace tower{
 
     protected:
     Platform(int x, int y, int w, int h, std::string image);
+    // int leftSide = x + h;
+    // int rightSide = (w - x) + h;
+    // int topSide = x + w;
+    // int bottomSide = (h-y) + w;
     
     private:
     SDL_Texture* texture;
@@ -21,6 +25,7 @@ namespace tower{
     int upperY;
     int rightX;
     int lowerY;
+    bool collider = true;
     };
 }
 #endif

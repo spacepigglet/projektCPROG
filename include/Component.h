@@ -15,6 +15,7 @@ namespace tower {
 		virtual void draw() const = 0;
 		virtual void collisionDetection(Component*) {};
 		const SDL_Rect& getRect() const { return rect; }
+		SDL_Rect& changeRect() { return rect; }
 		void moveRight(int toAdd){rect.x+=toAdd;}
 		void moveLeft(int toSub){rect.x-=toSub;}
 		void moveDown(int toAdd){rect.y+=toAdd;}
