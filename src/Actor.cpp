@@ -22,15 +22,15 @@ namespace tower{
         //if(!isColliding) {
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-            dxVel = 1;
-            moveRight(speed); ; break;
+            dxVel = 1; dyVel = 0;
+            moveRight(speed); break;
             case SDLK_LEFT: 
-            dxVel = -1;
+            dxVel = -1;dyVel = 0;
             moveLeft(speed);
             break;
-            case SDLK_UP: moveUp(speed); dyVel = -1;
+            case SDLK_UP: moveUp(speed); dyVel = -1; dxVel = 0;
             break;
-            case SDLK_DOWN:moveDown(speed); dyVel = 1;
+            case SDLK_DOWN:moveDown(speed); dyVel = 1; dxVel = 0;
             break;
             case SDLK_SPACE: jump(); break;
         }
@@ -47,16 +47,22 @@ namespace tower{
         //isColliding = true;
 
         //cout << "Det funkar!" << endl;
-        if(dxVel > 0) {
+        if(dxVel > 0) { //moving right into left side of platform
+            cout << "UpperY innan " << getUpperY() << endl;
+            cout << "UpperY platform innan " << p->getUpperY() << endl;
+
             setPosition(p->getLeftX() - getWidth(), getUpperY());
+
+            cout << "UpperY efter " << getUpperY() << endl;
+            cout << "UpperY platform efter " << p->getUpperY() << endl;
         }
-        if(dxVel < 0) {
+        else if(dxVel < 0) { //
             setPosition(p->getRightX(), getUpperY());
         }
         if(dyVel > 0) {
             setPosition(getLeftX(), p->getUpperY() - getHight());
         }
-        if(dyVel < 0) {
+        else if(dyVel < 0) {
             setPosition(getLeftX(), (p->getLowerY()));
         }
         
