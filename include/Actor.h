@@ -20,7 +20,6 @@ namespace tower{
     void collisionWithPlatform(Platform* p);
     bool handleCollisionWithPlatform(Platform*) const;
     void collisionDetection(Component*);
-    void setPosition(int x, int y);
 
     protected:
     Actor(int x, int y, int w, int h, std::string image);
@@ -28,6 +27,9 @@ namespace tower{
     private:
     //bool canBeControlledByPlayer;
       bool isColliding = false;
+      int dxVel;
+      int dyVel;
+      bool movingRight, movingLeft, movingUp, movingDown;
       float speed = 5;
       SDL_Texture* texture;
       std::string image;

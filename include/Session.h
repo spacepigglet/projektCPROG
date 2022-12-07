@@ -12,7 +12,6 @@ namespace tower {
 	public:
 		Session();
 		void add(Component* c);
-		void addPlatform(Platform* p);
 		void run();
 		~Session();
 		const std::vector<Component*> getComps() const {return comps;}

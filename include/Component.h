@@ -15,18 +15,21 @@ namespace tower {
 		virtual void draw() const = 0;
 		virtual void collisionDetection(Component*) {};
 		const SDL_Rect& getRect() const { return rect; }
-		SDL_Rect& changeRect() { return rect; }
+		//SDL_Rect& changeRect() { return rect; }
+		void setPosition(int, int);
 		void moveRight(int toAdd){rect.x+=toAdd;}
 		void moveLeft(int toSub){rect.x-=toSub;}
 		void moveDown(int toAdd){rect.y+=toAdd;}
 		void moveUp(int toSub){rect.y-=toSub;}
-		int getLeftX() {return leftX;}
-		int getUpperY() {return upperY;}
-		int getRightX() {return rightX;}
-		int getLowerY() {return lowerY;}
+		int getLeftX() {return rect.x;}
+		int getUpperY() {return rect.y;}
+		int getRightX() {return rect.x + rect.w;}
+		int getLowerY() {return rect.y + rect.h;}
+		int getWidth() {return rect.w;}
+		int getHight() {return rect.h;}
 
 	protected:
-		Component(int x, int y, int w, int h, int leftX, int upperY, int rightX , int lowerY);
+		Component(int x, int y, int w, int h); //int leftX, int upperY, int rightX , int lowerY
 		int leftX;
     int upperY;
     int rightX;

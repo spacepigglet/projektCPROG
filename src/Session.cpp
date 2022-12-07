@@ -15,10 +15,9 @@ namespace tower {
 
 	void Session::add(Component* c) {
 		comps.push_back(c);
-	}
-
-	void Session::addPlatform(Platform* p) {
-		platforms.push_back(p);
+		if(Platform* p = dynamic_cast<Platform*>(c)){
+            platforms.push_back(p);
+		}
 	}
 
 	void Session::processInput(){
@@ -53,8 +52,8 @@ namespace tower {
 			if(Actor *a = dynamic_cast <Actor*>(c)) {
 				for( Platform* p : platforms) {
 					if (Collision::collision(a, p)) {
-						std::cout << "COLLISION!" << std::endl;
-						//a->collisionWithPlatform(p);
+						//std::cout << "COLLISION!" << std::endl;
+						a->collisionWithPlatform(p);
 					} 
 			}
 			}
@@ -118,5 +117,5 @@ namespace tower {
 	{
 	}
 
-	//Session ses;
+	Session ses;
 }

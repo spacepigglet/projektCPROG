@@ -1,5 +1,5 @@
-#include "Actor.h"
 //#include "Sprite.h"
+#include "Actor.h"
 #include <iostream>
 #include <string>
 #include "Component.h"
@@ -14,22 +14,27 @@
 using namespace std;
 
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h, (x+10), (y+10), (x+w-10), (y+h)) {
+    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
     void Actor::keyDown(const SDL_Event& event) {
-        
+        //if(!isColliding) {
         switch(event.key.keysym.sym) {
-            case SDLK_RIGHT:
+            case SDLK_RIGHT: 
+            dxVel = 1;
             moveRight(speed); ; break;
-            case SDLK_LEFT: moveLeft(speed); 
+            case SDLK_LEFT: 
+            dxVel = -1;
+            moveLeft(speed);
             break;
-            case SDLK_UP: moveUp(speed); break;
-            case SDLK_DOWN:moveDown(speed); 
+            case SDLK_UP: moveUp(speed); dyVel = -1;
+            break;
+            case SDLK_DOWN:moveDown(speed); dyVel = 1;
             break;
             case SDLK_SPACE: jump(); break;
         }
+        //}
 
     //collisionDetection(getComps());
 }
@@ -39,14 +44,26 @@ namespace tower{
     }
 
     void Actor::collisionWithPlatform(Platform* p) {
-        this->setPosition(0,0);
-        //x, y
-    }
+        //isColliding = true;
 
-    //Ugly solution... changed getRect() från const -> not const... 
-    void Actor::setPosition(int x, int y) {
-        this->changeRect().x = x;
-        this->changeRect().y = y;
+        //cout << "Det funkar!" << endl;
+        if(dxVel > 0) {
+            setPosition(p->getLeftX() - getWidth(), getUpperY());
+        }
+        if(dxVel < 0) {
+            setPosition(p->getRightX(), getUpperY());
+        }
+        if(dyVel > 0) {
+            setPosition(getLeftX(), p->getUpperY() - getHight());
+        }
+        if(dyVel < 0) {
+            setPosition(getLeftX(), (p->getLowerY()));
+        }
+        
+
+        
+        //this->setPosition(0,0);
+        //x, y
     }
 
     Actor:: ~Actor(){

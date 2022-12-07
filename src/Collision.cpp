@@ -10,10 +10,10 @@ bool Collision::collision(Component* a, Component* b) {
     return false;
   }
   //std::cout << "Running collision" << std::endl;
-  if(a->getLeftX() >= b->getRightX() && 
-     a->getRightX() >= b->getLeftX() && 
-     a->getUpperY() >= b-> getLowerY() && 
-     a->getLowerY() >= b->getUpperY()) {
+  if(a->getLeftX() < b->getRightX() && 
+     a->getRightX() > b->getLeftX() && 
+     a->getUpperY() < b-> getLowerY() && 
+     a->getLowerY() > b->getUpperY()) {
       return true;
     } else {
       return false;
