@@ -19,20 +19,26 @@ namespace tower{
     }
 
     void Actor::keyDown(const SDL_Event& event) {
-        //if(!isColliding) {
+        //if(!isOnTopOfPlatform) {
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-            dxVel = 1; dyVel = 0;
-            moveRight(speed); break;
+                dxVel = speed; //dyVel = 0;
+                moveX(speed); break;
             case SDLK_LEFT: 
-            dxVel = -1;dyVel = 0;
-            moveLeft(speed);
+                dxVel = -speed; //dyVel = 0;
+                moveX(-speed);
+                break;
+            case SDLK_UP: 
+                moveUp(speed); 
+                dyVel = -1; 
+                dxVel = 0;
+                break;
+            case SDLK_DOWN:
+                moveDown(speed); 
+                dyVel = 1; 
+                dxVel = 0;
             break;
-            case SDLK_UP: moveUp(speed); dyVel = -1; dxVel = 0;
-            break;
-            case SDLK_DOWN:moveDown(speed); dyVel = 1; dxVel = 0;
-            break;
-            case SDLK_SPACE: jump(); break;
+            case SDLK_SPACE:  jump();  break; //jump(); break; dxVel = 0;dyVel = 0;
         }
         //}
 
@@ -44,10 +50,17 @@ namespace tower{
     }
 
     void Actor::collisionWithPlatform(Platform* p) {
-        //isColliding = true;
+        
+        
 
         //cout << "Det funkar!" << endl;
-        if(dxVel > 0) { //moving right into left side of platform
+        if(dyVel > 0) { //moving down on top of platform
+            //isOnTopOfPlatform = true; 
+            dyVel = 0;
+            isJumping = false;
+            setPosition(getLeftX(), p->getUpperY() - getHight());
+        }
+        else if(dxVel > 0) { //moving right into left side of platform
             cout << "UpperY innan " << getUpperY() << endl;
             cout << "UpperY platform innan " << p->getUpperY() << endl;
 
@@ -56,13 +69,11 @@ namespace tower{
             cout << "UpperY efter " << getUpperY() << endl;
             cout << "UpperY platform efter " << p->getUpperY() << endl;
         }
-        else if(dxVel < 0) { //
+        else if(dxVel < 0) { //moving left into right side of platform
             setPosition(p->getRightX(), getUpperY());
         }
-        if(dyVel > 0) {
-            setPosition(getLeftX(), p->getUpperY() - getHight());
-        }
-        else if(dyVel < 0) {
+        
+        else if(dyVel < 0) {//moving up under platform
             setPosition(getLeftX(), (p->getLowerY()));
         }
         
@@ -101,30 +112,57 @@ namespace tower{
     }
 
 
-    void Actor::jump(){
-        isJumping = true;
-        //SDL_Rect rect = getRect();
-        int originalheight = getRect().y;
-        int targetHeight = originalheight - 100;
-        //while (isJumping){
-            while(getRect().y > targetHeight){
-            moveUp(10);
-            SDL_RenderClear(sys.get_ren());
-			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
-            draw();
-            SDL_RenderPresent(sys.get_ren());
-            }
+    // void Actor::jump(){
+    //     isJumping = true;
+    //     //SDL_Rect rect = getRect();
+    //     int originalheight = getRect().y;
+    //     int targetHeight = originalheight - 100;
+    //     //while (isJumping){
+    //         while(getRect().y > targetHeight){
+    //         moveUp(10);
+    //         SDL_RenderClear(sys.get_ren());
+	// 		SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
+    //         draw();
+    //         SDL_RenderPresent(sys.get_ren());
+    //         }
 
-            while(getRect().y < originalheight){
-            moveDown(10);
-            SDL_RenderClear(sys.get_ren());
-			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
-            draw();
-            SDL_RenderPresent(sys.get_ren());
-            }
-        //}
-        isJumping = false;
+    //         while(getRect().y < originalheight){
+    //         moveDown(10);
+    //         SDL_RenderClear(sys.get_ren());
+	// 		SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
+    //         draw();
+    //         SDL_RenderPresent(sys.get_ren());
+    //         }
+    //     //}
+    //     isJumping = false;
+    // }
+
+    void Actor::jump(){
+        if (!isJumping){
+            dyVel = -10;
+            isJumping = true;
+        }
+        
     }
+
+    void Actor:: update(){
+        //if (isJumping){
+                //jump();
+            //     dyVel += GRAVITY; //gravity
+
+            //     //move jumper
+            //     moveY(dyVel);
+        //} 
+        //if(!isOnTopOfPlatform){
+            
+            dyVel += GRAVITY; //gravity
+            if(dyVel > 10) //limits how fast actor can fall
+                dyVel = 10;
+            moveY(dyVel);
+        //}
+        //isOnTopOfPlatform = false; //reset
+    }
+
 
     void Actor:: draw() const {
         // if (isFacingRight)

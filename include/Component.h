@@ -12,6 +12,7 @@ namespace tower {
 		virtual void mouseUp(const SDL_Event&) {}
 		virtual void keyDown(const SDL_Event&) {}
 		virtual void keyUp(const SDL_Event&) {}
+		virtual void update() {}
 		virtual void draw() const = 0;
 		virtual void collisionDetection(Component*) {};
 		const SDL_Rect& getRect() const { return rect; }
@@ -21,6 +22,8 @@ namespace tower {
 		void moveLeft(int toSub){rect.x-=toSub;}
 		void moveDown(int toAdd){rect.y+=toAdd;}
 		void moveUp(int toSub){rect.y-=toSub;}
+		void moveY(int toMove){rect.y += toMove;}
+		void moveX(int toMove){rect.x += toMove;}
 		int getLeftX() {return rect.x;}
 		int getUpperY() {return rect.y;}
 		int getRightX() {return rect.x + rect.w;}

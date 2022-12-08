@@ -49,6 +49,7 @@ namespace tower {
 	
 	void Session::updateGame() {
 		for( Component* c: comps) {
+			c->update();
 			if(Actor *a = dynamic_cast <Actor*>(c)) {
 				for( Platform* p : platforms) {
 					if (Collision::collision(a, p)) {
@@ -57,7 +58,7 @@ namespace tower {
 					} 
 			}
 			}
-			//c->update
+			
 		}
 		//collisionDetection();
 		
@@ -101,13 +102,16 @@ namespace tower {
     }*/
 
 	void Session::run() {
-		
+		const int tickInterval = 1000/FPS;
 		while (!quit) {
-
+			Uint32 nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
+			int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 			processInput();
 			updateGame();
 			generateOutput();
 
+			if (delay > 0)
+				SDL_Delay(delay);
 		
 		} //yttre while
 

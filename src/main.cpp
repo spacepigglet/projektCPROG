@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 	std::cout << "*** main()\n";
 
 	Session ses;
-	Actor* a = Actor::getInstance(0, 0, 70, 100, "images/spacepig_transparent.png");
+	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png");
 	Platform* p = Platform::getInstance(100, 200, 100, 10, "images/marble.jpg");
 	Platform* p2 = Platform::getInstance(300, 400, 100, 10, "images/marble.jpg");
 
