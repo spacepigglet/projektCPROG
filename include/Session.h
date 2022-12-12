@@ -27,7 +27,7 @@ namespace tower {
 		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}
 
 	private:
-	    void setup_Background();
+	    void setup_background();
 		std::vector<Component*> comps;
 		std::vector<Platform*> platforms;
 		//void collisionDetection();

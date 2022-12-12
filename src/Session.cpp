@@ -24,7 +24,7 @@ namespace tower {
     void Session::set_background(std::string image) {
 		bg_Image = image;
 	}
-	void Session::setup_Background() {
+	void Session::setup_background() {
 		bg1 = Background::getInstance(0,0,WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
 		bg2 = Background::getInstance(-WINDOW_HEIGHT,0,WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
 
@@ -123,7 +123,7 @@ namespace tower {
     }*/
 
 	void Session::run() {
-		setup_Background();
+		setup_background();
 		const int tickInterval = 1000/FPS;
 		while (!quit) {
 			Uint32 nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades

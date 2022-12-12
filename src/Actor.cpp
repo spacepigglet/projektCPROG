@@ -38,7 +38,6 @@ namespace tower{
                 dyVel = 1; 
                 dxVel = 0;
                 break;
-            case 1: dxVel = 0; break;
 
             case SDLK_SPACE:  jump();  break;                 //jump(); break; dxVel = 0;dyVel = 0;
         }
