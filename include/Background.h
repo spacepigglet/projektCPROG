@@ -16,7 +16,7 @@ namespace tower {
       static Background* getInstance(int x, int y, int w, int h, std::string image);
       //void update();
       void draw() const;
-      void scroll();
+      void scroll(int);
       SDL_Texture* get_bg_tex() const;
 
     protected:

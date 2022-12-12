@@ -1,16 +1,9 @@
 #include "Background.h"
-#include "Actor.h"
-#include <iostream>
 #include <string>
 #include "Component.h"
-#include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include "Constants.h"
-#include "System.h"
-#include <vector>
-#include "Platform.h"
-#include "Session.h"
-#include "Collision.h"
+
 
 namespace tower{
 
@@ -31,8 +24,11 @@ namespace tower{
   moveY(scrollSpeed);
   }*/
 
-  void Background::scroll() {
-
+  void Background::scroll(int toScroll) {
+    if(getUpperY() >= getHight()){
+      setPosition(0, -getHight());
+    } else
+        moveY(toScroll);
 
   }
 

@@ -29,7 +29,7 @@ namespace tower {
 	private:
 		std::vector<Component*> comps;
 		std::vector<Platform*> platforms;
-		void collisionDetection();
+		//void collisionDetection();
 		bool quit;
 		int scrollSpeed = 1;
 		Background* bg1 ;

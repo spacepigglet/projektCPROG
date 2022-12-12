@@ -1,4 +1,5 @@
 #include "Session.h"
+#include "Background.h"
 #include <SDL2/SDL.h>
 #include "System.h"
 #include "Component.h"
@@ -10,7 +11,7 @@ namespace tower {
 
 	Session::Session() : quit(false){
 		std::cout << "*** Session::Session()\n";
-
+		set_background("images/space-background-vector-21179778.jpg");
 	}
 
 	void Session::add(Component* c) {
@@ -21,6 +22,7 @@ namespace tower {
 	}
 
     void Session::set_background(std::string image) {
+		delete bg1; delete bg2;
 		bg1 = Background::getInstance(0,0,WINDOW_WIDTH, WINDOW_HEIGHT, image);
 		bg2 = Background::getInstance(-WINDOW_HEIGHT,0,WINDOW_WIDTH, WINDOW_HEIGHT, image);
 
@@ -139,6 +141,8 @@ namespace tower {
 	Session::~Session()
 	{
 		//SDL_DestroyTexture(bg_tex);
+		delete bg1;
+		delete bg2;
 	}
 
 	Session ses;
