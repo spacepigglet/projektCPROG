@@ -60,6 +60,9 @@ namespace tower {
 			}
 			
 		}
+		
+		//flytta ner allt mha c->moveY()
+
 		//collisionDetection();
 		
 		//hålla reda på tid
@@ -68,6 +71,12 @@ namespace tower {
 		//flytta bg
 		//flytta enemies
 
+	}
+
+	void Session::scroll() {
+		for( Component* c: comps) {
+			c->scroll(scrollSpeed);
+		}
 	}
 
 	void Session::generateOutput(){
@@ -108,6 +117,7 @@ namespace tower {
 			int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 			processInput();
 			updateGame();
+			scroll();
 			generateOutput();
 
 			if (delay > 0)

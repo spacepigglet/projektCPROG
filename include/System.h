@@ -25,6 +25,8 @@ namespace tower {
 	};
 	
 	extern System sys; //säger: "det finns en definition av system som heter sys, men inte här!" finns i cpp
+	extern int WINDOW_HEIGHT;
+	extern int WINDOW_WIDTH;
 }
 
 #endif

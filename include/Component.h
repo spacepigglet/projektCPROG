@@ -14,6 +14,7 @@ namespace tower {
 		virtual void keyUp(const SDL_Event&) {}
 		virtual void update() {}
 		virtual void draw() const = 0;
+		virtual void scroll(int);
 		virtual void collisionDetection(Component*) {};
 		const SDL_Rect& getRect() const { return rect; }
 		//SDL_Rect& changeRect() { return rect; }

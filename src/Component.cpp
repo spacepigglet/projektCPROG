@@ -11,6 +11,10 @@ namespace tower {
 	{
 	}
 
+	void Component::scroll(int toScroll) {
+		moveY(toScroll);
+	}
+
 	void Component::setPosition(int x, int y) {
 		rect.x = x;
 		rect.y = y;

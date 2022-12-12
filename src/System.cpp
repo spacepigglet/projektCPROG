@@ -6,19 +6,21 @@
 
 namespace tower {
 
+
 	System::System()
 	{
 		std::cout << "*** System::System()\n";
 		
 		SDL_Init(SDL_INIT_EVERYTHING);
 		win = SDL_CreateWindow("Tower game", SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED, 1080, 720, 0);
+			SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 		ren = SDL_CreateRenderer(win, -1, 0);
 		TTF_Init();
 		font = TTF_OpenFont( (constants::gResPath + "fonts/arial.ttf").c_str(), 36);
 		std::cout << "resPath: " << constants::gResPath << std::endl;
 
-		bg_tex = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + bg).c_str() );
+		//Background* bg = new Background()
+		//bg_tex = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + bg).c_str() );
 	
 	}
 
@@ -46,4 +48,6 @@ namespace tower {
 	}
 	
 	System sys; // Statiskt globalt objekt (definierad utanför funktioner.)
+	int WINDOW_WIDTH = 1080;
+	int WINDOW_HEIGHT = 720;
 }

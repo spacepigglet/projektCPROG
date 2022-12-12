@@ -18,12 +18,14 @@ namespace tower {
 		void processInput();
 		void updateGame();
 		void generateOutput();
+		void scroll();
 
 	private:
 		std::vector<Component*> comps;
 		std::vector<Platform*> platforms;
 		void collisionDetection();
 		bool quit;
+		int scrollSpeed = 10;
 	};
 
 	//extern Session ses;

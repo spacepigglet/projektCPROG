@@ -7,6 +7,7 @@
 #include "Actor.h"
 #include "Platform.h"
 #include <string>
+#include "Background.h"
 
 #include <iostream>
 
@@ -25,11 +26,12 @@ int main(int argc, char** argv) {
 	std::cout << "*** main()\n";
 
 	Session ses;
+	Background* b = Background::getInstance(0, 0, 1080, 780, "images/space-background-vector-21179778.jpg");
 	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png");
 	Platform* p = Platform::getInstance(100, 200, 100, 10, "images/marble.jpg");
 	Platform* p2 = Platform::getInstance(300, 400, 100, 10, "images/marble.jpg");
 
-	
+	ses.add(b);
 	ses.add(a);
 	ses.add(p);
 	ses.add(p2);
