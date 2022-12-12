@@ -27,6 +27,7 @@ namespace tower {
 		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}
 
 	private:
+	    void setup_Background();
 		std::vector<Component*> comps;
 		std::vector<Platform*> platforms;
 		//void collisionDetection();
@@ -34,6 +35,7 @@ namespace tower {
 		int scrollSpeed = 1;
 		Background* bg1 ;
 		Background* bg2 ;
+		std::string bg_Image;
 	};
 
 	//extern Session ses;
