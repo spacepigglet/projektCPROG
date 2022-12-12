@@ -22,29 +22,29 @@ namespace tower {
 
 	void Session::processInput(){
 		SDL_Event eve;
-			while (SDL_PollEvent(&eve)) {
-				switch (eve.type) {
-				case SDL_QUIT: quit = true; break;
-				// case SDL_MOUSEBUTTONDOWN:
-				// 	for (Component* c : comps)
-				// 		c->mouseDown(eve);
-				// 	break;
-				// case SDL_MOUSEBUTTONUP:
-				// 	for (Component* c : comps)
-				// 		c->mouseUp(eve);
-				// 	break;
-				case SDL_KEYDOWN:
-					for (Component* c : comps)
-						c->keyDown(eve);
-						
-					break;
-				case SDL_KEYUP:
-					for (Component* c : comps)
-						c->keyUp(eve);
-					break;
+		while (SDL_PollEvent(&eve)) {
+			switch (eve.type) {
+			case SDL_QUIT: quit = true; break;
+			// case SDL_MOUSEBUTTONDOWN:
+			// 	for (Component* c : comps)
+			// 		c->mouseDown(eve);
+			// 	break;
+			// case SDL_MOUSEBUTTONUP:
+			// 	for (Component* c : comps)
+			// 		c->mouseUp(eve);
+			// 	break;
+			case SDL_KEYDOWN:
+				for (Component* c : comps)
+					c->keyDown(eve);
+					
+				break;
+			case SDL_KEYUP:
+				for (Component* c : comps)
+					c->keyUp(eve);
+				break;
 
-				} // switch
-			} // inre while
+			} // switch
+		} // inre while
 	}
 	
 	void Session::updateGame() {

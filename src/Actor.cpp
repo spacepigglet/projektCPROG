@@ -37,7 +37,9 @@ namespace tower{
                 moveDown(speed); 
                 dyVel = 1; 
                 dxVel = 0;
-            break;
+                break;
+            case 1: dxVel = 0; break;
+
             case SDLK_SPACE:  jump();  break; //jump(); break; dxVel = 0;dyVel = 0;
         }
         //}
@@ -51,8 +53,6 @@ namespace tower{
 
     void Actor::collisionWithPlatform(Platform* p) {
         
-        
-
         //cout << "Det funkar!" << endl;
         if(dyVel > 0) { //moving down on top of platform
             //isOnTopOfPlatform = true; 
@@ -139,7 +139,7 @@ namespace tower{
 
     void Actor::jump(){
         if (!isJumping){
-            dyVel = -10;
+            dyVel = -20;
             isJumping = true;
         }
         
@@ -158,7 +158,18 @@ namespace tower{
             dyVel += GRAVITY; //gravity
             if(dyVel > 10) //limits how fast actor can fall
                 dyVel = 10;
-            moveY(dyVel);
+            moveY(dyVel); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
+
+            if(isJumping){
+                if (dxVel < 0 ){ //moving left
+                dxVel += GRAVITY;
+                moveX(dxVel);
+                } 
+                else if (dxVel > 0 ){ //moving right
+                dxVel -= GRAVITY;
+                moveX(dxVel);
+                }
+            } 
         //}
         //isOnTopOfPlatform = false; //reset
     }

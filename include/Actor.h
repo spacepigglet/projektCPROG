@@ -32,10 +32,12 @@ namespace tower{
       int dxVel;
       int dyVel;
       bool movingRight, movingLeft, movingUp, movingDown;
-      int speed = 5;
+      int speed = 10;
       SDL_Texture* texture;
       std::string image;
       bool isJumping = false;
+      bool faceRight;
+
 
   };
 }
