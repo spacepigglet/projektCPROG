@@ -27,7 +27,7 @@ namespace tower {
 
 	System::~System()
 	{
-		SDL_DestroyTexture(bg_tex);
+		//SDL_DestroyTexture(bg_tex);
 		TTF_CloseFont(font);
 		TTF_Quit();
 		SDL_DestroyWindow(win);
@@ -43,9 +43,9 @@ namespace tower {
 		return font;
 	}
 
-	SDL_Texture* System::get_bg_tex() const {
-		return bg_tex;
-	}
+	// SDL_Texture* System::get_bg_tex() const {
+	// 	return bg_tex;
+	// }
 	
 	System sys; // Statiskt globalt objekt (definierad utanför funktioner.)
 	int WINDOW_WIDTH = 1080;

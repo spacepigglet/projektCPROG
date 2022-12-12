@@ -20,6 +20,13 @@ namespace tower {
 		}
 	}
 
+    void Session::set_background(std::string image) {
+		bg1 = Background::getInstance(0,0,WINDOW_WIDTH, WINDOW_HEIGHT, image);
+		bg2 = Background::getInstance(-WINDOW_HEIGHT,0,WINDOW_WIDTH, WINDOW_HEIGHT, image);
+
+		add(bg1); add(bg2);
+	}
+
 	void Session::processInput(){
 		SDL_Event eve;
 		while (SDL_PollEvent(&eve)) {
@@ -82,7 +89,8 @@ namespace tower {
 	void Session::generateOutput(){
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
 			SDL_RenderClear(sys.get_ren());
-			SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
+			SDL_RenderCopy(sys.get_ren(), bg1->get_bg_tex(), NULL, NULL);
+			SDL_RenderCopy(sys.get_ren(), bg2->get_bg_tex(), NULL, NULL);
 			for (Component* c : comps) {
 				c->draw();
 			}
@@ -111,6 +119,7 @@ namespace tower {
     }*/
 
 	void Session::run() {
+		//setup_Background();
 		const int tickInterval = 1000/FPS;
 		while (!quit) {
 			Uint32 nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
@@ -129,6 +138,7 @@ namespace tower {
 
 	Session::~Session()
 	{
+		//SDL_DestroyTexture(bg_tex);
 	}
 
 	Session ses;
