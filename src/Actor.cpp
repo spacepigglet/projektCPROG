@@ -20,11 +20,14 @@ namespace tower{
 
     void Actor::keyDown(const SDL_Event& event) {
         //if(!isOnTopOfPlatform) {
+            old_dxVel = dxVel;
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
+                //old_dxVel = dxVel;
                 dxVel = speed;                               //dyVel = 0;
                 moveX(speed); break;
-            case SDLK_LEFT: 
+            case SDLK_LEFT:
+                //old_dxVel = dxVel; 
                 dxVel = -speed;                                  //dyVel = 0;
                 moveX(-speed);
                 break;
@@ -160,15 +163,18 @@ namespace tower{
             moveY(dyVel); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
             if(isJumping){
-                if (dxVel < 0 ){ //moving left
-                dxVel += GRAVITY;
-                moveX(dxVel);
+                if (old_dxVel < 0 ){ //moving left
+                    dxVel = old_dxVel/2;
+                    dxVel += GRAVITY;
+                    moveX(dxVel);
                 } 
-                else if (dxVel > 0 ){ //moving right
-                dxVel -= GRAVITY;
-                moveX(dxVel);
+                else if (old_dxVel > 0 ){ //moving right
+                    dxVel = old_dxVel/2;
+                    dxVel -= GRAVITY;
+                    moveX(dxVel);
                 }
-            } 
+            } else 
+                dxVel = 0; // resetting dxVel in between input, if not jumping. Other solution - keyup?? Probably better...?
         //}
         //isOnTopOfPlatform = false; //reset
     }

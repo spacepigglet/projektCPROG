@@ -30,6 +30,7 @@ namespace tower{
     //bool canBeControlledByPlayer;
       bool isOnTopOfPlatform = false;
       int dxVel;
+      int old_dxVel;
       int dyVel;
       bool movingRight, movingLeft, movingUp, movingDown;
       int speed = 10;
