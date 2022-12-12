@@ -22,10 +22,10 @@ namespace tower{
         //if(!isOnTopOfPlatform) {
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-                dxVel = speed; //dyVel = 0;
+                dxVel = speed;                               //dyVel = 0;
                 moveX(speed); break;
             case SDLK_LEFT: 
-                dxVel = -speed; //dyVel = 0;
+                dxVel = -speed;                                  //dyVel = 0;
                 moveX(-speed);
                 break;
             case SDLK_UP: 
@@ -40,7 +40,7 @@ namespace tower{
                 break;
             case 1: dxVel = 0; break;
 
-            case SDLK_SPACE:  jump();  break; //jump(); break; dxVel = 0;dyVel = 0;
+            case SDLK_SPACE:  jump();  break;                 //jump(); break; dxVel = 0;dyVel = 0;
         }
         //}
 
