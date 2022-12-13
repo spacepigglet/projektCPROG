@@ -26,9 +26,9 @@ namespace tower {
 	}
 	void Session::setup_background() {
 		bg1 = Background::getInstance(0,0,WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
-		bg2 = Background::getInstance(-WINDOW_HEIGHT,0,WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
+		bg2 = Background::getInstance(0,-WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
 
-		add(bg1); add(bg2);
+		//add(bg1); add(bg2);
 	}
 
 	void Session::processInput(){
@@ -85,19 +85,23 @@ namespace tower {
 	}
 
 	void Session::scroll() {
+		bg1->scroll(scrollSpeed);
+		bg2->scroll(scrollSpeed);
 		for( Component* c: comps) {
 			c->scroll(scrollSpeed);
 		}
+		
 	}
 
 	void Session::generateOutput(){
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
 			SDL_RenderClear(sys.get_ren());
-			SDL_RenderCopy(sys.get_ren(), bg1->get_bg_tex(), NULL, NULL);
-			SDL_RenderCopy(sys.get_ren(), bg2->get_bg_tex(), NULL, NULL);
+			bg1->draw();
+			bg2->draw();
 			for (Component* c : comps) {
 				c->draw();
 			}
+			
 			SDL_RenderPresent(sys.get_ren());
 	}
 
@@ -130,7 +134,7 @@ namespace tower {
 			int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 			processInput();
 			updateGame();
-			//scroll();
+			scroll();
 			generateOutput();
 
 			if (delay > 0)

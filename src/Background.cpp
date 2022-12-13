@@ -33,7 +33,7 @@ namespace tower{
   }
 
   void Background::draw() const {
-
+    SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
   }
 };
 
