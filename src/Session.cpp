@@ -130,7 +130,7 @@ namespace tower {
 			int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 			processInput();
 			updateGame();
-			//scroll();
+			scroll();
 			generateOutput();
 
 			if (delay > 0)
