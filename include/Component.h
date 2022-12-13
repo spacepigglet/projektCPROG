@@ -38,6 +38,7 @@ namespace tower {
     int upperY;
     int rightX;
     int lowerY;
+	
 	private:
 		SDL_Rect rect;
 		Component(const Component&) = delete;

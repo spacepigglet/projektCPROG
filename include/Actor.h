@@ -2,10 +2,13 @@
 #define ACTOR_H
 
 #include "Component.h"
-#include <string>
+#include "Constants.h"
+#include "System.h"
 #include "Session.h"
-#include <vector>
 #include "Platform.h"
+#include <string>
+#include <iostream>
+#include <SDL2/SDL_image.h>
 
 namespace tower{
   class Actor : public Component {

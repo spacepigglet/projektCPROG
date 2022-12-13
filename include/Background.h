@@ -4,8 +4,8 @@
 
 #include "Component.h"
 #include <string>
-#include "System.h"
-//#include "Session.h"
+#include  "System.h"
+#include <SDL2/SDL_image.h>
 #include "Constants.h"
 
 namespace tower {

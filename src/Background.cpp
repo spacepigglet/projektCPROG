@@ -1,9 +1,4 @@
 #include "Background.h"
-#include <string>
-#include "Component.h"
-#include <SDL2/SDL_image.h>
-#include "Constants.h"
-
 
 namespace tower{
 

@@ -1,7 +1,10 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 #include "Component.h"
+#include "Constants.h"
+#include "System.h"
 #include <string>
+#include <SDL2/SDL_image.h>
 
 namespace tower{
     class Platform : public Component{

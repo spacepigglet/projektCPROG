@@ -1,11 +1,5 @@
 #include "Session.h"
-#include "Background.h"
-#include <SDL2/SDL.h>
-#include "System.h"
-#include "Component.h"
-#include "Collision.h"
 
-#include <iostream>
 #define FPS 65
 namespace tower {
 

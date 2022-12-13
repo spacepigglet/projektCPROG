@@ -6,6 +6,10 @@
 #include "Background.h"
 #include "Platform.h"
 #include <SDL2/SDL.h>
+#include "System.h"
+#include "Collision.h"
+#include <iostream>
+#include "Actor.h"
 
 namespace tower {
 

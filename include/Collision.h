@@ -3,8 +3,7 @@
 #define COLLISION_H
 #include <SDL2/SDL.h>
 #include "Component.h"
-#include "Platform.h"
-#include "Actor.h"
+#include <iostream>
 
 using namespace tower;
 

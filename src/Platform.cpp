@@ -1,8 +1,4 @@
 #include "Platform.h"
-#include "Constants.h"
-#include "System.h"
-#include <string>
-#include <SDL2/SDL_image.h>
 
 namespace tower{
     

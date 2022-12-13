@@ -1,8 +1,5 @@
 #include "Collision.h"
-#include "Component.h"
-#include "Platform.h"
-#include "Actor.h"
-#include <iostream>
+
 using namespace tower;
 
 bool Collision::collision(Component* a, Component* b) {

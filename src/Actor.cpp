@@ -1,16 +1,6 @@
 //#include "Sprite.h"
 #include "Actor.h"
-#include <iostream>
-#include <string>
-#include "Component.h"
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
-#include "Constants.h"
-#include "System.h"
-#include <vector>
-#include "Platform.h"
-#include "Session.h"
-#include "Collision.h"
+
 using namespace std;
 
 namespace tower{
