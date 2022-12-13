@@ -11,7 +11,11 @@ namespace tower {
 	{
 	}
 
-	void Component::scroll(int toScroll) {
+	void Component::horizontalScroll(int toScroll) {
+		moveX(-toScroll);
+	}
+
+	void Component::verticalScroll(int toScroll) {
 		moveY(toScroll);
 	}
 

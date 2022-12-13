@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
 	Platform* p = Platform::getInstance(100, 200, 100, 10, "images/marble.jpg");
 	Platform* p2 = Platform::getInstance(300, 400, 100, 10, "images/marble.jpg");
 	Platform* p3 = Platform::getInstance(250, 300, 100, 10, "images/marble.jpg");
+	//ses.set_scroll_horizontal(true);
 
 	//ses.add(b);
 	ses.set_background("images/space-background-vector-21179778.jpg");

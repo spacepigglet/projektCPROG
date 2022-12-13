@@ -6,6 +6,8 @@ namespace tower {
 	Session::Session() : quit(false){
 		std::cout << "*** Session::Session()\n";
 		bg_Image = "images/space-background-vector-21179778.jpg";
+		set_scroll_horizontal(false);
+		//fptr= verticalScroll();
 	}
 
 	void Session::add(Component* c) {
@@ -20,10 +22,23 @@ namespace tower {
 	}
 	void Session::setup_background() {
 		bg1 = Background::getInstance(0,0,WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
-		bg2 = Background::getInstance(0,-WINDOW_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
+		bg2 = Background::getInstance(bg2_start_pos_x, bg2_start_pos_y, WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
 
 		//add(bg1); add(bg2);
 	}
+
+	void Session::set_scroll_horizontal(bool isHorizontal) {
+      isScrolledHorizontally = isHorizontal;
+	  if(isHorizontal){
+		  bg2_start_pos_x = WINDOW_WIDTH;
+		  bg2_start_pos_y = 0;
+	  } else {
+           bg2_start_pos_x = 0;
+	       bg2_start_pos_y = -WINDOW_HEIGHT; 
+	  }
+	  
+	 
+    } 
 
 	void Session::processInput(){
 		SDL_Event eve;
@@ -65,6 +80,7 @@ namespace tower {
 			}
 			
 		}
+		scroll();
 		
 		//flytta ner allt mha c->moveY()
 
@@ -79,10 +95,24 @@ namespace tower {
 	}
 
 	void Session::scroll() {
-		bg1->scroll(scrollSpeed);
-		bg2->scroll(scrollSpeed);
-		for( Component* c: comps) {
-			c->scroll(scrollSpeed);
+		// bg1->scrollFunc(scrollSpeed);
+		// bg2->scrollFunc(scrollSpeed);
+		// for( Component* c: comps) {
+		// 	c->scrollFunc(scrollSpeed);
+		// }
+
+		if (isScrolledHorizontally){
+			bg1->horizontalScroll(scrollSpeed);
+		    bg2->horizontalScroll(scrollSpeed);
+			for( Component* c: comps) {
+				c->horizontalScroll(scrollSpeed);
+			}
+		}else {
+			bg1->verticalScroll(scrollSpeed);
+		    bg2->verticalScroll(scrollSpeed);
+			for( Component* c: comps) {
+				c->verticalScroll(scrollSpeed);
+			}
 		}
 		
 	}
@@ -128,7 +158,6 @@ namespace tower {
 			int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 			processInput();
 			updateGame();
-			scroll();
 			generateOutput();
 
 			if (delay > 0)

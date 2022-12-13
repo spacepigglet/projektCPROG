@@ -19,11 +19,19 @@ namespace tower{
   moveY(scrollSpeed);
   }*/
 
-  void Background::scroll(int toScroll) {
+  void Background::verticalScroll(int toScroll) {
     if(getUpperY() >= getHight()){
       setPosition(0, -getHight());
     } else
         moveY(toScroll);
+
+  }
+
+  void Background::horizontalScroll(int toScroll) {
+    if(getRightX() <= 0){
+      setPosition(getWidth(), 0);
+    } else
+        moveX(-toScroll);
 
   }
 

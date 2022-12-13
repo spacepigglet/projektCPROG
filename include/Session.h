@@ -27,6 +27,8 @@ namespace tower {
 		void updateGame();
 		void generateOutput();
 		void scroll();
+		void set_scroll_horizontal(bool isHorizontal);
+        
 		// SDL_Texture* get_bg_tex1() const {return bg1->get_bg_tex();}
 		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}
 
@@ -40,6 +42,13 @@ namespace tower {
 		Background* bg1 ;
 		Background* bg2 ;
 		std::string bg_Image;
+		bool isScrolledHorizontally;
+		int bg2_start_pos_x;
+		int bg2_start_pos_y;
+		//void (*fpek)() ;
+		//typedef void (*func_t)(int); // pointer to function with no args and void return
+        //func_t fptr; // variable of pointer to function
+
 	};
 
 	//extern Session ses;
