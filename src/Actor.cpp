@@ -21,16 +21,6 @@ namespace tower{
                 dxVel = -speed;                                  //dyVel = 0;
                 moveX(-speed);
                 break;
-            case SDLK_UP: 
-                moveUp(speed); 
-                dyVel = -1; 
-                dxVel = 0;
-                break;
-            case SDLK_DOWN:
-                moveDown(speed); 
-                dyVel = 1; 
-                dxVel = 0;
-                break;
 
             case SDLK_SPACE:   jump();  break;                 //jump(); break; dxVel = 0;dyVel = 0;
         }
@@ -103,32 +93,6 @@ namespace tower{
         }
     }
 
-
-    // void Actor::jump(){
-    //     isJumping = true;
-    //     //SDL_Rect rect = getRect();
-    //     int originalheight = getRect().y;
-    //     int targetHeight = originalheight - 100;
-    //     //while (isJumping){
-    //         while(getRect().y > targetHeight){
-    //         moveUp(10);
-    //         SDL_RenderClear(sys.get_ren());
-	// 		SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
-    //         draw();
-    //         SDL_RenderPresent(sys.get_ren());
-    //         }
-
-    //         while(getRect().y < originalheight){
-    //         moveDown(10);
-    //         SDL_RenderClear(sys.get_ren());
-	// 		SDL_RenderCopy(sys.get_ren(), sys.get_bg_tex(), NULL, NULL);
-    //         draw();
-    //         SDL_RenderPresent(sys.get_ren());
-    //         }
-    //     //}
-    //     isJumping = false;
-    // }
-
     void Actor::jump(){
         if (!isJumping){
             dyVel = -20;
@@ -139,14 +103,6 @@ namespace tower{
     }
 
     void Actor:: update(){
-        //if (isJumping){
-                //jump();
-            //     dyVel += GRAVITY; //gravity
-
-            //     //move jumper
-            //     moveY(dyVel);
-        //} 
-        //if(!isOnTopOfPlatform){
             
             dyVel += GRAVITY; //gravity
             if(dyVel > 10) //limits how fast actor can fall - terminal velocity
@@ -156,12 +112,12 @@ namespace tower{
             if(isJumping){
                 //dxVel = old_dxVel;
                 if (dxVel < 0 ){ //moving left
-                    dxVel += GRAVITY;
+                    //dxVel += GRAVITY;
                     moveX(dxVel);
                 } 
                 else if (dxVel > 0 ){ //moving right
                     
-                    dxVel -= GRAVITY;
+                    //dxVel -= GRAVITY;
                     moveX(dxVel);
                 }
             } else 
