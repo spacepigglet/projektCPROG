@@ -10,6 +10,7 @@
 #include "Collision.h"
 #include <iostream>
 #include "Actor.h"
+#include <cstdlib>
 
 namespace tower {
 
@@ -45,6 +46,7 @@ namespace tower {
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
+		
 		//void (*fpek)() ;
 		//typedef void (*func_t)(int); // pointer to function with no args and void return
         //func_t fptr; // variable of pointer to function

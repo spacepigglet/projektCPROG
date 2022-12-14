@@ -20,10 +20,10 @@ namespace tower {
 		const SDL_Rect& getRect() const { return rect; }
 		//SDL_Rect& changeRect() { return rect; }
 		void setPosition(int, int);
-		void moveRight(int toAdd){rect.x+=toAdd;}
-		void moveLeft(int toSub){rect.x-=toSub;}
-		void moveDown(int toAdd){rect.y+=toAdd;}
-		void moveUp(int toSub){rect.y-=toSub;}
+		// void moveRight(int toAdd){rect.x+=toAdd;}
+		// void moveLeft(int toSub){rect.x-=toSub;}
+		// void moveDown(int toAdd){rect.y+=toAdd;}
+		// void moveUp(int toSub){rect.y-=toSub;}
 		void moveY(int toMove){rect.y += toMove;}
 		void moveX(int toMove){rect.x += toMove;}
 		int getLeftX() {return rect.x;}

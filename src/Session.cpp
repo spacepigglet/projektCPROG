@@ -1,6 +1,6 @@
 #include "Session.h"
 
-#define FPS 65
+#define FPS 60
 namespace tower {
 
 	Session::Session() : quit(false){
@@ -37,7 +37,6 @@ namespace tower {
 	       bg2_start_pos_y = -WINDOW_HEIGHT; 
 	  }
 	  
-	 
     } 
 
 	void Session::processInput(){
@@ -80,7 +79,7 @@ namespace tower {
 			}
 			
 		}
-		scroll();
+		//scroll();  //utkommenterat pga jobbigt haha
 		
 		//flytta ner allt mha c->moveY()
 
@@ -176,3 +175,5 @@ namespace tower {
 
 	Session ses;
 }
+
+

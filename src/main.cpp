@@ -31,6 +31,8 @@ int main(int argc, char** argv) {
 	Platform* p = Platform::getInstance(100, 200, 100, 10, "images/marble.jpg");
 	Platform* p2 = Platform::getInstance(300, 400, 100, 10, "images/marble.jpg");
 	Platform* p3 = Platform::getInstance(250, 300, 100, 10, "images/marble.jpg");
+	Platform* p4 = Platform::getInstance(100, 500, 1000, 10, "images/marble.jpg");
+	
 	//ses.set_scroll_horizontal(true);
 
 	//ses.add(b);
@@ -39,6 +41,7 @@ int main(int argc, char** argv) {
 	ses.add(p);
 	ses.add(p2);
 	ses.add(p3);
+	ses.add(p4);
 	ses.run();
 	
 	return 0;
