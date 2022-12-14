@@ -17,11 +17,10 @@ namespace tower{
     static Actor* getInstance(int x, int y, int w, int h, std::string image);
     virtual void jump();
     void keyDown(const SDL_Event&);
+    void keyUp(const SDL_Event&);
     void draw() const;
     //void update() const;
-    void handleCollision();
     void collisionWithPlatform(Platform* p);
-    bool handleCollisionWithPlatform(Platform*) const;
     void collisionDetection(Component*);
     void update();
     const static int GRAVITY = 1;
@@ -35,7 +34,7 @@ namespace tower{
       int dxVel;
       int old_dxVel;
       int dyVel;
-      bool movingRight, movingLeft, movingUp, movingDown;
+      bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
       int speed = 10;
       SDL_Texture* texture;
       std::string image;

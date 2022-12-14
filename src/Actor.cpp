@@ -10,24 +10,33 @@ namespace tower{
 
     void Actor::keyDown(const SDL_Event& event) {
         //if(!isOnTopOfPlatform) {
-            old_dxVel = dxVel;
+    
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-                //old_dxVel = dxVel;
-                dxVel = speed;                               //dyVel = 0;
-                moveX(speed); break;
-            case SDLK_LEFT:
-                //old_dxVel = dxVel; 
-                dxVel = -speed;                                  //dyVel = 0;
-                moveX(-speed);
+                movingRight = true;
+                break;
+            
+            case SDLK_LEFT:             
+                movingLeft = true;             
                 break;
 
-            case SDLK_SPACE:   jump();  break;                 //jump(); break; dxVel = 0;dyVel = 0;
+            case SDLK_SPACE:   jump();  break;        
         }
-        //}
+     
+    }
 
-    //collisionDetection(getComps());
-}
+    void Actor::keyUp(const SDL_Event& event) {
+        switch(event.key.keysym.sym) {
+                case SDLK_RIGHT: 
+                    //old_dxVel = dxVel;
+                    movingRight = false;
+                case SDLK_LEFT: 
+                    //old_dxVel = dxVel;
+                    movingLeft = false;
+                
+
+        }
+    }
 
     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
         return new Actor(x, y, w, h, image);
@@ -38,11 +47,12 @@ namespace tower{
         //cout << "Det funkar!" << endl;
         if(dyVel > 0) { //moving down on top of platform
             //isOnTopOfPlatform = true; 
+            movingDown = false;
             dyVel = 0;
             isJumping = false;
             setPosition(getLeftX(), p->getUpperY() - getHight());
         }
-        else if(dxVel > 0) { //moving right into left side of platform
+        else if(dxVel > 0 && movingDown) { //moving right into left side of platform
             cout << "UpperY innan " << getUpperY() << endl;
             cout << "UpperY platform innan " << p->getUpperY() << endl;
 
@@ -51,16 +61,15 @@ namespace tower{
             cout << "UpperY efter " << getUpperY() << endl;
             cout << "UpperY platform efter " << p->getUpperY() << endl;
         }
-        else if(dxVel < 0) { //moving left into right side of platform
+        else if(dxVel < 0 && movingDown) { //moving left into right side of platform
             setPosition(p->getRightX(), getUpperY());
         }
         
-        else if(dyVel < 0) {//moving up under platform
-            setPosition(getLeftX(), (p->getLowerY()));
-        }
+        // else if(dyVel < 0) {//moving up under platform
+        //     setPosition(getLeftX(), (p->getLowerY()));
+        // }
         
 
-        
         //this->setPosition(0,0);
         //x, y
     }
@@ -69,40 +78,27 @@ namespace tower{
         SDL_DestroyTexture(texture);
     }
 
-    bool Actor::handleCollisionWithPlatform(Platform* other)const{ //, char c
-        cout << "Collision" << endl;
-        // switch(c){
-        //     case 'l': //check left
-        //     case 'r': //check right
-
-        // }
-        return false;
-    }
-
-
-    void Actor::collisionDetection(Component* other) {
-        if(other == this) {
-            return;
-        }
-        if(leftX < other->getRightX() && rightX > other->getLeftX() 
-        && upperY < other-> getLowerY() && lowerY > other->getUpperY()){
-        //collision happened
-            if(Platform *p = dynamic_cast <Platform*>(other)) {
-                handleCollisionWithPlatform(p);
-            }
-        }
-    }
-
     void Actor::jump(){
         if (!isJumping){
             dyVel = -20;
-            dxVel = old_dxVel;
             isJumping = true;
         }
-        
     }
 
     void Actor:: update(){
+
+        if(movingRight){
+            dxVel = speed;                               //dyVel = 0;
+            moveX(speed);
+            //movingRight = false;
+        }
+        else if (movingLeft){
+            dxVel = -speed;                                  //dyVel = 0;
+            moveX(-speed);
+        }else if (!movingRight || !movingLeft){
+            dxVel = 0;
+        }
+
             
             dyVel += GRAVITY; //gravity
             if(dyVel > 10) //limits how fast actor can fall - terminal velocity
@@ -112,16 +108,16 @@ namespace tower{
             if(isJumping){
                 //dxVel = old_dxVel;
                 if (dxVel < 0 ){ //moving left
-                    //dxVel += GRAVITY;
+                    dxVel += GRAVITY;
                     moveX(dxVel);
                 } 
                 else if (dxVel > 0 ){ //moving right
                     
-                    //dxVel -= GRAVITY;
+                    dxVel -= GRAVITY;
                     moveX(dxVel);
                 }
-            } else 
-                dxVel = 0; // resetting dxVel in between input, if not jumping. Other solution - keyup?? Probably better...?
+            } 
+                 // resetting dxVel in between input, if not jumping. Other solution - keyup?? Probably better...?
         //}
         //isOnTopOfPlatform = false; //reset
     }
