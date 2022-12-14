@@ -1,0 +1,21 @@
+To do:
+
+Generera platforms
+
+Göra Rörlig/icke rörliga subklasser till Component.
+
+Rörliga: har handleCollision(Component)
+- Actor: kollar typ och kallar på korrekt privat metod för att hantera kollision med den typen.
+--> Ändra i Session updateGame (ta bort)
+
+Jump fix - make pretty
+
+Enemy
+Bullet
+Life - implemetation kunna bestämma antal liv
+
+
+
+
+Coins*
+End screen - game over + knappar start over eller quit
