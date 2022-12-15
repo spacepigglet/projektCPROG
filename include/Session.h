@@ -24,6 +24,7 @@ namespace tower {
 		void run();
 		~Session();
 		const std::vector<Component*> getComps() const {return comps;}
+		void initPlatforms(std::string);
 		void processInput();
 		void updateGame();
 		void generateOutput();
@@ -43,6 +44,7 @@ namespace tower {
 		Background* bg1 ;
 		Background* bg2 ;
 		std::string bg_Image;
+		std::string platform_image;
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;

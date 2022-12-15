@@ -79,7 +79,7 @@ namespace tower {
 			}
 			
 		}
-		//scroll();  //utkommenterat pga jobbigt haha
+		scroll();  //utkommenterat pga jobbigt haha
 		
 		//flytta ner allt mha c->moveY()
 
@@ -128,26 +128,22 @@ namespace tower {
 			SDL_RenderPresent(sys.get_ren());
 	}
 
+		void Session::initPlatforms(std::string image) {
+			platform_image = image;
+      for(int i = 0; i<10; i++) { 
+				int platformGap = WINDOW_HEIGHT / 10;
+				int y = 50 + (i * platformGap); //distance between platforms in y-led 
+				//Måste se till s.a. window_height och antal plattformar man vill skapa går ihop med 
+				//hur y beräknas, om man t.ex. sätter 100 som startvärde nu 
+				// kommer bara 9 plattformar att synas i startläget.
+				
+        int x = rand() % (WINDOW_WIDTH - 100); //100 = längd på platform
+        //int y = rand() % WINDOW_HEIGHT;
 
-	/*void Session::collisionDetection(){
-		// for (unsigned int i = 0; i<comps.size(); i++) {
-		// 	for(unsigned int j = 0; i<comps.size(); j++) {
-		// 		if(Collision::collision(comps[i], comps[j])) {
-		// 			std::cout << "Collision!" << std::endl;
-		// 		}
-		// 	}
-		// }
-
-
-		for (unsigned int i = 0; i<comps.size(); i++) {
-			for(unsigned int j = 0; i<comps.size(); j++) {
-				if(Collision::collision(comps[i]->getRect(), comps[j]->getRect())) {
-					std::cout << "Collision!" << std::endl;
-				}
-			}
+        Platform* p = Platform::getInstance(x, y, 100, 10, platform_image);
+				add(p);
+      }
 		}
-        
-    }*/
 
 	void Session::run() {
 		setup_background();
@@ -158,6 +154,7 @@ namespace tower {
 			processInput();
 			updateGame();
 			generateOutput();
+
 
 			if (delay > 0)
 				SDL_Delay(delay);
