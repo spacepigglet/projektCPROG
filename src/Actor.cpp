@@ -50,7 +50,7 @@ namespace tower{
             movingDown = false;
             dyVel = 0;
             isJumping = false;
-            setPosition(getLeftX(), p->getUpperY() - getHight());
+            setPosition(getLeftX(), p->getUpperY() - getHeight());
         }
         else if(dxVel > 0) { //moving right into left side of platform
             cout << "UpperY innan " << getUpperY() << endl;

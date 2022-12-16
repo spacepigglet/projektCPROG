@@ -7,6 +7,7 @@ namespace tower {
 		std::cout << "*** Session::Session()\n";
 		bg_Image = "images/space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
+		setPlatformWidthRange(80, 150);
 		//fptr= verticalScroll();
 	}
 
@@ -116,6 +117,10 @@ namespace tower {
 		
 	}
 
+	 void Session::setPlatformWidthRange(int min, int max) {
+	 	Platform::setPlatformWidthRange(min, max);
+	 }
+
 	void Session::generateOutput(){
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
 			SDL_RenderClear(sys.get_ren());
@@ -130,17 +135,18 @@ namespace tower {
 
 		void Session::initPlatforms(std::string image) {
 			platform_image = image;
-      for(int i = 0; i<10; i++) { 
-				int platformGap = WINDOW_HEIGHT / 10;
-				int y = 50 + (i * platformGap); //distance between platforms in y-led 
+      for(int i = 0; i<nrOfPlatforms; i++) { 
+				int platformGapY = WINDOW_HEIGHT / nrOfPlatforms;
+				int y = 50 + (i * platformGapY); //distance between platforms in y-led 
 				//Måste se till s.a. window_height och antal plattformar man vill skapa går ihop med 
 				//hur y beräknas, om man t.ex. sätter 100 som startvärde nu 
 				// kommer bara 9 plattformar att synas i startläget.
 				
-        int x = rand() % (WINDOW_WIDTH - 100); //100 = längd på platform
+				int width = (rand() % (Platform::getPlatformMaxWidth() - Platform::getPlatformMinWidth() + 1)) + Platform::getPlatformMinWidth(); //random nr between min and max platform width
+        int x = rand() % (WINDOW_WIDTH - width); //100 = bredd på platform
         //int y = rand() % WINDOW_HEIGHT;
 
-        Platform* p = Platform::getInstance(x, y, 100, 10, platform_image);
+        Platform* p = Platform::getInstance(x, y, width, 10, platform_image);
 				add(p);
       }
 		}

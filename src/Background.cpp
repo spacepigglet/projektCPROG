@@ -20,8 +20,8 @@ namespace tower{
   }*/
 
   void Background::verticalScroll(int toScroll) {
-    if(getUpperY() >= getHight()){
-      setPosition(0, -getHight());
+    if(getUpperY() >= getHeight()){
+      setPosition(0, -getHeight());
     } else
         moveY(toScroll);
 

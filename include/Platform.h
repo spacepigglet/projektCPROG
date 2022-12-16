@@ -13,7 +13,10 @@ namespace tower{
     void draw() const;
     void update();
     void collisionDetection(const Component*);
+    static void setPlatformWidthRange(int min, int max) {minPlatformWidth = min; maxPlatformWidth = max;}
     ~Platform();
+    static int getPlatformMinWidth() {return minPlatformWidth;}
+    static int getPlatformMaxWidth() {return maxPlatformWidth;}
 
     protected:
     Platform(int x, int y, int w, int h, std::string image);
@@ -23,6 +26,8 @@ namespace tower{
     // int bottomSide = (h-y) + w;
     
     private:
+    static int minPlatformWidth;
+    static int maxPlatformWidth;
     SDL_Texture* texture;
     std::string image;
     int leftX;
