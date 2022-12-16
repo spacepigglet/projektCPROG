@@ -23,11 +23,11 @@ namespace tower{
     }
 
     void Platform::update() {
-      if(this->getLowerY() > WINDOW_HEIGHT) {
+      if(this->getUpperY() > WINDOW_HEIGHT + 100) { //bredden på plattform, gör till variabel
         int newX = rand() % (WINDOW_WIDTH - this->getRightX());
         //int newX = rand() % (WINDOW_WIDTH - this->getRightX());
 
-        this->setPosition(newX, 0);
+        this->setPosition(newX, -10); //höjg på plattform, gör till variabel
       }
     }
 

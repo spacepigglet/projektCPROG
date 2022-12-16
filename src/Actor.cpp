@@ -33,7 +33,7 @@ namespace tower{
                 case SDLK_LEFT: 
                     //old_dxVel = dxVel;
                     movingLeft = false;
-                
+
 
         }
     }
@@ -46,13 +46,13 @@ namespace tower{
         
         //cout << "Det funkar!" << endl;
         if(dyVel > 0) { //moving down on top of platform
-            //isOnTopOfPlatform = true; 
+            isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
             movingDown = false;
             dyVel = 0;
             isJumping = false;
             setPosition(getLeftX(), p->getUpperY() - getHight());
         }
-        else if(dxVel > 0 && movingDown) { //moving right into left side of platform
+        else if(dxVel > 0) { //moving right into left side of platform
             cout << "UpperY innan " << getUpperY() << endl;
             cout << "UpperY platform innan " << p->getUpperY() << endl;
 
@@ -61,7 +61,7 @@ namespace tower{
             cout << "UpperY efter " << getUpperY() << endl;
             cout << "UpperY platform efter " << p->getUpperY() << endl;
         }
-        else if(dxVel < 0 && movingDown) { //moving left into right side of platform
+        else if(dxVel < 0) { //moving left into right side of platform
             setPosition(p->getRightX(), getUpperY());
         }
         
@@ -79,7 +79,7 @@ namespace tower{
     }
 
     void Actor::jump(){
-        if (!isJumping){
+        if (!isJumping && isOnTopOfPlatform){ //gör att vi inte kan hoppa i luften
             dyVel = -20;
             isJumping = true;
         }
@@ -112,14 +112,16 @@ namespace tower{
                     moveX(dxVel);
                 } 
                 else if (dxVel > 0 ){ //moving right
-                    
+
                     dxVel -= GRAVITY;
                     moveX(dxVel);
                 }
+            
             } 
                  // resetting dxVel in between input, if not jumping. Other solution - keyup?? Probably better...?
         //}
-        //isOnTopOfPlatform = false; //reset
+        isOnTopOfPlatform = false; //reset
+        movingDown = true;
     }
 
 
