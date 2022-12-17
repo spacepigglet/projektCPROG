@@ -24,7 +24,7 @@ namespace tower {
 		void run();
 		~Session();
 		const std::vector<Component*> getComps() const {return comps;}
-		void setPlatformWidthRange(int, int); 
+		//void setPlatformWidthRange(int, int); 
 		void initPlatforms(std::string);
 		void processInput();
 		void updateGame();
@@ -50,6 +50,8 @@ namespace tower {
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
 		int nrOfPlatforms = 10;
+		int platformMinWidth = 80;
+		int platformMaxWidth = 150;
 		
 		//void (*fpek)() ;
 		//typedef void (*func_t)(int); // pointer to function with no args and void return

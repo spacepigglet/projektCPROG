@@ -32,7 +32,7 @@ namespace tower{
 
       //Om man inte scrollar vertikalt kommer aldrig koden ovan att köras
       //Plattformarna hamnar för nära varandra i y led
-      else if(getRightX() < -100) {
+      else if(getRightX() < 0) {
         int newY = rand() % (WINDOW_WIDTH - getRightX());
         setPosition(WINDOW_WIDTH, newY);
       }
