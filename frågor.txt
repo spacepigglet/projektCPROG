@@ -1,3 +1,10 @@
+KEY-EVENTS
+Component/MobileComponent när vi loopar igenom?
+Är det rimligt att anta att endast MobileComponents svarar på input från tangentbord/musklick?
+
+KLASSVARIABEL MIN/MAX FÖR PLATTFORM FUNKAR INTE???
+Vad gäller??????????
+
 RITA spriten
 Använda storleken av bilden?
 

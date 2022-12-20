@@ -2,14 +2,14 @@
 #define BACKGROUND_H
 
 
-#include "Component.h"
+#include "MobileComponent.h"
 #include <string>
 #include  "System.h"
 #include <SDL2/SDL_image.h>
 #include "Constants.h"
 
 namespace tower {
-  class Background : public Component {
+  class Background : public MobileComponent {
 
     public:
       ~Background();

@@ -1,17 +1,16 @@
 #ifndef ACTOR_H
 #define ACTOR_H
-
+#include "MobileComponent.h"
 #include "Component.h"
 #include "Constants.h"
 #include "System.h"
-#include "Session.h"
 #include "Platform.h"
 #include <string>
 #include <iostream>
 #include <SDL2/SDL_image.h>
 
 namespace tower{
-  class Actor : public Component {
+  class Actor : public MobileComponent {
     public:
     ~Actor();
     static Actor* getInstance(int x, int y, int w, int h, std::string image);

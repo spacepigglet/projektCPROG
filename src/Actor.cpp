@@ -4,7 +4,7 @@
 using namespace std;
 
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) { //(x+10), (y+10), (x+w-10), (y+h)
+    Actor::Actor(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
@@ -27,12 +27,12 @@ namespace tower{
 
     void Actor::keyUp(const SDL_Event& event) {
         switch(event.key.keysym.sym) {
-                case SDLK_RIGHT: 
-                    //old_dxVel = dxVel;
-                    movingRight = false;
-                case SDLK_LEFT: 
-                    //old_dxVel = dxVel;
-                    movingLeft = false;
+            case SDLK_RIGHT: 
+                //old_dxVel = dxVel;
+                movingRight = false;
+            case SDLK_LEFT: 
+                //old_dxVel = dxVel;
+                movingLeft = false;
 
 
         }
@@ -53,13 +53,13 @@ namespace tower{
             setPosition(getLeftX(), p->getUpperY() - getHeight());
         }
         else if(dxVel > 0) { //moving right into left side of platform
-            cout << "UpperY innan " << getUpperY() << endl;
-            cout << "UpperY platform innan " << p->getUpperY() << endl;
+            // cout << "UpperY innan " << getUpperY() << endl;
+            // cout << "UpperY platform innan " << p->getUpperY() << endl;
 
             setPosition(p->getLeftX() - getWidth(), getUpperY());
 
-            cout << "UpperY efter " << getUpperY() << endl;
-            cout << "UpperY platform efter " << p->getUpperY() << endl;
+            // cout << "UpperY efter " << getUpperY() << endl;
+            // cout << "UpperY platform efter " << p->getUpperY() << endl;
         }
         else if(dxVel < 0) { //moving left into right side of platform
             setPosition(p->getRightX(), getUpperY());

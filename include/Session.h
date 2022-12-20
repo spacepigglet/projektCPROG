@@ -10,6 +10,7 @@
 #include "Collision.h"
 #include <iostream>
 #include "Actor.h"
+#include "MobileComponent.h"
 #include <cstdlib>
 
 namespace tower {
@@ -23,8 +24,8 @@ namespace tower {
 		void set_background(std::string);
 		void run();
 		~Session();
-		const std::vector<Component*> getComps() const {return comps;}
-		//void setPlatformWidthRange(int, int); 
+		const std::vector<MobileComponent*> getComps() const {return mobileComps;}
+		void setPlatformWidthRange(int, int); 
 		void initPlatforms(std::string);
 		void processInput();
 		void updateGame();
@@ -38,6 +39,7 @@ namespace tower {
 	private:
 	    void setup_background();
 		std::vector<Component*> comps;
+		std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
 		//void collisionDetection();
 		bool quit;
@@ -50,8 +52,10 @@ namespace tower {
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
 		int nrOfPlatforms = 10;
-		int platformMinWidth = 80;
-		int platformMaxWidth = 150;
+		int platformMinWidth;
+		int platformMaxWidth;
+		int platformHeight = 10;
+		Actor* player;
 		
 		//void (*fpek)() ;
 		//typedef void (*func_t)(int); // pointer to function with no args and void return

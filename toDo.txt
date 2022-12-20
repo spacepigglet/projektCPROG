@@ -4,11 +4,14 @@ Generera platforms
 
 Göra Rörlig/icke rörliga subklasser till Component.
 
+Fixa kollisionsbuggen!
+
+Jump fix - make pretty --> vill räkna fram x-värdet mer korrekt med användning tid
+
 Rörliga: har handleCollision(Component)
 - Actor: kollar typ och kallar på korrekt privat metod för att hantera kollision med den typen.
 --> Ändra i Session updateGame (ta bort)
 
-Jump fix - make pretty
 
 Enemy
 Bullet

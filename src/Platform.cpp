@@ -2,7 +2,7 @@
 
 namespace tower{
     
-    Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h) { // x, y, (x+w), (y+h+1)
+    Platform::Platform(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
