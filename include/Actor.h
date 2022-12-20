@@ -19,7 +19,7 @@ namespace tower{
     void keyUp(const SDL_Event&);
     void draw() const;
     //void update() const;
-    void collisionWithPlatform(Platform* p);
+    void collisionWithPlatform(Platform*, char);
     void collisionDetection(Component*);
     void update();
     const static int GRAVITY = 1;
@@ -34,7 +34,7 @@ namespace tower{
       int old_dxVel;
       int dyVel;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      int speed = 10;
+      int speed = 5;
       SDL_Texture* texture;
       std::string image;
       bool isJumping = false;

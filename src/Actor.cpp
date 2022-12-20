@@ -42,17 +42,17 @@ namespace tower{
         return new Actor(x, y, w, h, image);
     }
 
-    void Actor::collisionWithPlatform(Platform* p) {
+    void Actor::collisionWithPlatform(Platform* p, char collisionCode) {
         
         //cout << "Det funkar!" << endl;
-        if(dyVel > 0) { //moving down on top of platform
+        if(collisionCode == 't') { //moving down on top of platform
             isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
             movingDown = false;
             dyVel = 0;
             isJumping = false;
             setPosition(getLeftX(), p->getUpperY() - getHeight());
         }
-        else if(dxVel > 0) { //moving right into left side of platform
+        else if(collisionCode == 'l') { //moving right into left side of platform
             // cout << "UpperY innan " << getUpperY() << endl;
             // cout << "UpperY platform innan " << p->getUpperY() << endl;
 
@@ -61,7 +61,7 @@ namespace tower{
             // cout << "UpperY efter " << getUpperY() << endl;
             // cout << "UpperY platform efter " << p->getUpperY() << endl;
         }
-        else if(dxVel < 0) { //moving left into right side of platform
+        else if(collisionCode == 'r') { //moving left into right side of platform
             setPosition(p->getRightX(), getUpperY());
         }
         
@@ -104,7 +104,7 @@ namespace tower{
             if(dyVel > 10) //limits how fast actor can fall - terminal velocity
                 dyVel = 10;
             moveY(dyVel); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
-
+             
             if(isJumping){
                 //dxVel = old_dxVel;
                 if (dxVel < 0 ){ //moving left
