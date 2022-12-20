@@ -1,8 +1,5 @@
 To do:
 
-Generera platforms
-
-Göra Rörlig/icke rörliga subklasser till Component.
 
 Fixa kollisionsbuggen!
 
@@ -12,6 +9,7 @@ Rörliga: har handleCollision(Component)
 - Actor: kollar typ och kallar på korrekt privat metod för att hantera kollision med den typen.
 --> Ändra i Session updateGame (ta bort)
 
+Generera platforms bättre
 
 Enemy
 Bullet
