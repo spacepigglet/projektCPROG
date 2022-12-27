@@ -19,7 +19,7 @@ namespace tower{
     void keyUp(const SDL_Event&);
     void draw() const;
     //void update() const;
-    void collisionWithPlatform(Platform*, char);
+    void collisionWithPlatform(Platform*);
     void collisionDetection(Component*);
     void update();
     const static int GRAVITY = 1;

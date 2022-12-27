@@ -81,10 +81,10 @@ namespace tower {
 			c->update();
 			if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
 				for( Platform* p : platforms) {
-					char collisionCode = Collision::collision(a, p);
-					if (collisionCode != 'N') {
+					
+					if (Collision::collision(a, p)) {
 						//std::cout << "COLLISION!" << std::endl;
-						a->collisionWithPlatform(p, collisionCode);
+						a->collisionWithPlatform(p);
 					} 
 			}
 			}

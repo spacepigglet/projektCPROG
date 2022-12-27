@@ -42,36 +42,17 @@ namespace tower{
         return new Actor(x, y, w, h, image);
     }
 
-    void Actor::collisionWithPlatform(Platform* p, char collisionCode) {
+    void Actor::collisionWithPlatform(Platform* p) {
         
         //cout << "Det funkar!" << endl;
-        if(collisionCode == 't') { //moving down on top of platform
+        if( dyVel> 0) { //moving down on top of platform
             isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
             movingDown = false;
             dyVel = 0;
             isJumping = false;
             setPosition(getLeftX(), p->getUpperY() - getHeight());
         }
-        else if(collisionCode == 'l') { //moving right into left side of platform
-            // cout << "UpperY innan " << getUpperY() << endl;
-            // cout << "UpperY platform innan " << p->getUpperY() << endl;
-
-            setPosition(p->getLeftX() - getWidth(), getUpperY());
-
-            // cout << "UpperY efter " << getUpperY() << endl;
-            // cout << "UpperY platform efter " << p->getUpperY() << endl;
-        }
-        else if(collisionCode == 'r') { //moving left into right side of platform
-            setPosition(p->getRightX(), getUpperY());
-        }
         
-        // else if(dyVel < 0) {//moving up under platform
-        //     setPosition(getLeftX(), (p->getLowerY()));
-        // }
-        
-
-        //this->setPosition(0,0);
-        //x, y
     }
 
     Actor:: ~Actor(){
@@ -92,10 +73,10 @@ namespace tower{
             moveX(speed);
             //movingRight = false;
         }
-        else if (movingLeft){
+        if (movingLeft){
             dxVel = -speed;                                  //dyVel = 0;
             moveX(-speed);
-        }else if (!movingRight || !movingLeft){
+        }else if (!movingRight && !movingLeft){
             dxVel = 0;
         }
 
