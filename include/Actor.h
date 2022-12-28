@@ -34,7 +34,7 @@ namespace tower{
       int old_dxVel;
       int dyVel;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      int speed = 5;
+      int speed = 10;
       SDL_Texture* texture;
       std::string image;
       bool isJumping = false;

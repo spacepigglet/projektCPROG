@@ -45,14 +45,16 @@ namespace tower{
     void Actor::collisionWithPlatform(Platform* p) {
         
         //cout << "Det funkar!" << endl;
-        if( dyVel> 0) { //moving down on top of platform
+
+        if(dyVel > 0) { //moving down on top of platform
+
             isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
             movingDown = false;
             dyVel = 0;
             isJumping = false;
             setPosition(getLeftX(), p->getUpperY() - getHeight());
         }
-        
+      
     }
 
     Actor:: ~Actor(){
@@ -85,7 +87,7 @@ namespace tower{
             if(dyVel > 10) //limits how fast actor can fall - terminal velocity
                 dyVel = 10;
             moveY(dyVel); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
-             
+
             if(isJumping){
                 //dxVel = old_dxVel;
                 if (dxVel < 0 ){ //moving left
