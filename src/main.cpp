@@ -40,6 +40,7 @@ int main(int argc, char** argv) {
 	//ses.add(b);
 	ses.set_background("images/space-background-vector-21179778.jpg");
 	ses.initPlatforms("images/marble.jpg");
+	ses.initEnemies("images/enemy-orange.png");
 	ses.add(a);
 	//ses.add(p);
 	/*ses.add(p2);

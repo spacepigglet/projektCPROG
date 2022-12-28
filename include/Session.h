@@ -12,6 +12,7 @@
 #include "Actor.h"
 #include "MobileComponent.h"
 #include <cstdlib>
+#include "Enemy.h"
 
 namespace tower {
 
@@ -27,6 +28,7 @@ namespace tower {
 		const std::vector<MobileComponent*> getComps() const {return mobileComps;}
 		void setPlatformWidthRange(int, int); 
 		void initPlatforms(std::string);
+		void initEnemies(std::string);
 		void processInput();
 		void updateGame();
 		void generateOutput();
@@ -37,10 +39,11 @@ namespace tower {
 		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}
 
 	private:
-	    void setup_background();
+	  void setup_background();
 		std::vector<Component*> comps;
 		std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
+		std::vector<Enemy*> enemies;
 		//void collisionDetection();
 		bool quit;
 		int scrollSpeed = 1;
@@ -48,13 +51,14 @@ namespace tower {
 		Background* bg2 ;
 		std::string bg_Image;
 		std::string platform_image;
+		std::string enemy_image;
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
 		int nrOfPlatforms = 10;
-		int platformMinWidth;
+		/*int platformMinWidth;
 		int platformMaxWidth;
-		int platformHeight = 10;
+		int platformHeight = 10;*/
 		Actor* player;
 		
 		//void (*fpek)() ;
@@ -63,6 +67,6 @@ namespace tower {
 
 	};
 
-	//extern Session ses;
+	extern Session ses;
 }
 #endif

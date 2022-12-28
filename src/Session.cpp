@@ -1,4 +1,5 @@
 #include "Session.h"
+#include "Enemy.h"
 
 #define FPS 60
 namespace tower {
@@ -7,7 +8,7 @@ namespace tower {
 		std::cout << "*** Session::Session()\n";
 		bg_Image = "images/space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
-		setPlatformWidthRange(80, 200);
+		//setPlatformWidthRange(80, 200);
 		//fptr= verticalScroll();
 	}
 
@@ -16,10 +17,12 @@ namespace tower {
 		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ //bra lösning? platformar är rörliga och de är många...
             mobileComps.push_back(m);
 		}
+		if(Enemy* e = dynamic_cast<Enemy*>(c)){
+       enemies.push_back(e);
+		}
 		if(Platform* p = dynamic_cast<Platform*>(c)){
             platforms.push_back(p);
 		}
-
 		if(Actor* a = dynamic_cast<Actor*>(c)){
             player = a;
 		}
@@ -80,12 +83,20 @@ namespace tower {
 		for( Component* c: comps) {
 			c->update();
 			if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
+				for(Enemy* e: enemies) {
+					if(Collision::collision(a, e)) {
+						a->collisionWithEnemy(e);
+					}
+				}
+				
 				for( Platform* p : platforms) {
 					if (Collision::collision(a, p)) {
 						//std::cout << "COLLISION!" << std::endl;
 						a->collisionWithPlatform(p);
 					} 
-			}
+				}
+				
+				
 			}
 			
 		}
@@ -126,10 +137,10 @@ namespace tower {
 		
 	}
 
-	 void Session::setPlatformWidthRange(int min, int max) {
+	 /*void Session::setPlatformWidthRange(int min, int max) {
 	 	platformMinWidth = min;
 		platformMaxWidth = max;
-	 }
+	 }*/
 
 	void Session::generateOutput(){
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
@@ -152,13 +163,21 @@ namespace tower {
 				//hur y beräknas, om man t.ex. sätter 100 som startvärde nu 
 				// kommer bara 9 plattformar att synas i startläget.
 				
-				int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
+				int width = (rand() % (Platform::getPlatformMaxWidth()- Platform::getPlatformMinWidth() + 1)) + Platform::getPlatformMinWidth(); //random nr between min and max platform width
         int x = rand() % (WINDOW_WIDTH - width); //100 = bredd på platform
         //int y = rand() % WINDOW_HEIGHT;
 
-        Platform* p = Platform::getInstance(x, y, width, platformHeight, platform_image);
+        Platform* p = Platform::getInstance(x, y, width, Platform::getPlatformHeight(), platform_image);
 				add(p);
       }
+		}
+
+		void Session::initEnemies(std::string image) {
+			enemy_image = image;
+			for(Platform* p : platforms) {
+				Enemy* e = Enemy::getInstance(p->getLeftX(), p->getUpperY() - e->getHeight(), 50, 50, enemy_image, p);
+				add(e);
+			}
 		}
 
 //skapar en ny, stor platform och ser till att den skapas och när den är utanför så försvinner den

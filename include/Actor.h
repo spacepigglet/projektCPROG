@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "System.h"
 #include "Platform.h"
+#include "Enemy.h"
 #include <string>
 #include <iostream>
 #include <SDL2/SDL_image.h>
@@ -19,6 +20,7 @@ namespace tower{
     void keyUp(const SDL_Event&);
     void draw() const;
     void collisionWithPlatform(Platform*);
+    void collisionWithEnemy(Enemy*);
     void collisionDetection(Component*);
     void update();
     const static int GRAVITY = 1;

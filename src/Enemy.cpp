@@ -1,0 +1,46 @@
+#include "Enemy.h"
+#include "Collision.h"
+#include "Session.h"
+namespace tower {
+
+Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
+texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+platform = p;
+}
+
+Enemy* Enemy::getInstance(int x, int y, int w, int h, std::string image, Platform* p){
+    return new Enemy(x, y, w, h, image, p);
+}
+
+void Enemy::draw() const{
+  SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
+}
+
+void Enemy::update() {
+  /*if(isAlive == false) {
+    ses.enemies.erase(this);
+  }*/
+  rect.x += enemySpeed * enemyDirection;
+
+  if (rect.x < platform->getLeftX() || (rect.x + rect.w) > platform->getRightX()) {
+    enemyDirection *= -1;
+  }
+}
+
+void Enemy::getsHurt() {
+  //std::vector<Enemy*> 
+  rect.h--;
+  if(rect.h == 0) {
+    isAlive = false;
+  }
+}
+
+void Enemy::addOnPlatform(Platform* p) {
+  setPosition(p->getLeftX(), p->getUpperY());
+}
+
+Enemy:: ~Enemy(){
+    SDL_DestroyTexture(texture);
+}
+
+}

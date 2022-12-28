@@ -1,5 +1,6 @@
 //#include "Sprite.h"
 #include "Actor.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -43,23 +44,33 @@ namespace tower{
     }
 
     void Actor::collisionWithPlatform(Platform* p) {
-        
         //cout << "Det funkar!" << endl;
+        if(getLowerY() > p->getUpperY() && 
+        getLowerY() < p->getLowerY()  && 
+        getLeftX() < p->getRightX() &&  
+        getRightX() > p->getLeftX()) {
 
-        if(dyVel > 0) { //moving down on top of platform
-
-            isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
-            movingDown = false;
-            dyVel = 0;
-            isJumping = false;
-            setPosition(getLeftX(), p->getUpperY() - getHeight());
+            if(dyVel > 0) { //moving down on top of platform
+                isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
+                movingDown = false;
+                dyVel = 0;
+                isJumping = false;
+                setPosition(getLeftX(), p->getUpperY() - getHeight());
+            }
         }
-      
+    }
+
+    void Actor::collisionWithEnemy(Enemy* e) {
+        if(dyVel > 0) {
+            e->getsHurt(); //delete enemy from enemie-list when hurt (temporär lista!) -> inte implementerat ännu!
+            //setPosition(getLeftX(), e->getUpperY() - getHeight());
+        }
     }
 
     Actor:: ~Actor(){
         SDL_DestroyTexture(texture);
     }
+
 
     void Actor::jump(){
         if (!isJumping && isOnTopOfPlatform){ //gör att vi inte kan hoppa i luften

@@ -14,6 +14,9 @@ namespace tower{
     void update();
     void collisionDetection(const Component*);
     ~Platform();
+    static int getPlatformMinWidth() {return platformMinWidth;}
+	static int getPlatformMaxWidth() {return platformMaxWidth;}
+	static int getPlatformHeight() {return platformHeight;}
 
     protected:
     Platform(int x, int y, int w, int h, std::string image);
@@ -26,6 +29,9 @@ namespace tower{
     int rightX;
     int lowerY;
     bool collider = true;
+    const static int platformMinWidth = 80;
+	const static int platformMaxWidth = 150;
+	const static int platformHeight = 10;
     
     };
 }
