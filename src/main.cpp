@@ -28,23 +28,15 @@ int main(int argc, char** argv) {
 	std::cout << "*** main()\n";
 
 	Session ses;
-	//Background* b = Background::getInstance(0, 0, 1080, 780, "images/space-background-vector-21179778.jpg");
 	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png");
-	/*Platform* p = Platform::getInstance(100, 200, 100, 10, "images/marble.jpg");
-	Platform* p2 = Platform::getInstance(300, 400, 100, 10, "images/marble.jpg");
-	Platform* p3 = Platform::getInstance(250, 300, 100, 10, "images/marble.jpg");
-	Platform* p4 = Platform::getInstance(-500, 500, 2000, 10, "images/marble.jpg");*/
-	
-	ses.set_scroll_horizontal(true);
+	//ses.set_scroll_horizontal(true);
 
-	//ses.add(b);
+	
 	ses.set_background("images/space-background-vector-21179778.jpg");
-	ses.initPlatforms("images/marble.jpg");
-	ses.add(a);
-	//ses.add(p);
-	/*ses.add(p2);
-	ses.add(p3);
-	ses.add(p4);*/
+	ses.setPlatformImage("images/marble.jpg");
+
+	ses.add(a); //temp bcz needs to be added after platforms for rendering
+	
 	ses.run();
 	
 	return 0;

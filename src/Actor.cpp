@@ -4,8 +4,9 @@
 using namespace std;
 
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h) { //(x+10), (y+10), (x+w-10), (y+h)
+    Actor::Actor(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h), startHealth(3), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+        health = startHealth;
     }
 
     void Actor::keyDown(const SDL_Event& event) {
@@ -105,6 +106,17 @@ namespace tower{
         //}
         isOnTopOfPlatform = false; //reset
         movingDown = true;
+        if (health <= 0){
+            dead = true;
+        }
+    }
+
+    void Actor:: reset(){
+        setPosition(startX, startY);
+        dxVel = 0;
+        dyVel = 0;
+        dead = false;
+        health = startHealth;
     }
 
 

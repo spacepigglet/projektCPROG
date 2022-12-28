@@ -20,7 +20,7 @@ namespace tower {
 	private:
 		std::string text;
 		SDL_Texture* texture;
-		SDL_Texture* upIcon, *downIcon;
+		SDL_Texture* buttonIcon, *downIcon;
 		bool isDown = false;
 	};
 }

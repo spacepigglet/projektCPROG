@@ -8,6 +8,7 @@ namespace tower {
 		bg_Image = "images/space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
 		setPlatformWidthRange(80, 200);
+		
 		//fptr= verticalScroll();
 	}
 
@@ -25,10 +26,33 @@ namespace tower {
 		}
 		
 	}
+
+	void Session::addTemp(Component* c) {
+		tempComps.push_back(c);
+		
+		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ 
+            tempMobileComps.push_back(m);
+		}
+		
+	}
+
+	void Session::addCompsFromTemp(){
+		for(Component* c : tempComps){
+			comps.push_back(c);
+
+		}
+		for (MobileComponent* mc : tempMobileComps){
+			mobileComps.push_back(mc);
+		}
+	}
 		
 
     void Session::set_background(std::string image) {
 		bg_Image = image;
+	}
+
+	void Session::setPlatformImage(std::string image){
+		platform_image = image;
 	}
 	void Session::setup_background() {
 		bg1 = Background::getInstance(0,0,WINDOW_WIDTH, WINDOW_HEIGHT, bg_Image);
@@ -54,14 +78,14 @@ namespace tower {
 		while (SDL_PollEvent(&eve)) {
 			switch (eve.type) {
 			case SDL_QUIT: quit = true; break;
-			// case SDL_MOUSEBUTTONDOWN:
-			// 	for (Component* c : mobileComps)
-			// 		c->mouseDown(eve);
-			// 	break;
-			// case SDL_MOUSEBUTTONUP:
-			// 	for (Component* c : mobileComps)
-			// 		c->mouseUp(eve);
-			// 	break;
+			case SDL_MOUSEBUTTONDOWN:
+				for (Component* c : comps)
+					c->mouseDown(eve);
+				break;
+			case SDL_MOUSEBUTTONUP:
+				for (Component* c : comps)
+					c->mouseUp(eve);
+				break;
 			case SDL_KEYDOWN:
 				for (Component* c : comps)
 					c->keyDown(eve);
@@ -85,7 +109,13 @@ namespace tower {
 						//std::cout << "COLLISION!" << std::endl;
 						a->collisionWithPlatform(p);
 					} 
-			}
+				}
+				//player is allowed 50 points outside window. More than that-> game over
+				if ((isScrolledHorizontally && (a->getRightX() < -50)) || (
+				   (!isScrolledHorizontally &&(a->getUpperY() > WINDOW_HEIGHT + 50)))){
+						quit = true;
+					}
+				} 
 			}
 			
 		}
@@ -101,7 +131,7 @@ namespace tower {
 		//flytta bg
 		//flytta enemies
 
-	}
+	
 
 	void Session::scroll() {
 		// bg1->scrollFunc(scrollSpeed);
@@ -143,36 +173,92 @@ namespace tower {
 			SDL_RenderPresent(sys.get_ren());
 	}
 
-		void Session::initPlatforms(std::string image) {
-			platform_image = image;
-      for(int i = 0; i<nrOfPlatforms; i++) { 
-				int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; //player->getHeight()
-				int y = 20 + (i * platformGapY); //distance between platforms in y-led 
-				//Måste se till s.a. window_height och antal plattformar man vill skapa går ihop med 
-				//hur y beräknas, om man t.ex. sätter 100 som startvärde nu 
-				// kommer bara 9 plattformar att synas i startläget.
-				
-				int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
-        int x = rand() % (WINDOW_WIDTH - width); //100 = bredd på platform
-        //int y = rand() % WINDOW_HEIGHT;
+	void Session::initPlatforms() {
+	
+		for(int i = 0; i<nrOfPlatforms; i++) { 
+			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; //player->getHeight()
+			int y = 20 + (i * platformGapY); //distance between platforms in y-led 
+			//Måste se till s.a. window_height och antal plattformar man vill skapa går ihop med 
+			//hur y beräknas, om man t.ex. sätter 100 som startvärde nu 
+			// kommer bara 9 plattformar att synas i startläget.
+			
+			int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
+			int x = rand() % (WINDOW_WIDTH - width); //random nr within window
+			//int y = rand() % WINDOW_HEIGHT;
 
-        Platform* p = Platform::getInstance(x, y, width, platformHeight, platform_image);
-				add(p);
-      }
+			Platform* p = Platform::getInstance(x, y, width, platformHeight, platform_image);
+			add(p);
 		}
+	}
+//Session ses;
+	class RestartButton: public Button {
+		public:
+		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart"), session(ses) {}
+		void perform(Button* source) override{
+			session->quit = false;
+			session->reset();
+			session->run();
+		}
+		private:
+		Session* session;
+	};
+
+	class QuitButton: public Button {
+		public:
+		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit"), session(ses)  {}
+		void perform(Button* source) override{
+			session->quit = false;
+		}
+		private:
+		Session* session;
+	};
+
+	void Session::gameOver(){
+		
+		RestartButton* restartButton = new RestartButton(this);
+		QuitButton* quitButton = new QuitButton(this);
+		add(restartButton);
+		add(quitButton);
+		
+	}
+
+	void Session::reset(){
+
+		comps.clear();
+		mobileComps.clear();
+		for (int i = platforms.size()-1 ; i >= 0; i--){
+			delete platforms[i];
+		}
+		platforms.clear();
+		platformChunk1.clear();
+		platformChunk2.clear();
+		//initPlatforms();
+		player->reset();
+		comps.push_back(player);
+
+		
+	}
+
+	
 
 //skapar en ny, stor platform och ser till att den skapas och när den är utanför så försvinner den
 //sätter (implementation) att man börjar på den höjden -- 
+
+//main gameloop
 	void Session::run() {
 		setup_background();
+		initPlatforms();
+		
 		/*setup_start_platform();
 		if(!horisontalscroll) {
 			new Platform();
 		}*/
 		const int tickInterval = 1000/FPS;
+		Uint32 nextTick;
+		int delay;
 		while (!quit) {
-			Uint32 nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
-			int delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
+			nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
+			delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
 			processInput();
 			updateGame();
 			generateOutput();
@@ -183,6 +269,17 @@ namespace tower {
 		
 		} //yttre while
 
+
+		gameOver();
+		while (quit){
+			nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
+			delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
+			processInput();
+			generateOutput();
+
+			if (delay > 0)
+				SDL_Delay(delay);
+		}
 	}
 
 	Session::~Session()
@@ -192,7 +289,11 @@ namespace tower {
 		delete bg2;
 	}
 
-	Session ses;
+	
+
+	
+
+
 }
 
 

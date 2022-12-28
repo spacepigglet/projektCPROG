@@ -22,11 +22,17 @@ namespace tower{
     void collisionDetection(Component*);
     void update();
     const static int GRAVITY = 1;
+    bool dead = false;
+    int health;
+    void reset();
 
     protected:
     Actor(int x, int y, int w, int h, std::string image);
     
     private:
+      const int startHealth;
+      const int startX;
+      const int startY;
       bool isOnTopOfPlatform = false;
       int dxVel;
       int dyVel;
