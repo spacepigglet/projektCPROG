@@ -28,10 +28,10 @@ namespace tower{
     void Actor::keyUp(const SDL_Event& event) {
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-                //old_dxVel = dxVel;
+                
                 movingRight = false;
             case SDLK_LEFT: 
-                //old_dxVel = dxVel;
+            
                 movingLeft = false;
 
 
@@ -89,7 +89,7 @@ namespace tower{
             moveY(dyVel); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
             if(isJumping){
-                //dxVel = old_dxVel;
+    
                 if (dxVel < 0 ){ //moving left
                     dxVel += GRAVITY;
                     moveX(dxVel);

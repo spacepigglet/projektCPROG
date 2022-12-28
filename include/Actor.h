@@ -18,7 +18,6 @@ namespace tower{
     void keyDown(const SDL_Event&);
     void keyUp(const SDL_Event&);
     void draw() const;
-    //void update() const;
     void collisionWithPlatform(Platform*);
     void collisionDetection(Component*);
     void update();
@@ -28,13 +27,11 @@ namespace tower{
     Actor(int x, int y, int w, int h, std::string image);
     
     private:
-    //bool canBeControlledByPlayer;
       bool isOnTopOfPlatform = false;
       int dxVel;
-      int old_dxVel;
       int dyVel;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      int speed = 10;
+      int speed = 5;
       SDL_Texture* texture;
       std::string image;
       bool isJumping = false;

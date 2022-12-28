@@ -9,11 +9,7 @@ using namespace tower;
 
 class Collision {
   public:
-  static bool collision(const SDL_Rect& recA, const SDL_Rect& recB);
   static bool collision(Component* a, Component* b);
-
-  //static char collision(Component* a, Component* b);
-
 
 };
 
