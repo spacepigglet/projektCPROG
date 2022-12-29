@@ -28,6 +28,11 @@ namespace tower {
 		}
 		
 	}
+
+	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cpp
+		removedComps.push_back(c);
+		//std::cout << "Enemy is in removedComps" << std::endl; -> FUNKAR
+	}
 		
 
     void Session::set_background(std::string image) {
@@ -82,24 +87,44 @@ namespace tower {
 	void Session::updateGame() {
 		for( Component* c: comps) {
 			c->update();
-			if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
-				for(Enemy* e: enemies) {
-					if(Collision::collision(a, e)) {
-						a->collisionWithEnemy(e);
-					}
-				}
-				
-				for( Platform* p : platforms) {
-					if (Collision::collision(a, p)) {
+			//if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
+				for( Enemy* e : enemies) {
+					if (Collision::collision(player, e)) {
 						//std::cout << "COLLISION!" << std::endl;
-						a->collisionWithPlatform(p);
+						player->collisionWithEnemy(e);
 					} 
 				}
-				
-				
-			}
-			
+				for( Platform* p : platforms) {
+					if (Collision::collision(player, p)) {
+						//std::cout << "COLLISION!" << std::endl;
+						player->collisionWithPlatform(p);
+					} 
+				}
+			//}
 		}
+
+		//FUNKAR EJ!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//Testat lägga den på flera olika ställen i denna loop osv men den körs inte.
+		//Ska ta bort element från Sessionen -> 
+		//först anropas metoden remove() (i t.ex. Enemy när den dör) 
+		//och Enemy-objektet läggs till i vektorn removedComps som sedan ska itereras igenom och ta bort Enemy:
+		for(Component* c: removedComps) {
+			std::cout << "Remove loopen körs" << std::endl;
+			for(std::vector<Component*>::iterator it=comps.begin();
+			it != comps.end();) {
+				if(*it == c) {
+						std::cout << "Om it = component C" << std::endl;
+						it = comps.erase(it); //plockar ut från vektorn
+						std::cout << "Enemy deleted" << std::endl;
+				} else {
+					it++;
+				}
+				removedComps.clear();
+			}
+		}
+
+		//DENNA KÖRS ALDRIG...
+		
 		//scroll();  //utkommenterat pga jobbigt haha
 		
 		//flytta ner allt mha c->moveY()

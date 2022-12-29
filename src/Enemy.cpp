@@ -29,10 +29,9 @@ void Enemy::update() {
 
 void Enemy::getsHurt() {
   //std::vector<Enemy*> 
-  rect.h--;
-  if(rect.h == 0) {
-    isAlive = false;
-  }
+  //rect.h--; rect.w--; //impoderar
+  ses.remove(this); //lägger till Enemy i removedComps i Session!
+  //std::cout << "Lägger till i remove" << std::endl; -> FUNKAR!
 }
 
 void Enemy::addOnPlatform(Platform* p) {

@@ -21,6 +21,7 @@ namespace tower {
 	public:
 		Session();
 		void add(Component* c);
+		void remove(Component* c);
 		//void add(Background* b);
 		void set_background(std::string);
 		void run();
@@ -41,6 +42,7 @@ namespace tower {
 	private:
 	  void setup_background();
 		std::vector<Component*> comps;
+		std::vector<Component*> removedComps;
 		std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
 		std::vector<Enemy*> enemies;
