@@ -33,10 +33,17 @@ int main(int argc, char** argv) {
 
 	
 	ses.set_background("images/space-background-vector-21179778.jpg");
-	ses.setPlatformImage("images/marble.jpg");
 
-	ses.add(a); //temp bcz needs to be added after platforms for rendering
+	//ses.setPlatformImage("images/marble.jpg");
+
+	//ses.add(a); //temp bcz needs to be added after platforms for rendering
 	
+
+	ses.initPlatforms("images/marble.jpg");
+	ses.initEnemies("images/enemy-orange.png");
+	ses.add(a);
+	
+
 	ses.run();
 	
 	return 0;

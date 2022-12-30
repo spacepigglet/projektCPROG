@@ -1,4 +1,5 @@
 #include "Session.h"
+#include "Enemy.h"
 
 #define FPS 60
 namespace tower {
@@ -8,7 +9,6 @@ namespace tower {
 		bg_Image = "images/space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
 		setPlatformWidthRange(80, 200);
-		
 		//fptr= verticalScroll();
 	}
 
@@ -17,10 +17,12 @@ namespace tower {
 		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ //bra lösning? platformar är rörliga och de är många...
             mobileComps.push_back(m);
 		}
+		if(Enemy* e = dynamic_cast<Enemy*>(c)){
+       enemies.push_back(e);
+		}
 		if(Platform* p = dynamic_cast<Platform*>(c)){
             platforms.push_back(p);
 		}
-
 		if(Actor* a = dynamic_cast<Actor*>(c)){
             player = a;
 		}
@@ -32,9 +34,14 @@ namespace tower {
 		
 		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ 
             tempMobileComps.push_back(m);
-		}
-		
+		}}
+
+	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cpp
+		removedComps.push_back(c);
+		//std::cout << "Enemy is in removedComps" << std::endl; -> FUNKAR
 	}
+		
+	
 
 	void Session::addCompsFromTemp(){
 		for(Component* c : tempComps){
@@ -103,22 +110,50 @@ namespace tower {
 	void Session::updateGame() {
 		for( Component* c: comps) {
 			c->update();
-			if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
-				for( Platform* p : platforms) {
-					if (Collision::collision(a, p)) {
+			//if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
+				for( Enemy* e : enemies) {
+					if (Collision::collision(player, e)) {
 						//std::cout << "COLLISION!" << std::endl;
-						a->collisionWithPlatform(p);
+						player->collisionWithEnemy(e);
 					} 
 				}
+				for( Platform* p : platforms) {
+					if (Collision::collision(player, p)) {
+						//std::cout << "COLLISION!" << std::endl;
+						player->collisionWithPlatform(p);
+					} 
+					}
 				//player is allowed 50 points outside window. More than that-> game over
-				if ((isScrolledHorizontally && (a->getRightX() < -50)) || (
-				   (!isScrolledHorizontally &&(a->getUpperY() > WINDOW_HEIGHT + 50)))){
+				if ((isScrolledHorizontally && (player->getRightX() < -50)) || (
+				   (!isScrolledHorizontally &&(player->getUpperY() > WINDOW_HEIGHT + 50)))){
 						quit = true;
 					}
 				} 
+			//}
+		
+
+		//FUNKAR EJ!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//Testat lägga den på flera olika ställen i denna loop osv men den körs inte.
+		//Ska ta bort element från Sessionen -> 
+		//först anropas metoden remove() (i t.ex. Enemy när den dör) 
+		//och Enemy-objektet läggs till i vektorn removedComps som sedan ska itereras igenom och ta bort Enemy:
+		for(Component* c: removedComps) {
+			std::cout << "Remove loopen körs" << std::endl;
+			for(std::vector<Component*>::iterator it=comps.begin();
+			it != comps.end();) {
+				if(*it == c) {
+						std::cout << "Om it = component C" << std::endl;
+						it = comps.erase(it); //plockar ut från vektorn
+						std::cout << "Enemy deleted" << std::endl;
+				} else {
+					it++;
+				}
+				removedComps.clear();
 			}
-			
 		}
+
+		//DENNA KÖRS ALDRIG...
+		
 		//scroll();  //utkommenterat pga jobbigt haha
 		
 		//flytta ner allt mha c->moveY()
@@ -130,7 +165,7 @@ namespace tower {
 		//flytta plattformar
 		//flytta bg
 		//flytta enemies
-
+	}
 	
 
 	void Session::scroll() {
@@ -173,8 +208,8 @@ namespace tower {
 			SDL_RenderPresent(sys.get_ren());
 	}
 
-	void Session::initPlatforms() {
-	
+	void Session::initPlatforms(std::string image) {
+	    platform_image = image;
 		for(int i = 0; i<nrOfPlatforms; i++) { 
 			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; //player->getHeight()
 			int y = 20 + (i * platformGapY); //distance between platforms in y-led 
@@ -239,15 +274,13 @@ namespace tower {
 		
 	}
 
-	
-
 //skapar en ny, stor platform och ser till att den skapas och när den är utanför så försvinner den
 //sätter (implementation) att man börjar på den höjden -- 
 
 //main gameloop
 	void Session::run() {
 		setup_background();
-		initPlatforms();
+		//initPlatforms();
 		
 		/*setup_start_platform();
 		if(!horisontalscroll) {
@@ -289,11 +322,11 @@ namespace tower {
 		delete bg2;
 	}
 
-	
-
-	
-
-
 }
+
+	
+
+
+
 
 
