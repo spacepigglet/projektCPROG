@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "Collision.h"
-#include "Session.h"
 namespace tower {
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
@@ -30,7 +29,8 @@ void Enemy::update() {
 void Enemy::getsHurt() {
   //std::vector<Enemy*> 
   //rect.h--; rect.w--; //impoderar
-  ses.remove(this); //lägger till Enemy i removedComps i Session!
+  //ses.remove(this); //lägger till Enemy i removedComps i Session! //Enemy borde inte ha tillgång till Session... 
+  //Kan lösa ex genom en bool isDead. I Session kan listan av enemies gås igenom och om isDead så remove.
   //std::cout << "Lägger till i remove" << std::endl; -> FUNKAR!
 }
 

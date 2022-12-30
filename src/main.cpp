@@ -30,6 +30,7 @@ int main(int argc, char** argv) {
 	Session ses;
 	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png");
 	//ses.set_scroll_horizontal(true);
+	
 
 	
 	ses.set_background("images/space-background-vector-21179778.jpg");

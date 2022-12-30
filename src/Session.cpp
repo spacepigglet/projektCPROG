@@ -225,6 +225,14 @@ namespace tower {
 			add(p);
 		}
 	}
+
+	void Session::initEnemies(std::string image) {
+			enemy_image = image;
+			for(Platform* p : platforms) {
+				Enemy* e = Enemy::getInstance(p->getLeftX(), p->getUpperY() - e->getHeight(), 50, 50, enemy_image, p);
+				add(e);
+			}
+	}
 //Session ses;
 	class RestartButton: public Button {
 		public:
@@ -267,7 +275,7 @@ namespace tower {
 		platforms.clear();
 		platformChunk1.clear();
 		platformChunk2.clear();
-		//initPlatforms();
+		initPlatforms(platform_image);
 		player->reset();
 		comps.push_back(player);
 
