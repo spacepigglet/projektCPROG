@@ -115,6 +115,9 @@ namespace tower {
 					if (Collision::collision(player, e)) {
 						//std::cout << "COLLISION!" << std::endl;
 						player->collisionWithEnemy(e);
+						if(!(e->isEnemyAlive())) {
+							remove(e);
+						}
 					} 
 				}
 				for( Platform* p : platforms) {
@@ -142,7 +145,6 @@ namespace tower {
 			for(std::vector<Component*>::iterator it=comps.begin();
 			it != comps.end();) {
 				if(*it == c) {
-						std::cout << "Om it = component C" << std::endl;
 						it = comps.erase(it); //plockar ut från vektorn
 						std::cout << "Enemy deleted" << std::endl;
 				} else {
@@ -220,17 +222,14 @@ namespace tower {
 			int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
 			int x = rand() % (WINDOW_WIDTH - width); //random nr within window
 			//int y = rand() % WINDOW_HEIGHT;
-
-			Platform* p = Platform::getInstance(x, y, width, platformHeight, platform_image);
-			add(p);
+			add(Platform::getInstance(x, y, width, platformHeight, platform_image));
 		}
 	}
 
 	void Session::initEnemies(std::string image) {
 			enemy_image = image;
 			for(Platform* p : platforms) {
-				Enemy* e = Enemy::getInstance(p->getLeftX(), p->getUpperY() - e->getHeight(), 50, 50, enemy_image, p);
-				add(e);
+				add(Enemy::getInstance(p->getLeftX(), p->getUpperY() - 50, 50, 50, enemy_image, p));
 			}
 	}
 //Session ses;
@@ -269,13 +268,17 @@ namespace tower {
 
 		comps.clear();
 		mobileComps.clear();
-		for (int i = platforms.size()-1 ; i >= 0; i--){
-			delete platforms[i];
+		for (Platform* p : platforms) {
+			delete p;
 		}
 		platforms.clear();
+		for(Enemy* e: enemies) {
+			delete e;
+		}
 		platformChunk1.clear();
 		platformChunk2.clear();
 		initPlatforms(platform_image);
+		initEnemies(enemy_image);
 		player->reset();
 		comps.push_back(player);
 
@@ -329,6 +332,8 @@ namespace tower {
 		delete bg1;
 		delete bg2;
 	}
+
+	Session ses;
 
 }
 
