@@ -25,6 +25,7 @@ namespace tower{
     int upperY;
     int rightX;
     int lowerY;
+    int newX, newY;
     bool collider = true;
     
     };

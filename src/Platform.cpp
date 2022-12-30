@@ -24,7 +24,7 @@ namespace tower{
 
     void Platform::update() {
       if(getUpperY() > WINDOW_HEIGHT + getWidth()) { //bredden på plattform, gör till variabel
-        int newX = rand() % (WINDOW_WIDTH - getRightX());
+        newX = rand() % (WINDOW_WIDTH - getRightX());
         //int newX = rand() % (WINDOW_WIDTH - this->getRightX());
 
         setPosition(newX, -getHeight()); //höjd på plattform, gör till variabel
@@ -33,7 +33,7 @@ namespace tower{
       //Om man inte scrollar vertikalt kommer aldrig koden ovan att köras
       //Plattformarna hamnar för nära varandra i y led
       else if(getRightX() < 0) {
-        int newY = rand() % (WINDOW_WIDTH - getRightX());
+        newY = rand() % (WINDOW_WIDTH - getRightX());
         setPosition(WINDOW_WIDTH, newY);
       }
     }

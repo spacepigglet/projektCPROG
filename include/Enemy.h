@@ -12,6 +12,7 @@ class Enemy : public MobileComponent {
   void draw() const;
   void addOnPlatform(Platform*);
   void getsHurt();
+  bool isEnemyAlive() {return isAlive;}
 
   protected:
   Enemy(int x, int y, int w, int h, std::string image, Platform*);

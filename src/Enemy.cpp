@@ -29,7 +29,7 @@ void Enemy::update() {
 void Enemy::getsHurt() {
   //std::vector<Enemy*> 
   //rect.h--; rect.w--; //impoderar
-  //ses.remove(this); //lägger till Enemy i removedComps i Session! //Enemy borde inte ha tillgång till Session... 
+  isAlive = false; //lägger till Enemy i removedComps i Session! //Enemy borde inte ha tillgång till Session... 
   //Kan lösa ex genom en bool isDead. I Session kan listan av enemies gås igenom och om isDead så remove.
   //std::cout << "Lägger till i remove" << std::endl; -> FUNKAR!
 }
