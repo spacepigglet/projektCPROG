@@ -41,6 +41,7 @@ namespace tower {
 		void set_scroll_horizontal(bool isHorizontal);
 		void reset();
 		void setPlatformImage(std::string);
+		void removeEnemy(Enemy*);
         
 		// SDL_Texture* get_bg_tex1() const {return bg1->get_bg_tex();}
 		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}

@@ -1,4 +1,5 @@
 #include "Platform.h"
+#include "Enemy.h"
 
 namespace tower{
     
@@ -23,18 +24,22 @@ namespace tower{
     }
 
     void Platform::update() {
-      if(getUpperY() > WINDOW_HEIGHT + getWidth()) { //bredden på plattform, gör till variabel
+      if(getUpperY()+50 > WINDOW_HEIGHT + getWidth()) { //bredden på plattform, gör till variabel
         newX = rand() % (WINDOW_WIDTH - getRightX());
+        newY = -getHeight();
         //int newX = rand() % (WINDOW_WIDTH - this->getRightX());
 
-        setPosition(newX, -getHeight()); //höjd på plattform, gör till variabel
+        setPosition(newX, newY); //höjd på plattform, gör till variabel
+        newPos = true;
       }
 
       //Om man inte scrollar vertikalt kommer aldrig koden ovan att köras
       //Plattformarna hamnar för nära varandra i y led
       else if(getRightX() < 0) {
+        newX = WINDOW_WIDTH;
         newY = rand() % (WINDOW_WIDTH - getRightX());
-        setPosition(WINDOW_WIDTH, newY);
+
+        setPosition(newX, newY);
       }
     }
 

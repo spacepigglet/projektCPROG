@@ -9,6 +9,7 @@
 #include <string>
 #include <iostream>
 #include <SDL2/SDL_image.h>
+#include <vector>
 
 namespace tower{
   class Actor : public MobileComponent {
@@ -22,6 +23,7 @@ namespace tower{
     void collisionWithPlatform(Platform*);
     void collisionWithEnemy(Enemy*);
     void collisionDetection(Component*);
+    void handleCollision(std::vector<MobileComponent*>);
     void update();
     const static int GRAVITY = 1;
     bool dead = false;

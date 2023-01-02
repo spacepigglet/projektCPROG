@@ -110,8 +110,10 @@ namespace tower {
 	void Session::updateGame() {
 		for( Component* c: comps) {
 			c->update();
+			//player->collisionDetection(c); //Kollisionen blir sketchy med denna..
+			
 			//if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
-				for( Enemy* e : enemies) {
+				/*for( Enemy* e : enemies) {
 					if (Collision::collision(player, e)) {
 						//std::cout << "COLLISION!" << std::endl;
 						player->collisionWithEnemy(e);
@@ -125,38 +127,45 @@ namespace tower {
 						//std::cout << "COLLISION!" << std::endl;
 						player->collisionWithPlatform(p);
 					} 
-					}
+					}*/
 				//player is allowed 50 points outside window. More than that-> game over
 				if ((isScrolledHorizontally && (player->getRightX() < -50)) || (
 				   (!isScrolledHorizontally &&(player->getUpperY() > WINDOW_HEIGHT + 50)))){
 						quit = true;
 					}
-				} 
-			//}
-		
+				}
+				player->handleCollision(mobileComps);
+				for(Enemy* e : enemies) {
+					if(!(e->isEnemyAlive())) {
+						removeEnemy(e);
+					}
+				}
+				/*for(Platform* p: platforms) {
+					if(p->hasNewPos()) {
+						add(Enemy::getInstance(p->getLeftX(), p->getUpperY() - 50, 50, 50, enemy_image, p));
+					}
+				}*/
 
-		//FUNKAR EJ!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//Testat lägga den på flera olika ställen i denna loop osv men den körs inte.
-		//Ska ta bort element från Sessionen -> 
-		//först anropas metoden remove() (i t.ex. Enemy när den dör) 
-		//och Enemy-objektet läggs till i vektorn removedComps som sedan ska itereras igenom och ta bort Enemy:
-		for(Component* c: removedComps) {
-			std::cout << "Remove loopen körs" << std::endl;
+			
+				
+			//}
+		///FUNKAR
+		/*for(Component* c: removedComps) {
+			//std::cout << "Remove loopen körs" << std::endl;
 			for(std::vector<Component*>::iterator it=comps.begin();
 			it != comps.end();) {
 				if(*it == c) {
+						delete *it;
 						it = comps.erase(it); //plockar ut från vektorn
-						std::cout << "Enemy deleted" << std::endl;
+						std::cout << "Enemy deleted from comps vector" << std::endl;
 				} else {
 					it++;
 				}
 				removedComps.clear();
 			}
-		}
-
-		//DENNA KÖRS ALDRIG...
+		}*/
 		
-		//scroll();  //utkommenterat pga jobbigt haha
+		scroll();  //utkommenterat pga jobbigt haha
 		
 		//flytta ner allt mha c->moveY()
 
@@ -168,6 +177,43 @@ namespace tower {
 		//flytta bg
 		//flytta enemies
 	}
+
+
+	void Session::removeEnemy(Enemy* e) {
+   for(std::vector<Component*>::iterator it=comps.begin();
+        it != comps.end();) {
+        if(*it == e) {
+            delete *it;
+            it = comps.erase(it);
+						std::cout << "enemy deleted from comps" << std::endl;
+						std::cout << comps.size() << std::endl;
+        } else {
+            it++;
+        }
+    }
+   
+   for(std::vector<MobileComponent*>::iterator it=mobileComps.begin();
+        it != mobileComps.end();) {
+        if(*it == e) {
+            it = mobileComps.erase(it);
+						std::cout << "enemy deleted from mobilecomps" << std::endl;
+						std::cout << mobileComps.size() << std::endl;
+        } else {
+            it++;
+        }
+    }
+
+  for(std::vector<Enemy*>::iterator it=enemies.begin();
+        it != enemies.end();) {
+        if(*it == e) {
+            it = enemies.erase(it);
+						std::cout << "enemy deleted from enemies" << std::endl;
+						std::cout << enemies.size() << std::endl;
+        } else {
+            it++;
+        }
+    }
+}
 	
 
 	void Session::scroll() {
@@ -215,9 +261,6 @@ namespace tower {
 		for(int i = 0; i<nrOfPlatforms; i++) { 
 			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; //player->getHeight()
 			int y = 20 + (i * platformGapY); //distance between platforms in y-led 
-			//Måste se till s.a. window_height och antal plattformar man vill skapa går ihop med 
-			//hur y beräknas, om man t.ex. sätter 100 som startvärde nu 
-			// kommer bara 9 plattformar att synas i startläget.
 			
 			int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
 			int x = rand() % (WINDOW_WIDTH - width); //random nr within window

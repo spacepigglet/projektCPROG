@@ -16,13 +16,14 @@ void Enemy::draw() const{
 }
 
 void Enemy::update() {
-  /*if(isAlive == false) {
-    ses.enemies.erase(this);
-  }*/
   rect.x += enemySpeed * enemyDirection;
 
   if (rect.x < platform->getLeftX() || (rect.x + rect.w) > platform->getRightX()) {
     enemyDirection *= -1;
+  }
+
+  if(getRightX() < 0 || getUpperY() > WINDOW_HEIGHT - getHeight()) { //Om enemy = utanför skärm
+    isAlive = false;
   }
 }
 
@@ -38,8 +39,8 @@ void Enemy::addOnPlatform(Platform* p) {
   setPosition(p->getLeftX(), p->getUpperY());
 }
 
-Enemy:: ~Enemy(){
-    SDL_DestroyTexture(texture);
 }
 
+Enemy:: ~Enemy(){
+    SDL_DestroyTexture(texture);
 }

@@ -1,6 +1,8 @@
 //#include "Sprite.h"
 #include "Actor.h"
 #include "Enemy.h"
+#include "Collision.h"
+#include <vector>
 
 using namespace std;
 
@@ -44,6 +46,32 @@ namespace tower{
         return new Actor(x, y, w, h, image);
     }
 
+    void Actor::handleCollision(std::vector<MobileComponent*> mobileComps) {
+        for(MobileComponent* c: mobileComps) {
+            if(Collision::collision(this, c)) {
+                if(Enemy* e = dynamic_cast<Enemy*>(c)){
+                    collisionWithEnemy(e);
+		        }
+                if(Platform* p = dynamic_cast<Platform*>(c)) {
+                    collisionWithPlatform(p);
+                }
+            }
+        }
+    }
+
+    //Sketchy.... does not work.. Player gets stuck in platform and cant move:
+    /*void Actor::collisionDetection(Component* c) {
+        if(Collision::collision(this, c)) {
+            if(Enemy* e = dynamic_cast<Enemy*>(c)){
+                collisionWithEnemy(e);
+            }
+            if(Platform* p = dynamic_cast<Platform*>(c)) {
+                collisionWithPlatform(p);
+            }
+
+        }
+    }*/
+
     void Actor::collisionWithPlatform(Platform* p) {
         //cout << "Det funkar!" << endl;
         if(getLowerY() > p->getUpperY() && 
@@ -62,9 +90,11 @@ namespace tower{
     }
 
     void Actor::collisionWithEnemy(Enemy* e) {
-        if(dyVel > 0) {
+        if(dyVel > 0) { // Kommer ovanifrån
             e->getsHurt(); //delete enemy from enemie-list when hurt (temporär lista!) -> inte implementerat ännu!
             //setPosition(getLeftX(), e->getUpperY() - getHeight());
+        } else { //Om kollision sker från sidan aka Enemy skadar Player:
+            health--;
         }
     }
 
