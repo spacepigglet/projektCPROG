@@ -1,5 +1,6 @@
 #include "Session.h"
 #include "Enemy.h"
+#include <memory> //for unique ptr
 
 #define FPS 60
 namespace tower {
@@ -183,39 +184,42 @@ namespace tower {
 	}
 
 	void Session::removeEnemy(Enemy* e) {
-   for(std::vector<Component*>::iterator it=comps.begin();
-        it != comps.end();) {
-        if(*it == e) {
-            delete *it;
-            it = comps.erase(it);
-						std::cout << "enemy deleted from comps" << std::endl;
-						std::cout << comps.size() << std::endl;
-        } else {
-            it++;
-        }
-    }
-   
-   for(std::vector<MobileComponent*>::iterator it=mobileComps.begin();
-        it != mobileComps.end();) {
-        if(*it == e) {
-            it = mobileComps.erase(it);
-						std::cout << "enemy deleted from mobilecomps" << std::endl;
-						std::cout << mobileComps.size() << std::endl;
-        } else {
-            it++;
-        }
-    }
+		
+   std::unique_ptr<Enemy> enemyPtr(e); //ska ta hand om pekarna?
 
-  for(std::vector<Enemy*>::iterator it=enemies.begin();
-        it != enemies.end();) {
-        if(*it == e) {
-            it = enemies.erase(it);
-						std::cout << "enemy deleted from enemies" << std::endl;
-						std::cout << enemies.size() << std::endl;
-        } else {
-            it++;
-        }
-    }
+		for(std::vector<Component*>::iterator it=comps.begin();
+		it != comps.end();) {
+		if(*it == e) {
+		it = comps.erase(it, it+1);
+		std::cout << "enemy deleted from comps" << std::endl;
+		std::cout << comps.size() << std::endl;
+		} else {
+		++it;
+		}
+		}
+
+		for(std::vector<MobileComponent*>::iterator it2=mobileComps.begin();
+		it2 != mobileComps.end();) {
+		if(*it2 == e) {
+		it2 = mobileComps.erase(it2, it2+1);
+		std::cout << "enemy deleted from mobilecomps" << std::endl;
+		std::cout << mobileComps.size() << std::endl;
+		} else {
+		++it2;
+		}
+		}
+
+		for(std::vector<Enemy*>::iterator it3=enemies.begin();
+		it3 != enemies.end();) {
+		if(*it3 == e) {
+		it3 = enemies.erase(it3, it3+1);
+		std::cout << "enemy deleted from enemies" << std::endl;
+		std::cout << enemies.size() << std::endl;
+		} else {
+		++it3;
+		}
+		}
+     
 }
 	
 
