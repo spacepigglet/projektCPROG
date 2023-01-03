@@ -30,6 +30,7 @@ namespace tower{
         //int newX = rand() % (WINDOW_WIDTH - this->getRightX());
 
         setPosition(newX, newY); //höjd på plattform, gör till variabel
+        newPos = true;
       }
 
       //Om man inte scrollar vertikalt kommer aldrig koden ovan att köras
@@ -39,6 +40,7 @@ namespace tower{
         newY = rand() % (WINDOW_WIDTH - getRightX());
 
         setPosition(newX, newY);
+        newPos=true;
       }
     }
 
