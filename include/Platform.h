@@ -14,7 +14,6 @@ namespace tower{
     void update();
     void collisionDetection(const Component*);
     ~Platform();
-    bool hasNewPos() {return newPos;}
 
     protected:
     Platform(int x, int y, int w, int h, std::string image);
@@ -28,7 +27,6 @@ namespace tower{
     int lowerY;
     int newX, newY;
     bool collider = true;
-    bool newPos = false;
     
     };
 }

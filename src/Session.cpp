@@ -140,11 +140,7 @@ namespace tower {
 						removeEnemy(e);
 					}
 				}
-				/*for(Platform* p: platforms) {
-					if(p->hasNewPos()) {
-						add(Enemy::getInstance(p->getLeftX(), p->getUpperY() - 50, 50, 50, enemy_image, p));
-					}
-				}*/
+				addEnemy();
 
 			
 				
@@ -178,6 +174,13 @@ namespace tower {
 		//flytta enemies
 	}
 
+	void Session::addEnemy() {
+		for(Platform* p: platforms) {
+			if(p->getUpperY() == 0) {
+				add(Enemy::getInstance(p->getLeftX(), p->getUpperY() - 50, 50, 50, enemy_image, p));
+			}
+		}
+	}
 
 	void Session::removeEnemy(Enemy* e) {
    for(std::vector<Component*>::iterator it=comps.begin();
