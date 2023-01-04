@@ -24,7 +24,7 @@ namespace tower{
     }
 
     void Platform::update() {
-      if(getUpperY()+50 > WINDOW_HEIGHT + getWidth()) { //bredden på plattform, gör till variabel
+      if(getUpperY() > WINDOW_HEIGHT + getHeight()) { //bredden på plattform, gör till variabel
         newX = rand() % (WINDOW_WIDTH - getRightX());
         newY = -getHeight();
         //int newX = rand() % (WINDOW_WIDTH - this->getRightX());
