@@ -23,12 +23,14 @@ namespace tower{
     void collisionWithPlatform(Platform*);
     void collisionWithEnemy(Enemy*);
     void collisionDetection(Component*);
-    void handleCollision(std::vector<MobileComponent*>);
+    void handleCollision(MobileComponent*);
     void update();
     const static int GRAVITY = 1;
     bool dead = false;
     int health;
     void reset();
+    bool isMovingDown() {return movingDown;}
+    void hurting();
 
     protected:
     Actor(int x, int y, int w, int h, std::string image);
@@ -38,15 +40,16 @@ namespace tower{
       const int startX;
       const int startY;
       bool isOnTopOfPlatform = false;
-      int dxVel;
-      int dyVel;
+      int dx;
+      int dy;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      int speed = 5;
+      int xSpeed = 5;
+      //int ySpeed = 5;
       SDL_Texture* texture;
       std::string image;
       bool isJumping = false;
       bool faceRight;
-
+      int invincibility = 0;
 
   };
 }

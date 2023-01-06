@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include <vector>
 
+#define FPS 60
 using namespace std;
 
 namespace tower{
@@ -46,31 +47,14 @@ namespace tower{
         return new Actor(x, y, w, h, image);
     }
 
-    void Actor::handleCollision(std::vector<MobileComponent*> mobileComps) {
-        for(MobileComponent* c: mobileComps) {
-            if(Collision::collision(this, c)) {
-                if(Enemy* e = dynamic_cast<Enemy*>(c)){
-                    collisionWithEnemy(e);
-		        }
-                if(Platform* p = dynamic_cast<Platform*>(c)) {
-                    collisionWithPlatform(p);
-                }
-            }
+    void Actor::handleCollision(MobileComponent* mc) {
+        if(Enemy* e = dynamic_cast<Enemy*>(mc)){
+            collisionWithEnemy(e);
+        }
+        if(Platform* p = dynamic_cast<Platform*>(mc)) {
+            collisionWithPlatform(p);
         }
     }
-
-    //Sketchy.... does not work.. Player gets stuck in platform and cant move:
-    /*void Actor::collisionDetection(Component* c) {
-        if(Collision::collision(this, c)) {
-            if(Enemy* e = dynamic_cast<Enemy*>(c)){
-                collisionWithEnemy(e);
-            }
-            if(Platform* p = dynamic_cast<Platform*>(c)) {
-                collisionWithPlatform(p);
-            }
-
-        }
-    }*/
 
     void Actor::collisionWithPlatform(Platform* p) {
         //cout << "Det funkar!" << endl;
@@ -79,10 +63,10 @@ namespace tower{
         getLeftX() < p->getRightX() &&  
         getRightX() > p->getLeftX()) {
 
-            if(dyVel > 0) { //moving down on top of platform
+            if(dy > 0) { //moving down on top of platform
                 isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
                 movingDown = false;
-                dyVel = 0;
+                dy = 0;
                 isJumping = false;
                 setPosition(getLeftX(), p->getUpperY() - getHeight());
             }
@@ -90,11 +74,25 @@ namespace tower{
     }
 
     void Actor::collisionWithEnemy(Enemy* e) {
-        if(dyVel > 0) { // Kommer ovanifrån
-            e->getsHurt(); //delete enemy from enemie-list when hurt (temporär lista!) -> inte implementerat ännu!
+         if(movingUp) {
+            hurting();
+        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) { // Kommer ovanifrån
+            e->die(); //delete enemy from enemie-list when hurt (temporär lista!) -> inte implementerat ännu!
+            dy = -7;
             //setPosition(getLeftX(), e->getUpperY() - getHeight());
-        } else { //Om kollision sker från sidan aka Enemy skadar Player:
+        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){ //Om kollision sker med Enemy vänstersida
+            hurting();
+            setPosition(e->getLeftX() - getWidth(), getUpperY());
+        } else if ((getLeftX() < e->getRightX() && (getLeftX() > e->getLeftX()))) {
+            hurting();
+            setPosition(e->getRightX(), getUpperY());
+        } 
+    }
+
+    void Actor::hurting() {
+        if(invincibility == 0) {
             health--;
+            invincibility = 60;
         }
     }
 
@@ -105,7 +103,7 @@ namespace tower{
 
     void Actor::jump(){
         if (!isJumping && isOnTopOfPlatform){ //gör att vi inte kan hoppa i luften
-            dyVel = -20;
+            dy = -20;
             isJumping = true;
         }
     }
@@ -113,49 +111,51 @@ namespace tower{
     void Actor:: update(){
 
         if(movingRight){
-            dxVel = speed;                               //dyVel = 0;
-            moveX(speed);
+            dx = xSpeed;                               //dy = 0;
+            moveX(xSpeed);
             //movingRight = false;
         }
         if (movingLeft){
-            dxVel = -speed;                                  //dyVel = 0;
-            moveX(-speed);
+            dx = -xSpeed;                                  //dy = 0;
+            moveX(-xSpeed);
         }else if (!movingRight && !movingLeft){
-            dxVel = 0;
+            dx = 0;
         }
 
             
-            dyVel += GRAVITY; //gravity
-            if(dyVel > 10) //limits how fast actor can fall - terminal velocity
-                dyVel = 10;
-            moveY(dyVel); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
+            dy += GRAVITY; //gravity
+            if(dy > 10) //limits how fast actor can fall - terminal velocity
+                dy = 10;
+            moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
             if(isJumping){
-    
-                if (dxVel < 0 ){ //moving left
-                    dxVel += GRAVITY;
-                    moveX(dxVel);
+                if (dx < 0 ){ //moving left
+                    dx += GRAVITY;
+                    moveX(dx);
                 } 
-                else if (dxVel > 0 ){ //moving right
+                else if (dx > 0 ){ //moving right
 
-                    dxVel -= GRAVITY;
-                    moveX(dxVel);
+                    dx -= GRAVITY;
+                    moveX(dx);
                 }
             
             } 
-                 // resetting dxVel in between input, if not jumping. Other solution - keyup?? Probably better...?
+                 // resetting dx in between input, if not jumping. Other solution - keyup?? Probably better...?
         //}
         isOnTopOfPlatform = false; //reset
         movingDown = true;
         if (health <= 0){
             dead = true;
         }
+        if(invincibility > 0) {
+            invincibility--;
+        }
     }
 
     void Actor:: reset(){
         setPosition(startX, startY);
-        dxVel = 0;
-        dyVel = 0;
+        dx = 0;
+        dy = 0;
         dead = false;
         health = startHealth;
     }

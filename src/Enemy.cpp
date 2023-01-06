@@ -1,5 +1,4 @@
 #include "Enemy.h"
-#include "Collision.h"
 namespace tower {
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
@@ -16,6 +15,10 @@ void Enemy::draw() const{
 }
 
 void Enemy::update() {
+  if(isDying) {
+    dying();
+    return;
+  } 
   rect.x += enemySpeed * enemyDirection;
 
   if (rect.x < platform->getLeftX() || (rect.x + rect.w) > platform->getRightX()) {
@@ -23,24 +26,47 @@ void Enemy::update() {
   }
 
   if(getRightX() < 0 || getUpperY() > WINDOW_HEIGHT - getHeight()) { //Om enemy = utanför skärm
-    isAlive = false;
+    alive = false;
   }
 }
 
-void Enemy::getsHurt() {
+void Enemy::die() {
   //std::vector<Enemy*> 
   //rect.h--; rect.w--; //impoderar
-  isAlive = false; //lägger till Enemy i removedComps i Session! //Enemy borde inte ha tillgång till Session... 
-  //Kan lösa ex genom en bool isDead. I Session kan listan av enemies gås igenom och om isDead så remove.
-  //std::cout << "Lägger till i remove" << std::endl; -> FUNKAR!
+  isDying = true;
 }
+
+void Enemy::dying() {
+  rect.h--; rect.w--;
+  if(rect.h == 0 || rect.w == 0) {
+    alive = false;
+  }
+}
+
+/*void Enemy::handleCollision(MobileComponent* mc) {
+  if(Actor* a = dynamic_cast<Actor*>(mc)) {
+    collisionWithPlayer(a);
+  }
+}
+
+void Enemy::collisionWithPlayer(Actor* a) {
+  if(a->isMovingDown()) {
+    rect.h--; rect.w--;
+  }
+  if(rect.h == 0 || rect.w == 0) {
+    alive = false;
+  }
+
+}*/
+
 
 void Enemy::addOnPlatform(Platform* p) {
   setPosition(p->getLeftX(), p->getUpperY());
 }
 
-}
 
 Enemy:: ~Enemy(){
     SDL_DestroyTexture(texture);
+}
+
 }

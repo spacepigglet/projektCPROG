@@ -21,7 +21,7 @@ using namespace tower;
     return false;
 }*/
 
-bool::Collision::collision(Component* a, Component* b) {
+bool::Collision::collision(MobileComponent* a, MobileComponent* b) {
   if(a->getLeftX() < b->getRightX() && 
       a->getRightX() > b->getLeftX() && 
       a->getUpperY() < b-> getLowerY() && 

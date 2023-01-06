@@ -1,8 +1,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "Collision.h"
 #include "MobileComponent.h"
 #include "Platform.h"
+
 namespace tower {
 class Enemy : public MobileComponent {
   public:
@@ -11,19 +13,24 @@ class Enemy : public MobileComponent {
   void update();
   void draw() const;
   void addOnPlatform(Platform*);
-  void getsHurt();
-  bool isEnemyAlive() {return isAlive;}
+  void die();
+
+  bool isAlive() {return alive;}
+ // void handleCollision(MobileComponent*);
+  
+  //void collisionWithPlayer(Actor*);
 
   protected:
   Enemy(int x, int y, int w, int h, std::string image, Platform*);
-  private:
 
   private:
+  void dying();
   Platform* platform;
   SDL_Texture* texture;
   int enemySpeed = 1;
   int enemyDirection = 1;
-  bool isAlive = true;
+  bool alive = true;
+  bool isDying = false;
 };
 
 }

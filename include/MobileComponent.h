@@ -15,6 +15,7 @@ class MobileComponent : public Component {
   void setPosition(int, int);
   void moveY(int toMove){rect.y += toMove;}
 	void moveX(int toMove){rect.x += toMove;}
+  virtual void handleCollision(MobileComponent*) {}
   ~MobileComponent();
 
   protected:

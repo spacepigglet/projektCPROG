@@ -111,56 +111,32 @@ namespace tower {
 	void Session::updateGame() {
 		for( Component* c: comps) {
 			c->update();
-			//player->collisionDetection(c); //Kollisionen blir sketchy med denna..
 			
-			//if(Actor *a = dynamic_cast <Actor*>(c)) { //fundera på om det finns ett bättre sätt!
-				/*for( Enemy* e : enemies) {
-					if (Collision::collision(player, e)) {
-						//std::cout << "COLLISION!" << std::endl;
-						player->collisionWithEnemy(e);
-						if(!(e->isEnemyAlive())) {
-							remove(e);
-						}
-					} 
-				}
-				for( Platform* p : platforms) {
-					if (Collision::collision(player, p)) {
-						//std::cout << "COLLISION!" << std::endl;
-						player->collisionWithPlatform(p);
-					} 
-					}*/
 				//player is allowed 50 points outside window. More than that-> game over
 				if ((isScrolledHorizontally && (player->getRightX() < -50)) || (
 				   (!isScrolledHorizontally &&(player->getUpperY() > WINDOW_HEIGHT + 50)))){
 						quit = true;
 					}
-				}
-				player->handleCollision(mobileComps);
+		}
+
+			for(unsigned int i = 0; i<mobileComps.size()-1; i++) {
+				 MobileComponent* current = mobileComps[i];
+				 for(unsigned int j = i+1; j<mobileComps.size(); j++) {
+					MobileComponent* next = mobileComps[j];
+					if(Collision::collision(current, next)) {
+						//std::cout << "Collision with:" << i << " and " << j << std::endl;
+						current->handleCollision(next); //generalisera i mobilecomponent
+						next->handleCollision(current);
+						//std::cout << "Collision handled" << std::endl;
+					}
+				 }
+			}
 				for(Enemy* e : enemies) {
-					if(!(e->isEnemyAlive())) {
+					if(!(e->isAlive())) {
 						removeEnemy(e);
 					}
 				}
 				addEnemy();
-
-			
-				
-			//}
-		///FUNKAR
-		/*for(Component* c: removedComps) {
-			//std::cout << "Remove loopen körs" << std::endl;
-			for(std::vector<Component*>::iterator it=comps.begin();
-			it != comps.end();) {
-				if(*it == c) {
-						delete *it;
-						it = comps.erase(it); //plockar ut från vektorn
-						std::cout << "Enemy deleted from comps vector" << std::endl;
-				} else {
-					it++;
-				}
-				removedComps.clear();
-			}
-		}*/
 		
 		scroll();  //utkommenterat pga jobbigt haha
 		
@@ -176,10 +152,10 @@ namespace tower {
 	}
 
 	void Session::addEnemy() {
-		for(Platform* p: platforms) {
-			if(p->getUpperY() == 0) {
-				add(Enemy::getInstance(p->getLeftX(), p->getUpperY() - 50, 50, 50, enemy_image, p));
-			}
+		for(int i = 0; i<(platforms.size()-2); i+=2) {
+			if(platforms[i]->getUpperY() == 0) {
+				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
+			} 
 		}
 	}
 
