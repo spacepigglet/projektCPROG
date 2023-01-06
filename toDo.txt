@@ -12,7 +12,7 @@ Life
   - implemetation kunna bestämma antal liv
   - rendering(bildlig representation av liven), börja med siffra -> hjärtan
 
-
+Ändra speed till floats
 
 
 Coins*
