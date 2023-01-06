@@ -23,12 +23,13 @@ namespace tower {
 	{
 	public:
 		Session();
+		Session(Session&);
 		void add(Component* c);
 		void addTemp(Component* c);
 		void remove(Component* c);
 		//void add(Background* b);
 		void set_background(std::string);
-		void run();
+		bool run();
 		~Session();
 		const std::vector<MobileComponent*> getComps() const {return mobileComps;}
 		void setPlatformWidthRange(int, int); 
@@ -46,6 +47,8 @@ namespace tower {
 		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}
 
 		bool quit;
+		bool restart = false;
+		bool askingForRestart = false;
 
 	private:
 		void gameOver();
@@ -70,6 +73,7 @@ namespace tower {
 		std::string platform_image;
 		std::string enemy_image;
 		bool isScrolledHorizontally;
+		
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
 		int nrOfPlatforms = 10;

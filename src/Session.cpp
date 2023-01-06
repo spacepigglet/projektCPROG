@@ -12,6 +12,22 @@ namespace tower {
 		//fptr= verticalScroll();
 	}
 
+	
+  
+    // Copy constructor
+    Session::Session(Session& s)
+    {
+        bg_Image = s.bg_Image;
+		platform_image = s.platform_image;
+		enemy_image = s.enemy_image;
+        scrollSpeed = s.scrollSpeed;
+		isScrolledHorizontally = s.isScrolledHorizontally;
+		platformMaxWidth = s.platformMaxWidth;
+		platformMinWidth = s.platformMinWidth;
+		player = s.player;
+
+    }
+
 	void Session::add(Component* c) {
 		comps.push_back(c);
 		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ //bra lösning? platformar är rörliga och de är många...
@@ -141,12 +157,12 @@ namespace tower {
 		//först anropas metoden remove() (i t.ex. Enemy när den dör) 
 		//och Enemy-objektet läggs till i vektorn removedComps som sedan ska itereras igenom och ta bort Enemy:
 		for(Component* c: removedComps) {
-			std::cout << "Remove loopen körs" << std::endl;
+			//std::cout << "Remove loopen körs" << std::endl;
 			for(std::vector<Component*>::iterator it=comps.begin();
 			it != comps.end();) {
 				if(*it == c) {
 						it = comps.erase(it); //plockar ut från vektorn
-						std::cout << "Enemy deleted" << std::endl;
+						//std::cout << "Enemy deleted" << std::endl;
 				} else {
 					it++;
 				}
@@ -237,9 +253,10 @@ namespace tower {
 		public:
 		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart"), session(ses) {}
 		void perform(Button* source) override{
-			session->quit = false;
-			session->reset();
-			session->run();
+			session->askingForRestart = false;
+			session->restart = true;
+			//session->reset();
+			//session->run();
 		}
 		private:
 		Session* session;
@@ -249,14 +266,14 @@ namespace tower {
 		public:
 		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit"), session(ses)  {}
 		void perform(Button* source) override{
-			session->quit = false;
+			session->askingForRestart = false;
 		}
 		private:
 		Session* session;
 	};
 
 	void Session::gameOver(){
-		
+		askingForRestart = true;
 		RestartButton* restartButton = new RestartButton(this);
 		QuitButton* quitButton = new QuitButton(this);
 		add(restartButton);
@@ -268,13 +285,14 @@ namespace tower {
 
 		comps.clear();
 		mobileComps.clear();
-		for (Platform* p : platforms) {
+		for (Platform* p : platforms) { //How does this work? You can't delete during this kind of iteration...?
 			delete p;
 		}
 		platforms.clear();
 		for(Enemy* e: enemies) {
 			delete e;
 		}
+		enemies.clear(); //pointers removed from vectors.
 		platformChunk1.clear();
 		platformChunk2.clear();
 		initPlatforms(platform_image);
@@ -289,7 +307,7 @@ namespace tower {
 //sätter (implementation) att man börjar på den höjden -- 
 
 //main gameloop
-	void Session::run() {
+	bool Session::run() {
 		setup_background();
 		//initPlatforms();
 		
@@ -324,6 +342,8 @@ namespace tower {
 			if (delay > 0)
 				SDL_Delay(delay);
 		}
+
+		return restart;
 	}
 
 	Session::~Session()

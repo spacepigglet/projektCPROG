@@ -1,7 +1,7 @@
 
 
 #include <SDL2/SDL.h>
-
+#include "Game.h"
 #include "Session.h"
 #include "Button.h"
 #include "Actor.h"
@@ -45,7 +45,10 @@ int main(int argc, char** argv) {
 	ses.add(a);
 	
 
-	ses.run();
+    Game* game = new Game(ses);
+	game->start();
+	//delete game;
+	//ses.run();
 	
 	return 0;
 }
