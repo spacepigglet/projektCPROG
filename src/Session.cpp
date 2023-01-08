@@ -299,8 +299,8 @@ namespace tower {
 	}
 
 	void Session::reset(){
-
-		comps.clear();
+		//reset/clean up
+		comps.clear(); //deletes pointers in vector, not objects
 		mobileComps.clear();
 		for (Platform* p : platforms) {
 			delete p;
@@ -309,8 +309,11 @@ namespace tower {
 		for(Enemy* e: enemies) {
 			delete e;
 		}
+		
 		platformChunk1.clear();
 		platformChunk2.clear();
+
+		//restart
 		initPlatforms(platform_image);
 		initEnemies(enemy_image);
 		player->reset();

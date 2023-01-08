@@ -168,6 +168,8 @@ namespace tower{
 		// 	SDL_RenderCopy(sys.get_ren(), upIcon, NULL, &getRect());
 
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
+        
+
     }
 
 }
