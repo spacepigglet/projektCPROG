@@ -152,7 +152,7 @@ namespace tower {
 	}
 
 	void Session::addEnemy() {
-		for(int i = 0; i<(platforms.size()-2); i+=2) {
+		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) {
 			if(platforms[i]->getUpperY() == 0) {
 				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
 			} 
