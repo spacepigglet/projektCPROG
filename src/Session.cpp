@@ -124,7 +124,6 @@ namespace tower {
 				 for(unsigned int j = i+1; j<mobileComps.size(); j++) {
 					MobileComponent* next = mobileComps[j];
 					if(Collision::collision(current, next)) {
-						//std::cout << "Collision with:" << i << " and " << j << std::endl;
 						current->handleCollision(next); //generalisera i mobilecomponent
 						next->handleCollision(current);
 						//std::cout << "Collision handled" << std::endl;
@@ -133,10 +132,13 @@ namespace tower {
 			}
 				for(Enemy* e : enemies) {
 					if(!(e->isAlive())) {
-						removeEnemy(e);
+						//removeEnemy(e);
+						removedComps.push_back(e);
+						removedEnemies.push_back(e);
+						removedMobileComps.push_back(e);
 					}
 				}
-				addEnemy();
+				remove();
 		
 		scroll();  //utkommenterat pga jobbigt haha
 		
@@ -159,43 +161,46 @@ namespace tower {
 		}
 	}
 
-	void Session::removeEnemy(Enemy* e) {
-		
-   std::unique_ptr<Enemy> enemyPtr(e); //ska ta hand om pekarna?
 
-		for(std::vector<Component*>::iterator it=comps.begin();
-		it != comps.end();) {
-		if(*it == e) {
-		it = comps.erase(it, it+1);
-		std::cout << "enemy deleted from comps" << std::endl;
-		std::cout << comps.size() << std::endl;
-		} else {
-		++it;
-		}
-		}
+	void Session::remove() {
 
-		for(std::vector<MobileComponent*>::iterator it2=mobileComps.begin();
-		it2 != mobileComps.end();) {
-		if(*it2 == e) {
-		it2 = mobileComps.erase(it2, it2+1);
-		std::cout << "enemy deleted from mobilecomps" << std::endl;
-		std::cout << mobileComps.size() << std::endl;
-		} else {
-		++it2;
-		}
-		}
+	for(Component* c: removedComps) {
+			for(std::vector<Component*>::iterator it=comps.begin();
+			it != comps.end();) {
+				if(*it == c) {
+					delete *it;
+						std::cout << "Ta bort i comps" << std::endl;
+						it = comps.erase(it); //plockar ut från vektorn
+				} else {
+					it++;
+				}
+				removedComps.clear();
+			}
+	}
 
-		for(std::vector<Enemy*>::iterator it3=enemies.begin();
-		it3 != enemies.end();) {
-		if(*it3 == e) {
-		it3 = enemies.erase(it3, it3+1);
-		std::cout << "enemy deleted from enemies" << std::endl;
-		std::cout << enemies.size() << std::endl;
-		} else {
-		++it3;
-		}
-		}
-     
+	for(MobileComponent* mc: removedMobileComps) {
+			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin();
+			it != mobileComps.end();) {
+				if(*it == mc) {
+						it = mobileComps.erase(it); //plockar ut från vektorn
+				} else {
+					it++;
+				}
+				removedMobileComps.clear();
+			}
+	}
+
+	for(Enemy* e: removedEnemies) {
+			for(std::vector<Enemy*>::iterator it=enemies.begin();
+			it != enemies.end();) {
+				if(*it == e) {
+						it = enemies.erase(it); //plockar ut från vektorn
+				} else {
+					it++;
+				}
+				removedEnemies.clear();
+			}
+	}
 }
 	
 
