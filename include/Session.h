@@ -53,6 +53,7 @@ namespace tower {
 		void gameOver();
 	    void setup_background();
 		void addCompsFromTemp();
+		void setup_lives();
 		std::vector<Component*> tempComps;
 		std::vector<MobileComponent*> tempMobileComps;
 		

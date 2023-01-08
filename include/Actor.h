@@ -25,9 +25,10 @@ namespace tower{
     void collisionDetection(Component*);
     void handleCollision(MobileComponent*);
     void update();
+    int getHealth() {return health;}
     const static int GRAVITY = 1;
     bool dead = false;
-    int health;
+    
     void reset();
     bool isMovingDown() {return movingDown;}
     void hurting();
@@ -37,6 +38,7 @@ namespace tower{
     
     private:
       const int startHealth;
+      int health;
       const int startX;
       const int startY;
       bool isOnTopOfPlatform = false;

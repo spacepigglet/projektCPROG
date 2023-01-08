@@ -3,6 +3,7 @@
 #include <memory> //for unique ptr
 
 #define FPS 60
+using namespace std;
 namespace tower {
 
 	Session::Session() : quit(false){
@@ -235,7 +236,14 @@ namespace tower {
 			for (Component* c : comps) {
 				c->draw();
 			}
+			string livesStr = to_string(player->getHealth());
+			SDL_Color white = {255,255,255};
+			SDL_Surface* lives_Surf = TTF_RenderText_Solid(sys.get_font(), livesStr.c_str(), white);
+			SDL_Texture* livesTx = SDL_CreateTextureFromSurface(sys.get_ren(), lives_Surf);
+			SDL_Rect lives_rect = {WINDOW_WIDTH-20, 10, lives_Surf->w, lives_Surf->h};
+			SDL_RenderCopy(sys.get_ren(), livesTx, NULL, &lives_rect);
 			
+			//setup_lives();
 			SDL_RenderPresent(sys.get_ren());
 	}
 
@@ -315,8 +323,15 @@ namespace tower {
 //sätter (implementation) att man börjar på den höjden -- 
 
 //main gameloop
+
+void Session::setup_lives(){
+	//Label* number_of_lives = new Label(WINDOW_WIDTH-20, 10, sys.get_font(), lives_Surf->h)
+	
+
+}
 	void Session::run() {
 		setup_background();
+		//setup_lives();
 		//initPlatforms();
 		
 		/*setup_start_platform();
