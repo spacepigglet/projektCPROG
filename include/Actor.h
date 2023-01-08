@@ -31,6 +31,7 @@ namespace tower{
     void reset();
     bool isMovingDown() {return movingDown;}
     void hurting();
+    void handleShake();
 
     protected:
     Actor(int x, int y, int w, int h, std::string image);
@@ -49,7 +50,10 @@ namespace tower{
       std::string image;
       bool isJumping = false;
       bool faceRight;
+      bool hurtByEnemy = false;
       int invincibility = 0;
+      int timer = 0;
+      const int SHAKE_DURATION = 500;
 
   };
 }

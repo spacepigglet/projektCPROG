@@ -22,6 +22,8 @@ namespace tower {
 		int getLowerY() {return rect.y + rect.h;}
 		int getWidth() {return rect.w;}
 		int getHeight() {return rect.h;}
+		int getCenterX() {return (rect.x + rect.w) / 2;}
+		int getCenterY() {return (rect.y + rect.h) / 2;}
 		
 	protected:
 		Component(int x, int y, int w, int h); //int leftX, int upperY, int rightX , int lowerY

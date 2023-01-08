@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#define FPS 60
 namespace tower {
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
@@ -19,6 +20,19 @@ void Enemy::update() {
     dying();
     return;
   } 
+
+  if (isInvincible) {
+    timer += FPS;
+    if (timer < INVINCIBLE_DURATION) {
+      canGetHurt = false;
+    } else {
+      isInvincible = false;
+      canGetHurt = true;
+      timer = 0;
+    }
+  }
+
+
   rect.x += enemySpeed * enemyDirection;
 
   if (rect.x < platform->getLeftX() || (rect.x + rect.w) > platform->getRightX()) {
@@ -31,13 +45,19 @@ void Enemy::update() {
 }
 
 void Enemy::die() {
-  //std::vector<Enemy*> 
-  //rect.h--; rect.w--; //impoderar
-  isDying = true;
+  if(canGetHurt) {
+    isDying = true;
+  } else {
+    isDying = false;
+  }
+}
+
+void Enemy::getsInvincible() {
+  isInvincible = true;
 }
 
 void Enemy::dying() {
-  rect.h--; rect.w--;
+  rect.h = rect.h-5; rect.w = rect.w - 5;
   if(rect.h == 0 || rect.w == 0) {
     alive = false;
   }

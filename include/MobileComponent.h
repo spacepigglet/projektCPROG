@@ -16,10 +16,14 @@ class MobileComponent : public Component {
   void moveY(int toMove){rect.y += toMove;}
 	void moveX(int toMove){rect.x += toMove;}
   virtual void handleCollision(MobileComponent*) {}
+  virtual bool isAlive() {return alive;}
   ~MobileComponent();
 
   protected:
   MobileComponent(int, int, int, int);
+
+  private:
+  bool alive = true;
 
 };
 

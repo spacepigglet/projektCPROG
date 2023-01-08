@@ -131,9 +131,9 @@ namespace tower {
 					}
 				 }
 			}
-				for(Enemy* e : enemies) {
-					if(!(e->isAlive())) {
-						removeEnemy(e);
+				for(MobileComponent* mc : mobileComps) {
+					if(!(mc->isAlive())) {
+						removeMobileComponent(mc);
 					}
 				}
 				addEnemy();
@@ -159,44 +159,36 @@ namespace tower {
 		}
 	}
 
-	void Session::removeEnemy(Enemy* e) {
-		
-   std::unique_ptr<Enemy> enemyPtr(e); //ska ta hand om pekarna?
+	void Session::removeMobileComponent(MobileComponent* mc) {
+		if(Enemy* e = dynamic_cast <Enemy*>(mc)) {
+			
+			std::unique_ptr<Enemy> enemyPtr(e); //ska ta hand om pekarna?
 
-		for(std::vector<Component*>::iterator it=comps.begin();
-		it != comps.end();) {
-		if(*it == e) {
-		it = comps.erase(it, it+1);
-		std::cout << "enemy deleted from comps" << std::endl;
-		std::cout << comps.size() << std::endl;
-		} else {
-		++it;
-		}
-		}
+			for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
+				if(*it == e) {
+					it = comps.erase(it, it+1);
+				} else {
+					++it;
+				}
+			}
 
-		for(std::vector<MobileComponent*>::iterator it2=mobileComps.begin();
-		it2 != mobileComps.end();) {
-		if(*it2 == e) {
-		it2 = mobileComps.erase(it2, it2+1);
-		std::cout << "enemy deleted from mobilecomps" << std::endl;
-		std::cout << mobileComps.size() << std::endl;
-		} else {
-		++it2;
-		}
-		}
+			for(std::vector<MobileComponent*>::iterator it2=mobileComps.begin(); it2 != mobileComps.end();) {
+				if(*it2 == e) {
+					it2 = mobileComps.erase(it2, it2+1);
+				} else {
+					++it2;
+				}
+			}
 
-		for(std::vector<Enemy*>::iterator it3=enemies.begin();
-		it3 != enemies.end();) {
-		if(*it3 == e) {
-		it3 = enemies.erase(it3, it3+1);
-		std::cout << "enemy deleted from enemies" << std::endl;
-		std::cout << enemies.size() << std::endl;
-		} else {
-		++it3;
-		}
-		}
-     
-}
+			for(std::vector<Enemy*>::iterator it3=enemies.begin(); it3 != enemies.end();) {
+				if(*it3 == e) {
+					it3 = enemies.erase(it3, it3+1);
+				} else {
+					++it3;
+				}
+			}
+		}  
+	}
 	
 
 	void Session::scroll() {

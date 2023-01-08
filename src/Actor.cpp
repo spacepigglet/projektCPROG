@@ -76,6 +76,7 @@ namespace tower{
     void Actor::collisionWithEnemy(Enemy* e) {
          if(movingUp) {
             hurting();
+            e->getsInvincible();
         } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) { // Kommer ovanifrån
             e->die(); //delete enemy from enemie-list when hurt (temporär lista!) -> inte implementerat ännu!
             dy = -7;
@@ -83,9 +84,13 @@ namespace tower{
         } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){ //Om kollision sker med Enemy vänstersida
             hurting();
             setPosition(e->getLeftX() - getWidth(), getUpperY());
+            e->getsInvincible();
+            hurtByEnemy = true;
         } else if ((getLeftX() < e->getRightX() && (getLeftX() > e->getLeftX()))) {
             hurting();
             setPosition(e->getRightX(), getUpperY());
+            e->getsInvincible();
+            hurtByEnemy = true;
         } 
     }
 
@@ -105,6 +110,26 @@ namespace tower{
         if (!isJumping && isOnTopOfPlatform){ //gör att vi inte kan hoppa i luften
             dy = -20;
             isJumping = true;
+            movingUp = true;
+        }
+    }
+
+    void Actor::handleShake() {
+        if (hurtByEnemy)
+        {
+        timer += FPS;
+        if (timer < SHAKE_DURATION)
+        {
+            int value = 7;
+            int randX = (rand() % (value- (-value) + 1)) + (-value);
+            int randY = (rand() % (value- (-value) + 1)) + (-value);
+            setPosition(getLeftX() + randX, getUpperY() + randY);
+        }
+        else
+        {
+            hurtByEnemy = false;
+            timer = 0;
+        }
         }
     }
 
@@ -123,26 +148,27 @@ namespace tower{
         }
 
             
-            dy += GRAVITY; //gravity
-            if(dy > 10) //limits how fast actor can fall - terminal velocity
-                dy = 10;
-            moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
+        dy += GRAVITY; //gravity
+        if(dy > 10) //limits how fast actor can fall - terminal velocity
+            dy = 10;
+        moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
-            if(isJumping){
-                if (dx < 0 ){ //moving left
-                    dx += GRAVITY;
-                    moveX(dx);
-                } 
-                else if (dx > 0 ){ //moving right
-
-                    dx -= GRAVITY;
-                    moveX(dx);
-                }
-            
+        if(isJumping){
+            if (dx < 0 ){ //moving left
+                dx += GRAVITY;
+                moveX(dx);
             } 
+            else if (dx > 0 ){ //moving right
+
+                dx -= GRAVITY;
+                moveX(dx);
+            }
+        
+        } 
                  // resetting dx in between input, if not jumping. Other solution - keyup?? Probably better...?
         //}
         isOnTopOfPlatform = false; //reset
+        movingUp = false;
         movingDown = true;
         if (health <= 0){
             dead = true;
@@ -150,7 +176,12 @@ namespace tower{
         if(invincibility > 0) {
             invincibility--;
         }
+
+        handleShake();
+
     }
+
+    
 
     void Actor:: reset(){
         setPosition(startX, startY);

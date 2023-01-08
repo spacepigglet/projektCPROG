@@ -14,6 +14,7 @@ class Enemy : public MobileComponent {
   void draw() const;
   void addOnPlatform(Platform*);
   void die();
+  void getsInvincible();
 
   bool isAlive() {return alive;}
  // void handleCollision(MobileComponent*);
@@ -31,6 +32,10 @@ class Enemy : public MobileComponent {
   int enemyDirection = 1;
   bool alive = true;
   bool isDying = false;
+  bool isInvincible = false;
+  int timer = 0;
+  bool canGetHurt = true;
+  const int INVINCIBLE_DURATION = 2000;
 };
 
 }
