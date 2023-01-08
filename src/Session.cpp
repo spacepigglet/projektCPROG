@@ -112,17 +112,16 @@ namespace tower {
 	void Session::updateGame() {
 		for( Component* c: comps) {
 			c->update();
-			
-				//player is allowed 50 points outside window. More than that-> game over
-				if ((isScrolledHorizontally && (player->getRightX() < -50)) || (
-				   (!isScrolledHorizontally &&(player->getUpperY() > WINDOW_HEIGHT + 50)))){
-						quit = true;
-					}
+		}
+		//player is allowed 50 points outside window. More than that-> game over
+		if ((isScrolledHorizontally && (player->getRightX() < -50)) || ( 
+			(!isScrolledHorizontally &&(player->getUpperY() > WINDOW_HEIGHT + 50)))){
+				quit = true;
 		}
 
-			for(unsigned int i = 0; i<mobileComps.size()-1; i++) {
-				 MobileComponent* current = mobileComps[i];
-				 for(unsigned int j = i+1; j<mobileComps.size(); j++) {
+		for(unsigned int i = 0; i<mobileComps.size()-1; i++) {
+				MobileComponent* current = mobileComps[i];
+				for(unsigned int j = i+1; j<mobileComps.size(); j++) {
 					MobileComponent* next = mobileComps[j];
 					if(Collision::collision(current, next)) {
 						//std::cout << "Collision with:" << i << " and " << j << std::endl;
@@ -130,14 +129,15 @@ namespace tower {
 						next->handleCollision(current);
 						//std::cout << "Collision handled" << std::endl;
 					}
-				 }
-			}
-				for(Enemy* e : enemies) {
-					if(!(e->isAlive())) {
-						removeEnemy(e);
-					}
 				}
-				addEnemy();
+		}
+		for(Enemy* e : enemies) {
+			if(!(e->isAlive())) {
+				removeEnemy(e);
+			}
+		}
+		addEnemy();
+		number_of_lives->setText(to_string(player->getHealth()));
 		
 		scroll();  //utkommenterat pga jobbigt haha
 		
@@ -236,14 +236,14 @@ namespace tower {
 			for (Component* c : comps) {
 				c->draw();
 			}
-			string livesStr = to_string(player->getHealth());
-			SDL_Color white = {255,255,255};
-			SDL_Surface* lives_Surf = TTF_RenderText_Solid(sys.get_font(), livesStr.c_str(), white);
-			SDL_Texture* livesTx = SDL_CreateTextureFromSurface(sys.get_ren(), lives_Surf);
-			SDL_Rect lives_rect = {WINDOW_WIDTH-20, 10, lives_Surf->w, lives_Surf->h};
-			SDL_RenderCopy(sys.get_ren(), livesTx, NULL, &lives_rect);
+			// string livesStr = to_string(player->getHealth());
+			// SDL_Color white = {255,255,255};
+			// SDL_Surface* lives_Surf = TTF_RenderText_Solid(sys.get_font(), livesStr.c_str(), white);
+			// SDL_Texture* livesTx = SDL_CreateTextureFromSurface(sys.get_ren(), lives_Surf);
+			// SDL_Rect lives_rect = {WINDOW_WIDTH-20, 10, lives_Surf->w, lives_Surf->h};
+			// SDL_RenderCopy(sys.get_ren(), livesTx, NULL, &lives_rect);
 			
-			//setup_lives();
+			
 			SDL_RenderPresent(sys.get_ren());
 	}
 
@@ -325,13 +325,13 @@ namespace tower {
 //main gameloop
 
 void Session::setup_lives(){
-	//Label* number_of_lives = new Label(WINDOW_WIDTH-20, 10, sys.get_font(), lives_Surf->h)
-	
+	number_of_lives = Label::getInstance(WINDOW_WIDTH-20, 10, 20, 20, to_string(player->getHealth()), {255,255,255});
+	add(number_of_lives);
 
 }
 	void Session::run() {
 		setup_background();
-		//setup_lives();
+		setup_lives();
 		//initPlatforms();
 		
 		/*setup_start_platform();
