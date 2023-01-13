@@ -80,6 +80,7 @@ namespace tower {
 		int platformMaxWidth;
 		int platformHeight = 10;
 		Actor* player;
+		Label* number_of_lives;
 		
 		//void (*fpek)() ;
 		//typedef void (*func_t)(int); // pointer to function with no args and void return

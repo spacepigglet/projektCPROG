@@ -92,7 +92,7 @@ namespace tower{
     void Actor::hurting() {
         if(invincibility == 0) {
             health--;
-            invincibility = 60;
+            invincibility = 60; //can't get hur again for another 60 ticks
         }
     }
 
@@ -121,25 +121,23 @@ namespace tower{
         }else if (!movingRight && !movingLeft){
             dx = 0;
         }
-
             
-            dy += GRAVITY; //gravity
-            if(dy > 10) //limits how fast actor can fall - terminal velocity
-                dy = 10;
-            moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
+        dy += GRAVITY; //gravity
+        if(dy > 10) //limits how fast actor can fall - terminal velocity
+            dy = 10;
+        moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
-            if(isJumping){
-                if (dx < 0 ){ //moving left
-                    dx += GRAVITY;
-                    moveX(dx);
-                } 
-                else if (dx > 0 ){ //moving right
-
-                    dx -= GRAVITY;
-                    moveX(dx);
-                }
-            
+        if(isJumping){
+            if (dx < 0 ){ //moving left
+                dx += GRAVITY;
+                moveX(dx);
             } 
+            else if (dx > 0 ){ //moving right
+
+                dx -= GRAVITY;
+                moveX(dx);
+            }
+        } 
                  // resetting dx in between input, if not jumping. Other solution - keyup?? Probably better...?
         //}
         isOnTopOfPlatform = false; //reset
@@ -168,7 +166,7 @@ namespace tower{
 		// 	SDL_RenderCopy(sys.get_ren(), upIcon, NULL, &getRect());
 
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
-        
+
 
     }
 

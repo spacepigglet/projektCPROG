@@ -8,15 +8,19 @@ namespace tower {
 	class Label: public Component
 	{
 	public:
-		static Label* getInstance(int x, int y, int w, int h, std::string txt);
+		static Label* getInstance(int x, int y, int w, int h, std::string txt, SDL_Color color);
 		void draw() const;
 		std::string getText() const;
 		void setText(std::string newText);
+		//virtual void update(); 
 		~Label();
+		SDL_Color getColor() {return color;}
+		void setColor(SDL_Color c);
 	protected:
-		Label(int x, int y, int w, int h, std::string txt);
+		Label(int, int, int, int, std::string , SDL_Color);
 	private:
 		std::string text;
+	    SDL_Color color;
 		SDL_Texture* texture;
 	};
 

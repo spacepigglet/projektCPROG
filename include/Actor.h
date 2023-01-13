@@ -27,7 +27,8 @@ namespace tower{
     void update();
     int getHealth() {return health;}
     const static int GRAVITY = 1;
-    bool dead = false;
+    bool isDead() {return dead;};
+    
     
     void reset();
     bool isMovingDown() {return movingDown;}
@@ -46,6 +47,7 @@ namespace tower{
       int dy;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
       int xSpeed = 5;
+      bool dead = false;
       //int ySpeed = 5;
       SDL_Texture* texture;
       std::string image;

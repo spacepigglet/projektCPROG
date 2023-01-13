@@ -110,6 +110,7 @@ namespace tower {
 	}
 	
 	void Session::updateGame() {
+		
 		for( Component* c: comps) {
 			c->update();
 		}
@@ -137,7 +138,12 @@ namespace tower {
 			}
 		}
 		addEnemy();
+
 		number_of_lives->setText(to_string(player->getHealth()));
+		
+		if (player->isDead()){
+			quit = true;
+		}
 		
 		scroll();  //utkommenterat pga jobbigt haha
 		
@@ -309,7 +315,7 @@ namespace tower {
 		for(Enemy* e: enemies) {
 			delete e;
 		}
-		
+
 		platformChunk1.clear();
 		platformChunk2.clear();
 
