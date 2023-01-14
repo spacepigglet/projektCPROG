@@ -125,27 +125,28 @@ namespace tower {
 				for(unsigned int j = i+1; j<mobileComps.size(); j++) {
 					MobileComponent* next = mobileComps[j];
 					if(Collision::collision(current, next)) {
-						//std::cout << "Collision with:" << i << " and " << j << std::endl;
 						current->handleCollision(next); //generalisera i mobilecomponent
 						next->handleCollision(current);
 						//std::cout << "Collision handled" << std::endl;
 					}
+
 				}
 		}
-		for(Enemy* e : enemies) {
-			if(!(e->isAlive())) {
-				removeEnemy(e);
-			}
-		}
-		addEnemy();
-
-		
-		//number_of_lives->setText(to_string(player->getHealth()));
 		
 		if (player->isDead()){
 			quit = true;
 		}
-		
+			
+		for(Enemy* e : enemies) {
+			if(!(e->isAlive())) {
+				//removeEnemy(e);
+				removedComps.push_back(e);
+				removedEnemies.push_back(e);
+				removedMobileComps.push_back(e);
+			}
+		}
+		remove();
+
 		scroll();  //utkommenterat pga jobbigt haha
 		
 		//flytta ner allt mha c->moveY()
@@ -167,43 +168,46 @@ namespace tower {
 		}
 	}
 
-	void Session::removeEnemy(Enemy* e) {
-		
-   std::unique_ptr<Enemy> enemyPtr(e); //ska ta hand om pekarna?
 
-		for(std::vector<Component*>::iterator it=comps.begin();
-		it != comps.end();) {
-		if(*it == e) {
-		it = comps.erase(it, it+1);
-		std::cout << "enemy deleted from comps" << std::endl;
-		std::cout << comps.size() << std::endl;
-		} else {
-		++it;
-		}
-		}
+	void Session::remove() {
 
-		for(std::vector<MobileComponent*>::iterator it2=mobileComps.begin();
-		it2 != mobileComps.end();) {
-		if(*it2 == e) {
-		it2 = mobileComps.erase(it2, it2+1);
-		std::cout << "enemy deleted from mobilecomps" << std::endl;
-		std::cout << mobileComps.size() << std::endl;
-		} else {
-		++it2;
-		}
-		}
+	for(Component* c: removedComps) {
+			for(std::vector<Component*>::iterator it=comps.begin();
+			it != comps.end();) {
+				if(*it == c) {
+					delete *it;
+						std::cout << "Ta bort i comps" << std::endl;
+						it = comps.erase(it); //plockar ut från vektorn
+				} else {
+					it++;
+				}
+				removedComps.clear();
+			}
+	}
 
-		for(std::vector<Enemy*>::iterator it3=enemies.begin();
-		it3 != enemies.end();) {
-		if(*it3 == e) {
-		it3 = enemies.erase(it3, it3+1);
-		std::cout << "enemy deleted from enemies" << std::endl;
-		std::cout << enemies.size() << std::endl;
-		} else {
-		++it3;
-		}
-		}
-     
+	for(MobileComponent* mc: removedMobileComps) {
+			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin();
+			it != mobileComps.end();) {
+				if(*it == mc) {
+						it = mobileComps.erase(it); //plockar ut från vektorn
+				} else {
+					it++;
+				}
+				removedMobileComps.clear();
+			}
+	}
+
+	for(Enemy* e: removedEnemies) {
+			for(std::vector<Enemy*>::iterator it=enemies.begin();
+			it != enemies.end();) {
+				if(*it == e) {
+						it = enemies.erase(it); //plockar ut från vektorn
+				} else {
+					it++;
+				}
+				removedEnemies.clear();
+			}
+	}
 }
 	
 
@@ -243,13 +247,6 @@ namespace tower {
 			for (Component* c : comps) {
 				c->draw();
 			}
-			// string livesStr = to_string(player->getHealth());
-			// SDL_Color white = {255,255,255};
-			// SDL_Surface* lives_Surf = TTF_RenderText_Solid(sys.get_font(), livesStr.c_str(), white);
-			// SDL_Texture* livesTx = SDL_CreateTextureFromSurface(sys.get_ren(), lives_Surf);
-			// SDL_Rect lives_rect = {WINDOW_WIDTH-20, 10, lives_Surf->w, lives_Surf->h};
-			// SDL_RenderCopy(sys.get_ren(), livesTx, NULL, &lives_rect);
-			
 			
 			SDL_RenderPresent(sys.get_ren());
 	}
@@ -329,25 +326,10 @@ namespace tower {
 		
 	}
 
-//skapar en ny, stor platform och ser till att den skapas och när den är utanför så försvinner den
-//sätter (implementation) att man börjar på den höjden -- 
-
 //main gameloop
-
-// void Session::setup_lives(){
-// 	number_of_lives = Label::getInstance(WINDOW_WIDTH-20, 10, 20, 20, to_string(player->getHealth()), {255,255,255});
-// 	add(number_of_lives);
-
-// }
 	void Session::run() {
 		setup_background();
-		//setup_lives();
-		//initPlatforms();
-		
-		/*setup_start_platform();
-		if(!horisontalscroll) {
-			new Platform();
-		}*/
+
 		const int tickInterval = 1000/FPS;
 		Uint32 nextTick;
 		int delay;
@@ -357,7 +339,6 @@ namespace tower {
 			processInput();
 			updateGame();
 			generateOutput();
-
 
 			if (delay > 0)
 				SDL_Delay(delay);

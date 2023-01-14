@@ -37,7 +37,8 @@ void Enemy::die() {
 }
 
 void Enemy::dying() {
-  rect.h--; rect.w--;
+  rect.h -= 5;
+  setPosition(getLeftX(), getUpperY() + 5);
   if(rect.h == 0 || rect.w == 0) {
     alive = false;
   }

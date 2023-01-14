@@ -41,7 +41,7 @@ namespace tower {
 		void set_scroll_horizontal(bool isHorizontal);
 		void reset();
 		void setPlatformImage(std::string);
-		void removeEnemy(Enemy*);
+		void remove();
 		void addEnemy();
         
 		// SDL_Texture* get_bg_tex1() const {return bg1->get_bg_tex();}
@@ -59,6 +59,8 @@ namespace tower {
 		
 		std::vector<Component*> comps;
 		std::vector<Component*> removedComps;
+		std::vector<MobileComponent*> removedMobileComps;
+		std::vector<Enemy*> removedEnemies;
 		std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
 		std::vector<Platform*> platformChunk1;
