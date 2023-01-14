@@ -6,7 +6,7 @@
 
 #define FPS 60
 using namespace std;
-
+//TEST COMMIT IGEN
 namespace tower{
     Actor::Actor(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h), startHealth(3), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
