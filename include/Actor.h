@@ -16,43 +16,35 @@ namespace tower{
     public:
     ~Actor();
     static Actor* getInstance(int x, int y, int w, int h, std::string image);
+    void draw() const;
+    void update();
     virtual void jump();
+    void hurting();
+    void reset();
     void keyDown(const SDL_Event&);
     void keyUp(const SDL_Event&);
-    void draw() const;
     void collisionWithPlatform(Platform*);
     void collisionWithEnemy(Enemy*);
-    void collisionDetection(Component*);
     void handleCollision(MobileComponent*);
-    void update();
     int getHealth() {return health;}
-    const static int GRAVITY = 1;
     bool isDead() {return dead;};
-    
-    
-    void reset();
-    bool isMovingDown() {return movingDown;}
-    void hurting();
 
     protected:
-    Actor(int x, int y, int w, int h, std::string image);
+      Actor(int x, int y, int w, int h, std::string image);
     
     private:
+      const static int GRAVITY = 1;
       const int startHealth;
       int health;
-      const int startX;
-      const int startY;
+      const int startX, startY;
       bool isOnTopOfPlatform = false;
-      int dx;
-      int dy;
+      int dx, dy;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
       int xSpeed = 7;
       bool dead = false;
-      //int ySpeed = 5;
       SDL_Texture* texture;
       std::string image;
       bool isJumping = false;
-      bool faceRight;
       int invincibility = 0;
 
   };

@@ -15,7 +15,6 @@ namespace tower {
 		virtual void update() {}
 		virtual void draw() const = 0;
 		const SDL_Rect& getRect() const { return rect; }
-		//SDL_Rect& changeRect() { return rect; }
 		int getLeftX() {return rect.x;}
 		int getUpperY() {return rect.y;}
 		int getRightX() {return rect.x + rect.w;}
@@ -24,7 +23,7 @@ namespace tower {
 		int getHeight() {return rect.h;}
 		
 	protected:
-		Component(int x, int y, int w, int h); //int leftX, int upperY, int rightX , int lowerY
+		Component(int x, int y, int w, int h);
 		SDL_Rect rect;
 		int leftX;
     int upperY;

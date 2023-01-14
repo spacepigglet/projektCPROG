@@ -25,14 +25,12 @@ void Enemy::update() {
     enemyDirection *= -1;
   }
 
-  if(getRightX() < 0 || getUpperY() > WINDOW_HEIGHT - getHeight()) { //Om enemy = utanför skärm
+  if(getRightX() < 0 || getUpperY() > WINDOW_HEIGHT - getHeight()) { //if enemy is outside screen
     alive = false;
   }
 }
 
 void Enemy::die() {
-  //std::vector<Enemy*> 
-  //rect.h--; rect.w--; //impoderar
   isDying = true;
 }
 
@@ -43,22 +41,6 @@ void Enemy::dying() {
     alive = false;
   }
 }
-
-/*void Enemy::handleCollision(MobileComponent* mc) {
-  if(Actor* a = dynamic_cast<Actor*>(mc)) {
-    collisionWithPlayer(a);
-  }
-}
-
-void Enemy::collisionWithPlayer(Actor* a) {
-  if(a->isMovingDown()) {
-    rect.h--; rect.w--;
-  }
-  if(rect.h == 0 || rect.w == 0) {
-    alive = false;
-  }
-
-}*/
 
 
 void Enemy::addOnPlatform(Platform* p) {

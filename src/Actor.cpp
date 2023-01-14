@@ -13,38 +13,31 @@ namespace tower{
         health = startHealth;
     }
 
+     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
+        return new Actor(x, y, w, h, image);
+    }
+
     void Actor::keyDown(const SDL_Event& event) {
-        //if(!isOnTopOfPlatform) {
-    
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
                 movingRight = true;
                 break;
-            
             case SDLK_LEFT:             
                 movingLeft = true;             
                 break;
-
-            case SDLK_SPACE:   jump();  break;        
+            case SDLK_SPACE:   
+                jump();  
+                break;
         }
-     
     }
 
     void Actor::keyUp(const SDL_Event& event) {
         switch(event.key.keysym.sym) {
             case SDLK_RIGHT: 
-                
                 movingRight = false;
             case SDLK_LEFT: 
-            
                 movingLeft = false;
-
-
         }
-    }
-
-    Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
-        return new Actor(x, y, w, h, image);
     }
 
     void Actor::handleCollision(MobileComponent* mc) {
@@ -57,14 +50,10 @@ namespace tower{
     }
 
     void Actor::collisionWithPlatform(Platform* p) {
-        //cout << "Det funkar!" << endl;
-        if(getLowerY() > p->getUpperY() && 
-        getLowerY() < p->getLowerY()  && 
-        getLeftX() < p->getRightX() &&  
-        getRightX() > p->getLeftX()) {
-
+        if(getLowerY() > p->getUpperY() && getLowerY() < p->getLowerY()  && 
+        getLeftX() < p->getRightX() && getRightX() > p->getLeftX()) {
             if(dy > 0) { //moving down on top of platform
-                isOnTopOfPlatform = true;  //står på plattform, kan nu hoppa
+                isOnTopOfPlatform = true;  //standing on platform, can jump now
                 movingDown = false;
                 dy = 0;
                 isJumping = false;
@@ -76,11 +65,10 @@ namespace tower{
     void Actor::collisionWithEnemy(Enemy* e) {
          if(movingUp) {
             hurting();
-        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) { // Kommer ovanifrån
-            e->die(); //delete enemy from enemie-list when hurt (temporär lista!) -> inte implementerat ännu!
+        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) { //coming from above
+            e->die();
             dy = -7;
-            //setPosition(getLeftX(), e->getUpperY() - getHeight());
-        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){ //Om kollision sker med Enemy vänstersida
+        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){ //collision with enemy left side
             hurting();
             setPosition(e->getLeftX() - getWidth(), getUpperY());
         } else if ((getLeftX() < e->getRightX() && (getLeftX() > e->getLeftX()))) {
@@ -102,35 +90,33 @@ namespace tower{
 
 
     void Actor::jump(){
-        if (!isJumping && isOnTopOfPlatform){ //gör att vi inte kan hoppa i luften
+        if (!isJumping && isOnTopOfPlatform){ //can't jump when in air
             dy = -20;
             isJumping = true;
         }
     }
 
     void Actor:: update(){
-
         if(movingRight){
-            dx = xSpeed;                               //dy = 0;
+            dx = xSpeed; 
             moveX(xSpeed);
-            //movingRight = false;
         }
         if (movingLeft){
-            dx = -xSpeed;                                  //dy = 0;
+            dx = -xSpeed;
             moveX(-xSpeed);
         }else if (!movingRight && !movingLeft){
             dx = 0;
         }
             
         dy += GRAVITY; //gravity
-        if(dy > 10) //limits how fast actor can fall - terminal velocity
+        if(dy > 10) { //limits how fast actor can fall - terminal velocity
             dy = 10;
-        moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
+        }
+            moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
-    
-        //}
         isOnTopOfPlatform = false; //reset
         movingDown = true;
+        
         if (health <= 0){
             dead = true;
         }
@@ -139,7 +125,7 @@ namespace tower{
         }
     }
 
-    void Actor:: reset(){
+    void Actor:: reset() {
         setPosition(startX, startY);
         dx = 0;
         dy = 0;
@@ -149,14 +135,7 @@ namespace tower{
 
 
     void Actor:: draw() const {
-        // if (isFacingRight)
-		// 	SDL_RenderCopy(sys.get_ren(), downIcon, NULL, &getRect());
-		// else
-		// 	SDL_RenderCopy(sys.get_ren(), upIcon, NULL, &getRect());
-
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
-
-
     }
 
 }
