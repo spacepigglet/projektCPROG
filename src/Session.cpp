@@ -17,47 +17,32 @@ namespace tower {
 	void Session::add(Component* c) {
 		comps.push_back(c);
 		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ //bra lösning? platformar är rörliga och de är många...
-            mobileComps.push_back(m);
+      mobileComps.push_back(m);
 		}
 		if(Enemy* e = dynamic_cast<Enemy*>(c)){
        enemies.push_back(e);
 		}
 		if(Platform* p = dynamic_cast<Platform*>(c)){
-            platforms.push_back(p);
+      platforms.push_back(p);
 		}
 		if(Actor* a = dynamic_cast<Actor*>(c)){
-            player = a;
+      player = a;
 		}
 		
 	}
-
-	void Session::addTemp(Component* c) {
-		tempComps.push_back(c);
-		
-		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ 
-            tempMobileComps.push_back(m);
-		}}
 
 	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cp
 		removedComps.push_back(c);
+		if(MobileComponent* mc = dynamic_cast<MobileComponent*>(c)) {
+			removedMobileComps.push_back(mc);
+		}
 		if(Platform* p = dynamic_cast<Platform*>(c)) {
 			removedPlatforms.push_back(p);
 		}
-		//std::cout << "Enemy is in removedComps" << std::endl; -> FUNKAR
-	}
-		
-	
-
-	void Session::addCompsFromTemp(){
-		for(Component* c : tempComps){
-			comps.push_back(c);
-
-		}
-		for (MobileComponent* mc : tempMobileComps){
-			mobileComps.push_back(mc);
+		if(Enemy* e = dynamic_cast<Enemy*>(c)) {
+			removedEnemies.push_back(e);
 		}
 	}
-		
 
     void Session::set_background(std::string image) {
 		bg_Image = image;
@@ -117,30 +102,26 @@ namespace tower {
 		for( Component* c: comps) {
 			if(Platform* p = dynamic_cast<Platform*>(c)) {
 				if(((p->getUpperY() > WINDOW_HEIGHT + p->getHeight()) || ((p->getRightX() < 0))) && p->shouldBeRemoved()) {
-						removedPlatforms.push_back(p);
-						removedComps.push_back(p);
-						removedMobileComps.push_back(p);
+						remove(p);
 				}
 			}
 			c->update();
 		}
 		//player is allowed 50 points outside window. More than that-> game over
-		if ((isScrolledHorizontally && (player->getRightX() < -50)) || ( 
+		if ((isScrolledHorizontally && ( (player->getRightX() < -50) || (player->getUpperY() > WINDOW_HEIGHT + 50))) || ( 
 			(!isScrolledHorizontally &&(player->getUpperY() > WINDOW_HEIGHT + 50)))){
 				quit = true;
 		}
 
 		for(unsigned int i = 0; i<mobileComps.size()-1; i++) {
-				MobileComponent* current = mobileComps[i];
-				for(unsigned int j = i+1; j<mobileComps.size(); j++) {
-					MobileComponent* next = mobileComps[j];
-					if(Collision::collision(current, next)) {
-						current->handleCollision(next); //generalisera i mobilecomponent
-						next->handleCollision(current);
-						//std::cout << "Collision handled" << std::endl;
-					}
-
+			MobileComponent* current = mobileComps[i];
+			for(unsigned int j = i+1; j<mobileComps.size(); j++) {
+				MobileComponent* next = mobileComps[j];
+				if(Collision::collision(current, next)) {
+					current->handleCollision(next); //generalisera i mobilecomponent
+					next->handleCollision(current);
 				}
+			}
 		}
 		
 		if (player->isDead()){
@@ -149,25 +130,14 @@ namespace tower {
 			
 		for(Enemy* e : enemies) {
 			if(!(e->isAlive())) {
-				//removeEnemy(e);
-				removedComps.push_back(e);
-				removedEnemies.push_back(e);
-				removedMobileComps.push_back(e);
+				remove(e);
 			}
 		}
-		remove();
+		removeComponents();
+		addEnemy();
 
 		scroll();  //utkommenterat pga jobbigt haha
 		
-		//flytta ner allt mha c->moveY()
-
-		//collisionDetection();
-		
-		//hålla reda på tid
-		//skicka update till actors
-		//flytta plattformar
-		//flytta bg
-		//flytta enemies
 	}
 
 	void Session::addEnemy() {
@@ -181,14 +151,12 @@ namespace tower {
 	}
 
 
-	void Session::remove() {
+	void Session::removeComponents() {
 
 		for(Platform* p: removedPlatforms) {
-			for(std::vector<Platform*>::iterator it=platforms.begin();
-			it != platforms.end();) {
+			for(std::vector<Platform*>::iterator it=platforms.begin(); it != platforms.end();) {
 				if(*it == p) {
 						it = platforms.erase(it);
-						std::cout << "Platform pointer in platform-vector deleted" << std::endl;
 				} else {
 					it++;
 				}
@@ -197,11 +165,9 @@ namespace tower {
 	removedPlatforms.clear();
 
 	for(MobileComponent* mc: removedMobileComps) {
-			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin();
-			it != mobileComps.end();) {
+			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin(); it != mobileComps.end();) {
 				if(*it == mc) {
-						it = mobileComps.erase(it); //plockar ut från vektorn
-						std::cout << "Mobilecomps pointer in mobilecomps-vector deleted" << std::endl;
+						it = mobileComps.erase(it);
 				} else {
 					it++;
 				}
@@ -210,10 +176,9 @@ namespace tower {
 	removedMobileComps.clear();
 
 	for(Enemy* e: removedEnemies) {
-			for(std::vector<Enemy*>::iterator it=enemies.begin();
-			it != enemies.end();) {
+			for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
 				if(*it == e) {
-						it = enemies.erase(it); //plockar ut från vektorn
+						it = enemies.erase(it); 
 				} else {
 					it++;
 				}
@@ -222,12 +187,10 @@ namespace tower {
 	removedEnemies.clear();
 
 	for(Component* c: removedComps) {
-				for(std::vector<Component*>::iterator it=comps.begin();
-				it != comps.end();) {
+				for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
 					if(*it == c) {
 						delete *it;
-							std::cout << "Delete objekt (i comps)" << std::endl;
-							it = comps.erase(it); //plockar ut från vektorn
+							it = comps.erase(it); 
 					} else {
 						it++;
 					}
@@ -239,12 +202,6 @@ namespace tower {
 	
 
 	void Session::scroll() {
-		// bg1->scrollFunc(scrollSpeed);
-		// bg2->scrollFunc(scrollSpeed);
-		// for( Component* c: mobileComps) {
-		// 	c->scrollFunc(scrollSpeed);
-		// }
-
 		if (isScrolledHorizontally){
 			bg1->horizontalScroll(scrollSpeed);
 		    bg2->horizontalScroll(scrollSpeed);
@@ -281,28 +238,27 @@ namespace tower {
 	void Session::initPlatforms(std::string image) {
 	    platform_image = image;
 		for(int i = 0; i<nrOfPlatforms; i++) { 
-			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; //player->getHeight()
+			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; 
 			int y = 20 + (i * platformGapY); //distance between platforms in y-led 
 			
 			int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
 			int x = rand() % (WINDOW_WIDTH - width); //random nr within window
-			//int y = rand() % WINDOW_HEIGHT;
 			add(Platform::getInstance(x, y, width, platformHeight, platform_image));
 		}
 	}
 
 	void Session::initEnemies(std::string image) {
-			enemy_image = image;
-			for(Platform* p : platforms) {
-				add(Enemy::getInstance(p->getLeftX(), p->getUpperY() - 50, 50, 50, enemy_image, p));
-			}
+		enemy_image = image;
+		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) {
+			add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
+		}
 	}
 //Session ses;
 	class RestartButton: public Button {
 		public:
 		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart"), session(ses) {}
 		void perform(Button* source) override{
-			session->quit = false;
+			session->isQuitting(false);
 			session->reset();
 			session->run();
 		}
@@ -314,7 +270,7 @@ namespace tower {
 		public:
 		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit"), session(ses)  {}
 		void perform(Button* source) override{
-			session->quit = false;
+			session->isQuitting(false);
 		}
 		private:
 		Session* session;
@@ -334,29 +290,20 @@ namespace tower {
 		comps.clear(); //deletes pointers in vector, not objects
 		mobileComps.clear();
 		for (Platform* p : platforms) {
-			removedComps.push_back(p);
-			removedPlatforms.push_back(p);
-			removedMobileComps.push_back(p);
+			remove(p);
 		}
 		platforms.clear();
 		for(Enemy* e: enemies) {
-			removedComps.push_back(e);
-			removedEnemies.push_back(e);
-			removedMobileComps.push_back(e);
+			remove(e);
 		}
 		enemies.clear();
-
-		platformChunk1.clear();
-		platformChunk2.clear();
+		removeComponents();
 
 		//restart
 		initPlatforms(platform_image);
 		initEnemies(enemy_image);
 		player->reset();
-		comps.push_back(player);
-		mobileComps.push_back(player);
-
-		
+		add(player);
 	}
 
 //main gameloop

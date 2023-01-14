@@ -24,9 +24,7 @@ namespace tower {
 	public:
 		Session();
 		void add(Component* c);
-		void addTemp(Component* c);
 		void remove(Component* c);
-		//void add(Background* b);
 		void set_background(std::string);
 		void run();
 		~Session();
@@ -41,19 +39,17 @@ namespace tower {
 		void set_scroll_horizontal(bool isHorizontal);
 		void reset();
 		void setPlatformImage(std::string);
-		void remove();
 		void addEnemy();
-        
-		// SDL_Texture* get_bg_tex1() const {return bg1->get_bg_tex();}
-		// SDL_Texture* get_bg_tex2() const {return bg2->get_bg_tex();}
+		void isQuitting(bool q) {quit = q;}
 
-		bool quit;
+		//bool quit;
 
 	private:
+		bool quit;
 		void gameOver();
-	    void setup_background();
-		void addCompsFromTemp();
+	  void setup_background();
 		void setup_lives();
+		void removeComponents();
 		std::vector<Component*> tempComps;
 		std::vector<MobileComponent*> tempMobileComps;
 		
@@ -84,6 +80,7 @@ namespace tower {
 		int platformHeight = 10;
 		Actor* player;
 		Label* number_of_lives;
+		Platform* startPlatform;
 		
 		//void (*fpek)() ;
 		//typedef void (*func_t)(int); // pointer to function with no args and void return
