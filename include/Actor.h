@@ -15,7 +15,7 @@ namespace tower{
   class Actor : public MobileComponent {
     public:
     ~Actor();
-    static Actor* getInstance(int x, int y, int w, int h, std::string image);
+    static Actor* getInstance(int x, int y, int w, int h, std::string image, int no_lives);
     void draw() const;
     void update();
     virtual void jump();
@@ -30,7 +30,7 @@ namespace tower{
     bool isDead() {return dead;};
 
     protected:
-      Actor(int x, int y, int w, int h, std::string image);
+      Actor(int x, int y, int w, int h, std::string image, int no_lives);
     
     private:
       const static int GRAVITY = 1;
@@ -40,7 +40,7 @@ namespace tower{
       bool isOnTopOfPlatform = false;
       int dx, dy;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      int xSpeed = 7;
+      int xSpeed = 8;
       bool dead = false;
       SDL_Texture* texture;
       std::string image;

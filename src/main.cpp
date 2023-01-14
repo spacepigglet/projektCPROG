@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
 	std::cout << "*** main()\n";
 
 	Session ses;
-	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png");
+	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png", 3);
 	//ses.set_scroll_horizontal(true);
 	
 	HealthLabel* health_lbl = new HealthLabel(WINDOW_WIDTH-20, 10, 20, 20, to_string(a->getHealth()), {255,255,255}, a);

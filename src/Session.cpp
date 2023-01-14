@@ -10,7 +10,7 @@ namespace tower {
 		std::cout << "*** Session::Session()\n";
 		bg_Image = "images/space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
-		setPlatformWidthRange(80, 200);
+		setPlatformWidthRange(100, 250);
 		//fptr= verticalScroll();
 	}
 

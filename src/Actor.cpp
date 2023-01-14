@@ -8,13 +8,13 @@
 using namespace std;
 //TEST COMMIT IGEN
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h), startHealth(3), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
+    Actor::Actor(int x, int y, int w, int h, std::string image, int no_lives) : MobileComponent(x,y,w,h), startHealth(no_lives), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
         health = startHealth;
     }
 
-     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image){
-        return new Actor(x, y, w, h, image);
+     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image, int no_lives){
+        return new Actor(x, y, w, h, image,no_lives);
     }
 
     void Actor::keyDown(const SDL_Event& event) {
