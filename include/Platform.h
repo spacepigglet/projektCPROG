@@ -10,15 +10,18 @@ namespace tower{
     class Platform : public MobileComponent{
     public:
     static Platform* getInstance(int x, int y, int w, int h, std::string image);
+    static Platform* getInstance(int x, int y, int w, int h, std::string image, bool);
     void draw() const;
     void update();
     void collisionDetection(const Component*);
     ~Platform();
     bool hasNewPos() {return newPos;}
+    bool shouldBeRemoved() {return toBeRemoved;}
 
     protected:
     Platform(int x, int y, int w, int h, std::string image);
-    
+    Platform(int x, int y, int w, int h, std::string image, bool);
+
     private:
     SDL_Texture* texture;
     std::string image;
@@ -29,7 +32,7 @@ namespace tower{
     int newX, newY;
     bool collider = true;
     bool newPos = false;
-    
+    bool toBeRemoved;
     };
 }
 #endif

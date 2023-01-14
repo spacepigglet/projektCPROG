@@ -38,8 +38,11 @@ namespace tower {
             tempMobileComps.push_back(m);
 		}}
 
-	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cpp
+	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cp
 		removedComps.push_back(c);
+		if(Platform* p = dynamic_cast<Platform*>(c)) {
+			removedPlatforms.push_back(p);
+		}
 		//std::cout << "Enemy is in removedComps" << std::endl; -> FUNKAR
 	}
 		
@@ -110,8 +113,15 @@ namespace tower {
 	}
 	
 	void Session::updateGame() {
-		
+		//This code is before the update() bc update will move the platform to the top so in that case this code will never run:
 		for( Component* c: comps) {
+			if(Platform* p = dynamic_cast<Platform*>(c)) {
+				if(((p->getUpperY() > WINDOW_HEIGHT + p->getHeight()) || ((p->getRightX() < 0))) && p->shouldBeRemoved()) {
+						removedPlatforms.push_back(p);
+						removedComps.push_back(p);
+						removedMobileComps.push_back(p);
+				}
+			}
 			c->update();
 		}
 		//player is allowed 50 points outside window. More than that-> game over
@@ -164,38 +174,40 @@ namespace tower {
 		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) {
 			if(platforms[i]->getUpperY() == 0) {
 				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
-			} 
+			} else if(platforms[i]->getLeftX() == WINDOW_WIDTH) { //horizontal scroll
+				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
+			}
 		}
 	}
 
 
 	void Session::remove() {
 
-	for(Component* c: removedComps) {
-			for(std::vector<Component*>::iterator it=comps.begin();
-			it != comps.end();) {
-				if(*it == c) {
-					delete *it;
-						std::cout << "Ta bort i comps" << std::endl;
-						it = comps.erase(it); //plockar ut från vektorn
+		for(Platform* p: removedPlatforms) {
+			for(std::vector<Platform*>::iterator it=platforms.begin();
+			it != platforms.end();) {
+				if(*it == p) {
+						it = platforms.erase(it);
+						std::cout << "Platform pointer in platform-vector deleted" << std::endl;
 				} else {
 					it++;
 				}
-				removedComps.clear();
 			}
 	}
+	removedPlatforms.clear();
 
 	for(MobileComponent* mc: removedMobileComps) {
 			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin();
 			it != mobileComps.end();) {
 				if(*it == mc) {
 						it = mobileComps.erase(it); //plockar ut från vektorn
+						std::cout << "Mobilecomps pointer in mobilecomps-vector deleted" << std::endl;
 				} else {
 					it++;
 				}
-				removedMobileComps.clear();
 			}
 	}
+	removedMobileComps.clear();
 
 	for(Enemy* e: removedEnemies) {
 			for(std::vector<Enemy*>::iterator it=enemies.begin();
@@ -205,9 +217,24 @@ namespace tower {
 				} else {
 					it++;
 				}
-				removedEnemies.clear();
 			}
 	}
+	removedEnemies.clear();
+
+	for(Component* c: removedComps) {
+				for(std::vector<Component*>::iterator it=comps.begin();
+				it != comps.end();) {
+					if(*it == c) {
+						delete *it;
+							std::cout << "Delete objekt (i comps)" << std::endl;
+							it = comps.erase(it); //plockar ut från vektorn
+					} else {
+						it++;
+					}
+				}
+		}
+		removedComps.clear();
+
 }
 	
 

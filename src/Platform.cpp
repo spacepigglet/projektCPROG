@@ -3,12 +3,20 @@
 
 namespace tower{
     
-    Platform::Platform(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
+    Platform::Platform(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h), toBeRemoved(false) { // x, y, (x+w), (y+h+1)
+		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+    }
+
+    Platform::Platform(int x, int y, int w, int h, std::string image, bool isEnabled) : MobileComponent(x,y,w,h), toBeRemoved(isEnabled) { // x, y, (x+w), (y+h+1)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
     Platform* Platform::getInstance(int x, int y, int w, int h, std::string image){
         return new Platform(x, y, w, h, image);
+    }
+
+    Platform* Platform::getInstance(int x, int y, int w, int h, std::string image, bool isEnabled){
+        return new Platform(x, y, w, h, image, isEnabled);
     }
 
      void Platform:: draw() const {

@@ -61,6 +61,7 @@ namespace tower {
 		std::vector<Component*> removedComps;
 		std::vector<MobileComponent*> removedMobileComps;
 		std::vector<Enemy*> removedEnemies;
+		std::vector<Platform*> removedPlatforms;
 		std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
 		std::vector<Platform*> platformChunk1;

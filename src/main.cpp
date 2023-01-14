@@ -56,8 +56,8 @@ int main(int argc, char** argv) {
 	//ses.setPlatformImage("images/marble.jpg");
 
 	//ses.add(a); //temp bcz needs to be added after platforms for rendering
-	
-
+	Platform* start = Platform::getInstance(WINDOW_WIDTH/2 - 250, 500, 500, 10, "images/marble.jpg", true);
+	ses.add(start);
 	ses.initPlatforms("images/marble.jpg");
 	ses.initEnemies("images/enemy-orange.png");
 	ses.add(a);
