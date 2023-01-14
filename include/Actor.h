@@ -46,7 +46,7 @@ namespace tower{
       int dx;
       int dy;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      int xSpeed = 5;
+      int xSpeed = 7;
       bool dead = false;
       //int ySpeed = 5;
       SDL_Texture* texture;

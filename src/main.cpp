@@ -21,6 +21,23 @@
 using namespace std;
 using namespace tower;
 
+class HealthLabel : public Label {
+	public:
+	HealthLabel(int x, int y, int w, int h, std::string txt, SDL_Color color, Actor* a);
+	void update();
+
+	private:
+	Actor* player;
+};
+
+HealthLabel::HealthLabel(int x, int y, int w, int h, std::string txt, SDL_Color color, Actor* a):
+	Label(x,y,w,h,txt,color), player(a){
+
+	}
+void HealthLabel::update(){
+	setText(to_string(player->getHealth()));
+}
+
 
 
 
@@ -31,7 +48,8 @@ int main(int argc, char** argv) {
 	Actor* a = Actor::getInstance(150, 0, 70, 100, "images/spacepig_transparent.png");
 	//ses.set_scroll_horizontal(true);
 	
-
+	HealthLabel* health_lbl = new HealthLabel(WINDOW_WIDTH-20, 10, 20, 20, to_string(a->getHealth()), {255,255,255}, a);
+	ses.add(health_lbl);
 	
 	ses.set_background("images/space-background-vector-21179778.jpg");
 

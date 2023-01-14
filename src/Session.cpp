@@ -139,7 +139,8 @@ namespace tower {
 		}
 		addEnemy();
 
-		number_of_lives->setText(to_string(player->getHealth()));
+		
+		//number_of_lives->setText(to_string(player->getHealth()));
 		
 		if (player->isDead()){
 			quit = true;
@@ -333,14 +334,14 @@ namespace tower {
 
 //main gameloop
 
-void Session::setup_lives(){
-	number_of_lives = Label::getInstance(WINDOW_WIDTH-20, 10, 20, 20, to_string(player->getHealth()), {255,255,255});
-	add(number_of_lives);
+// void Session::setup_lives(){
+// 	number_of_lives = Label::getInstance(WINDOW_WIDTH-20, 10, 20, 20, to_string(player->getHealth()), {255,255,255});
+// 	add(number_of_lives);
 
-}
+// }
 	void Session::run() {
 		setup_background();
-		setup_lives();
+		//setup_lives();
 		//initPlatforms();
 		
 		/*setup_start_platform();
