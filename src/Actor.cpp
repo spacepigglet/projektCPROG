@@ -127,18 +127,7 @@ namespace tower{
             dy = 10;
         moveY(dy); //moving down no matter what, but as update is called before collision check this will be corrected if standing on platform
 
-        if(isJumping){
-            if (dx < 0 ){ //moving left
-                dx += GRAVITY;
-                moveX(dx);
-            } 
-            else if (dx > 0 ){ //moving right
-
-                dx -= GRAVITY;
-                moveX(dx);
-            }
-        } 
-                 // resetting dx in between input, if not jumping. Other solution - keyup?? Probably better...?
+    
         //}
         isOnTopOfPlatform = false; //reset
         movingDown = true;
