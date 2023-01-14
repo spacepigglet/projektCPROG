@@ -3,11 +3,11 @@
 
 namespace tower{
     
-    Platform::Platform(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h), toBeRemoved(false) { // x, y, (x+w), (y+h+1)
+    Platform::Platform(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h, image), toBeRemoved(false) { // x, y, (x+w), (y+h+1)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
-    Platform::Platform(int x, int y, int w, int h, std::string image, bool isEnabled) : MobileComponent(x,y,w,h), toBeRemoved(isEnabled) { // x, y, (x+w), (y+h+1)
+    Platform::Platform(int x, int y, int w, int h, std::string image, bool isEnabled) : MobileComponent(x,y,w,h, image), toBeRemoved(isEnabled) { // x, y, (x+w), (y+h+1)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 

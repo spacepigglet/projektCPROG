@@ -1,7 +1,7 @@
 #include "Enemy.h"
 namespace tower {
 
-Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : MobileComponent(x,y,w,h) { // x, y, (x+w), (y+h+1)
+Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : MobileComponent(x,y,w,h, image) { // x, y, (x+w), (y+h+1)
 texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
 platform = p;
 }

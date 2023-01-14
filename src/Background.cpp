@@ -2,7 +2,7 @@
 
 namespace tower{
 
-  Background::Background(int x, int y, int w, int h, std::string image) : MobileComponent(x, y, w, h) {
+  Background::Background(int x, int y, int w, int h, std::string image) : MobileComponent(x, y, w, h, image) {
     texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
   }
   

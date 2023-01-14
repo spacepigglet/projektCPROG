@@ -202,19 +202,13 @@ namespace tower {
 	
 
 	void Session::scroll() {
-		if (isScrolledHorizontally){
-			bg1->horizontalScroll(scrollSpeed);
-		    bg2->horizontalScroll(scrollSpeed);
-			for( MobileComponent* m: mobileComps) {
-				m->horizontalScroll(scrollSpeed);
-			}
-		}else {
-			bg1->verticalScroll(scrollSpeed);
-		    bg2->verticalScroll(scrollSpeed);
-			for( MobileComponent* m: mobileComps) {
-				m->verticalScroll(scrollSpeed);
-			}
+		
+		bg1->scroll(isScrolledHorizontally, scrollSpeed);
+		bg2->scroll(isScrolledHorizontally, scrollSpeed);
+		for( MobileComponent* m: mobileComps) {
+			m->scroll(isScrolledHorizontally, scrollSpeed);
 		}
+		
 		
 	}
 
