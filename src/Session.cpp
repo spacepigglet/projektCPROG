@@ -334,12 +334,17 @@ namespace tower {
 		comps.clear(); //deletes pointers in vector, not objects
 		mobileComps.clear();
 		for (Platform* p : platforms) {
-			delete p;
+			removedComps.push_back(p);
+			removedPlatforms.push_back(p);
+			removedMobileComps.push_back(p);
 		}
 		platforms.clear();
 		for(Enemy* e: enemies) {
-			delete e;
+			removedComps.push_back(e);
+			removedEnemies.push_back(e);
+			removedMobileComps.push_back(e);
 		}
+		enemies.clear();
 
 		platformChunk1.clear();
 		platformChunk2.clear();
@@ -349,6 +354,7 @@ namespace tower {
 		initEnemies(enemy_image);
 		player->reset();
 		comps.push_back(player);
+		mobileComps.push_back(player);
 
 		
 	}
