@@ -3,8 +3,7 @@
 namespace tower {
 
 
-	System::System()
-	{
+	System::System() {
 		std::cout << "*** System::System()\n";
 		
 		SDL_Init(SDL_INIT_EVERYTHING);
@@ -14,16 +13,10 @@ namespace tower {
 		TTF_Init();
 		font = TTF_OpenFont( (constants::gResPath + "fonts/arial.ttf").c_str(), 25);
 		std::cout << "resPath: " << constants::gResPath << std::endl;
-
-		//Background* bg = new Background()
-		//bg_tex = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + bg).c_str() );
-	
 	}
 
 
-	System::~System()
-	{
-		//SDL_DestroyTexture(bg_tex);
+	System::~System() {
 		TTF_CloseFont(font);
 		TTF_Quit();
 		SDL_DestroyWindow(win);
@@ -38,10 +31,6 @@ namespace tower {
 	TTF_Font* System::get_font() const {
 		return font;
 	}
-
-	// SDL_Texture* System::get_bg_tex() const {
-	// 	return bg_tex;
-	// }
 	
 	System sys; // Statiskt globalt objekt (definierad utanför funktioner.)
 	int WINDOW_WIDTH = 1080;
