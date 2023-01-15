@@ -56,9 +56,9 @@ int main(int argc, char** argv) {
 	ses.add(heart);
 
 	ses.set_background("space-background-vector-21179778.jpg");
-
+	ses.setPlatformWidthRange(100, 200);
 	ses.initPlatforms("marble.jpg", 10);
-	ses.initEnemies("enemy-orange.png");
+	ses.initEnemies("enemy_orange.png");
 
 	ses.add(a);
 

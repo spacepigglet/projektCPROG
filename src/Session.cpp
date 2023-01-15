@@ -131,9 +131,9 @@ namespace tower {
 	void Session::addEnemy() {
 		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) { //enemy added to about every other platform
 			if(platforms[i]->getUpperY() == 0) {
-				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
+				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 45, 35, 45, enemy_image, platforms[i]));
 			} else if(platforms[i]->getLeftX() == WINDOW_WIDTH) { //horizontal scroll
-				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
+				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 45, 35, 45, enemy_image, platforms[i]));
 			}
 		}
 	}
@@ -183,7 +183,7 @@ namespace tower {
 	const void Session::initEnemies(std::string image) {
 		enemy_image = image;
 		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) { //enemiey position based on platforms
-			add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
+			add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 45, 35, 45, enemy_image, platforms[i]));
 		}
 	}
 
