@@ -29,9 +29,9 @@ namespace tower {
       dying();
       return;
     } 
-    rect.x += enemySpeed * enemyDirection;
+    moveX(enemySpeed * enemyDirection);
 
-    if (rect.x < platform->getLeftX() || (rect.x + rect.w) > platform->getRightX()) {
+    if (getLeftX() < platform->getLeftX() || (getRightX()) > platform->getRightX()) {
       enemyDirection *= -1;
     }
 
@@ -45,9 +45,9 @@ namespace tower {
   }
 
   void Enemy::dying() {
-    rect.h -= 5;
+    changeHeight(-5);
     setPosition(getLeftX(), getUpperY() + 5);
-    if(rect.h == 0 || rect.w == 0) {
+    if(getHeight() == 0) {
       alive = false;
     }
   }

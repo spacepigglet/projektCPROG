@@ -21,6 +21,7 @@ namespace tower {
 		int getLowerY() const {return rect.y + rect.h;}
 		int getWidth() const {return rect.w;}
 		int getHeight() const {return rect.h;}
+		void changeHeight(int value) {rect.h += value;}
 		void scroll(const bool, const int); 
 		void setPosition(int, int);
   	void moveY(const int toMove){rect.y += toMove;}
@@ -30,20 +31,15 @@ namespace tower {
 	protected:
 		Component(int x, int y, int w, int h);
 		Component(int x, int y, int w, int h, bool scrollable);
-		
-	 	SDL_Texture* texture;
-		SDL_Rect rect;
-		int leftX;
-		int upperY;
-		int rightX;
-		int lowerY;
 	
 	private:
 		Component(const Component&) = delete;
 		const Component& operator=(const Component&) = delete;
 		virtual void verticalScroll(int);
   	virtual void horizontalScroll(int);
-		bool isScrollable = true;
+		SDL_Texture* texture;
+		SDL_Rect rect;
+		bool isScrollable;
 	
 	};
 }
