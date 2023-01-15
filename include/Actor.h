@@ -1,15 +1,18 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
-#include "Component.h"
-#include "Constants.h"
-#include "System.h"
-#include "Platform.h"
-#include "Enemy.h"
+
 #include <string>
 #include <iostream>
 #include <SDL2/SDL_image.h>
 #include <vector>
+
+#include "System.h"
+#include "Component.h"
+#include "Constants.h"
+#include "Platform.h"
+#include "Enemy.h"
+
 
 namespace tower{
   class Actor : public Component {
