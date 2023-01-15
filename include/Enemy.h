@@ -13,9 +13,8 @@ class Enemy : public Component {
     static Enemy* getInstance(int x, int y, int w, int h, std::string image, Platform*, bool scrollable);
     void update();
     void draw() const;
-    void addOnPlatform(Platform*);
     void die();
-    bool isAlive() {return alive;}
+    const bool isAlive() {return alive;}
 
   protected:
     Enemy(int x, int y, int w, int h, std::string image, Platform*);
@@ -25,7 +24,7 @@ class Enemy : public Component {
     void dying();
     Platform* platform;
     SDL_Texture* texture;
-    int enemySpeed = 1;
+    const int enemySpeed = 1;
     int enemyDirection = 1;
     bool alive = true;
     bool isDying = false;

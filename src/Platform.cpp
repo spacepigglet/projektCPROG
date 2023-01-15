@@ -16,7 +16,7 @@ namespace tower{
     }
 
     Platform* Platform::getInstance(int x, int y, int w, int h, std::string image, bool removable, bool scrollable){
-        return new Platform(x, y, w, h, image, removable, scrollable);
+      return new Platform(x, y, w, h, image, removable, scrollable);
     }
 
      void Platform:: draw() const {
@@ -24,7 +24,7 @@ namespace tower{
     }
 
     Platform:: ~Platform(){
-        SDL_DestroyTexture(texture);
+      SDL_DestroyTexture(texture);
     }
 
     void Platform::collisionDetection(const Component* other){

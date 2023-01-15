@@ -15,7 +15,7 @@ namespace tower{
         void update();
         void collisionDetection(const Component*);
         ~Platform();
-        bool shouldBeRemoved() {return isToBeRemoved;}
+        const bool shouldBeRemoved() const {return isToBeRemoved;}
 
     protected:
         Platform(int x, int y, int w, int h, std::string image);

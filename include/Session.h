@@ -10,10 +10,11 @@
 #include "Collision.h"
 #include <iostream>
 #include "Actor.h"
-//#include "MobileComponent.h"
+#include "Label.h"
 #include <cstdlib>
 #include "Button.h"
 #include "Label.h"
+#include "ImmobileComponent.h"
 
 #include "Enemy.h"
 
@@ -23,16 +24,16 @@ namespace tower {
 	public:
 		Session();
 		void add(Component* c);
-		void remove(Component* c);
-		void set_background(std::string);
+		void addToRemove(Component* c);
+		void set_background(const std::string);
 		void run();
 		~Session();
 		void setPlatformWidthRange(int, int); 
-		void initPlatforms(std::string);
-		void initEnemies(std::string);
-		void processInput();
-		void updateGame();
-		void generateOutput();
+		const void initPlatforms(const std::string);
+		const void initEnemies(const std::string);
+		const void processInput();
+		const void updateGame();
+		const void generateOutput();
 		void scroll();
 		void set_scroll_horizontal(bool isHorizontal);
 		void reset();
@@ -44,7 +45,6 @@ namespace tower {
 		bool quit;
 		void gameOver();
 	  void setup_background();
-		void setup_lives();
 		void removeComponents();
 		std::vector<Component*> tempComps;
 		std::vector<Component*> comps;
@@ -72,6 +72,8 @@ namespace tower {
 		Actor* player;
 		Label* number_of_lives;
 		Platform* startPlatform;
+		Label* health;
+		ImmobileComponent* life;
 
 	};
 

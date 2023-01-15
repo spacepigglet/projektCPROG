@@ -7,12 +7,12 @@ class Sprite {
   
   public:
     Sprite(int x, int y, std::string image); //takes in path to the pictures
-    void moveUp(int steg = 1);
-    void moveDown(int steg = 1);
-    void moveRight(int steg = 1);
-    void moveLeft(int steg = 1);
-    int getX();
-    int getY();
+    void moveUp(const int steg = 1);
+    void moveDown(const int steg = 1);
+    void moveRight(const int steg = 1);
+    void moveLeft(const int steg = 1);
+    const int getX() const;
+    const int getY() const;
 
     SDL_Rect getRect();
     SDL_Texture getTexture();
@@ -23,7 +23,6 @@ class Sprite {
     int gy;
     SDL_Rect rect;
     SDL_Texture* texture;
-
 };
 
 #endif

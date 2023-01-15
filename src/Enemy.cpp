@@ -2,13 +2,13 @@
 namespace tower {
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p, bool scrollable): Component(x,y,w,h, scrollable) { // x, y, (x+w), (y+h+1)
-texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
-platform = p;
+  texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+  platform = p;
 }
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : Component(x,y,w,h) { // x, y, (x+w), (y+h+1)
-texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
-platform = p;
+  texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+  platform = p;
 }
 
 Enemy* Enemy::getInstance(int x, int y, int w, int h, std::string image, Platform* p, bool scrollable){
@@ -19,7 +19,7 @@ Enemy* Enemy::getInstance(int x, int y, int w, int h, std::string image, Platfor
   return new Enemy(x, y, w, h, image, p, true);
 }
 
-void Enemy::draw() const{
+void Enemy::draw() const {
   SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
 }
 
@@ -49,11 +49,6 @@ void Enemy::dying() {
   if(rect.h == 0 || rect.w == 0) {
     alive = false;
   }
-}
-
-
-void Enemy::addOnPlatform(Platform* p) {
-  setPosition(p->getLeftX(), p->getUpperY());
 }
 
 

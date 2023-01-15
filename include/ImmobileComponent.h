@@ -10,14 +10,14 @@
 namespace tower {
 class ImmobileComponent : public Component {
 
-   public:
+  public:
   virtual void draw() const;
   ~ImmobileComponent();
   static ImmobileComponent* getInstance(int, int, int, int, std::string);
   static ImmobileComponent* getInstance(int, int, int, int, std::string, bool);
 
   protected:
-  ImmobileComponent(int, int, int, int, std::string ); 
+  ImmobileComponent(int, int, int, int, std::string); 
   ImmobileComponent(int, int, int, int, std::string, bool); 
 
   private:

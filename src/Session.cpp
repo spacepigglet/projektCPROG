@@ -1,12 +1,12 @@
 #include "Session.h"
 #include "Enemy.h"
-#include <memory> //for unique ptr
+#include <algorithm>
 
 #define FPS 60
 using namespace std;
 namespace tower {
 
-	Session::Session() : quit(false){
+	Session::Session() : quit(false) {
 		std::cout << "*** Session::Session()\n";
 		bg_Image = "images/space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
@@ -16,10 +16,7 @@ namespace tower {
 
 	void Session::add(Component* c) {
 		comps.push_back(c);
-		/*
-		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ //bra lösning? platformar är rörliga och de är många...
-      mobileComps.push_back(m);
-		}*/
+		
 		if(Enemy* e = dynamic_cast<Enemy*>(c)){
        enemies.push_back(e);
 		}
@@ -32,11 +29,8 @@ namespace tower {
 		
 	}
 
-	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cp
+	void Session::addToRemove(Component* c) { //anropas t.ex. i Enemy.cp
 		removedComps.push_back(c);
-		/* if(MobileComponent* mc = dynamic_cast<MobileComponent*>(c)) {
-			removedMobileComps.push_back(mc);
-		} */
 		if(Platform* p = dynamic_cast<Platform*>(c)) {
 			removedPlatforms.push_back(p);
 		}
@@ -71,7 +65,7 @@ namespace tower {
 	  
     } 
 
-	void Session::processInput(){
+	const void Session::processInput(){
 		SDL_Event eve;
 		while (SDL_PollEvent(&eve)) {
 			switch (eve.type) {
@@ -98,14 +92,8 @@ namespace tower {
 		} // inre while
 	}
 	
-	void Session::updateGame() {
-		//This code is before the update() bc update will move the platform to the top so in that case this code will never run:
+	const void Session::updateGame() {
 		for( Component* c: comps) {
-			/*if(Platform* p = dynamic_cast<Platform*>(c)) {
-				if(((p->getUpperY() > WINDOW_HEIGHT + p->getHeight()) || ((p->getRightX() < 0))) && p->shouldBeRemoved()) {
-						remove(p);
-				}
-			}*/
 			c->update();
 		}
 		//player is allowed 50 points outside window. More than that-> game over
@@ -132,7 +120,7 @@ namespace tower {
 			
 		for(Enemy* e : enemies) {
 			if(!(e->isAlive())) {
-				remove(e);
+				addToRemove(e);
 			}
 		}
 		removeComponents();
@@ -151,56 +139,6 @@ namespace tower {
 			}
 		}
 	}
-
-
-	void Session::removeComponents() {
-
-		for(Platform* p: removedPlatforms) {
-			for(std::vector<Platform*>::iterator it=platforms.begin(); it != platforms.end();) {
-				if(*it == p) {
-						it = platforms.erase(it);
-				} else {
-					it++;
-				}
-			}
-	}
-	removedPlatforms.clear();
-
-	/* for(MobileComponent* mc: removedMobileComps) {
-			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin(); it != mobileComps.end();) {
-				if(*it == mc) {
-						it = mobileComps.erase(it);
-				} else {
-					it++;
-				}
-			}
-	}
-	removedMobileComps.clear(); */
-
-	for(Enemy* e: removedEnemies) {
-			for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
-				if(*it == e) {
-						it = enemies.erase(it); 
-				} else {
-					it++;
-				}
-			}
-	}
-	removedEnemies.clear();
-
-	for(Component* c: removedComps) {
-				for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
-					if(*it == c) {
-						delete *it;
-							it = comps.erase(it); 
-					} else {
-						it++;
-					}
-				}
-		}
-		removedComps.clear();
-
-}
 	
 
 	void Session::scroll() {
@@ -214,12 +152,12 @@ namespace tower {
 		
 	}
 
-	 void Session::setPlatformWidthRange(int min, int max) {
+	void Session::setPlatformWidthRange(int min, int max) {
 	 	platformMinWidth = min;
 		platformMaxWidth = max;
 	 }
 
-	void Session::generateOutput(){
+	const void Session::generateOutput(){
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
 			SDL_RenderClear(sys.get_ren());
 			bg1->draw();
@@ -231,7 +169,7 @@ namespace tower {
 			SDL_RenderPresent(sys.get_ren());
 	}
 
-	void Session::initPlatforms(std::string image) {
+	const void Session::initPlatforms(std::string image) {
 	    platform_image = image;
 		for(int i = 0; i<nrOfPlatforms; i++) { 
 			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; 
@@ -243,7 +181,7 @@ namespace tower {
 		}
 	}
 
-	void Session::initEnemies(std::string image) {
+	const void Session::initEnemies(std::string image) {
 		enemy_image = image;
 		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) {
 			add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
@@ -278,22 +216,61 @@ namespace tower {
 		QuitButton* quitButton = new QuitButton(this);
 		add(restartButton);
 		add(quitButton);
-		
 	}
 
+	void Session::removeComponents() {
+
+		for(Platform* p: removedPlatforms) {
+			for(std::vector<Platform*>::iterator it=platforms.begin(); it != platforms.end();) {
+				if(*it == p) {
+						it = platforms.erase(it);
+				} else {
+					it++;
+				}
+			}
+	}
+	removedPlatforms.clear();
+
+	for(Enemy* e: removedEnemies) {
+			for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
+				if(*it == e) {
+						it = enemies.erase(it); 
+				} else {
+					it++;
+				}
+			}
+	}
+	removedEnemies.clear();
+
+	for(Component* c: removedComps) {
+			for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
+				if(*it == c) {
+						delete *it;
+						it = comps.erase(it); 
+				} else {
+					it++;
+				}
+			}
+		}
+		removedComps.clear();
+}
+
 	void Session::reset(){
-		comps.clear(); //deletes pointers in vector, not objects
+		//comps.clear(); //deletes pointers in vector, not objects
 		for (Platform* p : platforms) {
-			remove(p);
+			addToRemove(p);
 		}
 		platforms.clear();
 		for(Enemy* e: enemies) {
-			remove(e);
+			addToRemove(e);
 		}
 		enemies.clear();
 		removeComponents();
 
-		//restart
+
+		remove(comps.begin(), comps.end(), player);
+	
+
 		initPlatforms(platform_image);
 		initEnemies(enemy_image);
 		player->reset();

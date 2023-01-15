@@ -20,6 +20,6 @@ void Sprite::moveRight(int steg) {
 void Sprite::moveLeft(int steg) {
 }
 
-int Sprite::getX() {return gx;}
+const int Sprite::getX() const {return gx;}
 
-int Sprite::getY() {return gy;}
+const int Sprite::getY() const {return gy;}
