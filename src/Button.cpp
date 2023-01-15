@@ -1,6 +1,4 @@
-#include "Constants.h"
 #include "Button.h"
-#include "System.h"
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 

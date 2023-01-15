@@ -1,6 +1,7 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#include "Constants.h"
 #include "Component.h"
 #include "System.h"
 #include <SDL2/SDL.h>

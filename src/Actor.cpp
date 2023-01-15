@@ -1,5 +1,4 @@
 #include "Actor.h"
-#include "Collision.h"
 #include <vector>
 
 using namespace std;
@@ -120,7 +119,7 @@ namespace tower{
         if (health <= 0){
             dead = true;
         }
-        
+
         if(invincibility > 0) {
             invincibility--;
         }

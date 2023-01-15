@@ -1,8 +1,8 @@
-
 #ifndef COLLISION_H
 #define COLLISION_H
-#include <SDL2/SDL.h>
+
 #include "Component.h"
+#include <SDL2/SDL.h>
 #include <iostream>
 
 using namespace tower;

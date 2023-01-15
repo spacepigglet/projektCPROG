@@ -1,4 +1,5 @@
 #include "Enemy.h"
+
 namespace tower {
 
   Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p, bool scrollable): Component(x,y,w,h, scrollable) { // x, y, (x+w), (y+h+1)
