@@ -9,8 +9,8 @@ namespace tower {
 			SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
 		ren = SDL_CreateRenderer(win, -1, 0);
 		TTF_Init();
-		font = TTF_OpenFont( (constants::gResPath_fonts + "fonts/arial.ttf").c_str(), 25);
-		std::cout << "resPath: " << constants::gResPath_fonts << std::endl;
+		font = TTF_OpenFont( (constants::gResPath + "fonts/arial.ttf").c_str(), 25);
+		std::cout << "resPath: " << constants::gResPath << std::endl;
 	}
 
 
