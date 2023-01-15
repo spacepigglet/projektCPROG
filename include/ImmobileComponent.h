@@ -2,10 +2,10 @@
 #define IMMOBILECOMPONENT_H
 
 #include "Component.h"
-#include <string>
 #include "Constants.h"
-#include <SDL2/SDL_image.h>
 #include "System.h"
+#include <string>
+#include <SDL2/SDL_image.h>
 
 namespace tower {
 class ImmobileComponent : public Component {
@@ -17,11 +17,11 @@ class ImmobileComponent : public Component {
   static ImmobileComponent* getInstance(int, int, int, int, std::string, bool);
 
   protected:
-  ImmobileComponent(int, int, int, int, std::string); 
-  ImmobileComponent(int, int, int, int, std::string, bool); 
+    ImmobileComponent(int, int, int, int, std::string); 
+    ImmobileComponent(int, int, int, int, std::string, bool); 
 
   private:
-  SDL_Texture* texture;
+    SDL_Texture* texture;
 
 };
 }

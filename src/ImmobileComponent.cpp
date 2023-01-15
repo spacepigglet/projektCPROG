@@ -2,10 +2,10 @@
 
 namespace tower {
 
-
   ImmobileComponent::ImmobileComponent(int x, int y, int w, int h, std::string img, bool scrollable) : Component(x,y,w,h,scrollable) {
     texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + img).c_str() );
   }
+
   ImmobileComponent::ImmobileComponent(int x, int y, int w, int h, std::string img) : Component(x,y,w,h) {
     ImmobileComponent(x,y,w,h,img,true);
   }

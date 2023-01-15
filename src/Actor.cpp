@@ -1,12 +1,7 @@
-//#include "Sprite.h"
 #include "Actor.h"
-#include "Enemy.h"
-#include "Collision.h"
 #include <vector>
 
-#define FPS 60
 using namespace std;
-//TEST COMMIT IGEN
 namespace tower{
     Actor::Actor(int x, int y, int w, int h, std::string image, int no_lives) : Component(x,y,w,h, true), startHealth(no_lives), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
@@ -124,6 +119,7 @@ namespace tower{
         if (health <= 0){
             dead = true;
         }
+
         if(invincibility > 0) {
             invincibility--;
         }

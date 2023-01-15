@@ -1,12 +1,11 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-
-#include "Component.h"
-#include <string>
 #include  "System.h"
-#include <SDL2/SDL_image.h>
+#include "Component.h"
 #include "Constants.h"
+#include <string>
+#include <SDL2/SDL_image.h>
 
 namespace tower {
   class Background : public Component {
