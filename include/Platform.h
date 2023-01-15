@@ -10,7 +10,7 @@ namespace tower{
     class Platform : public Component{
     public:
         static Platform* getInstance(int x, int y, int w, int h, std::string image);
-        static Platform* getInstance(int x, int y, int w, int h, std::string image, bool);
+        //static Platform* getInstance(int x, int y, int w, int h, std::string image, bool);
         static Platform* getInstance(int x, int y, int w, int h, std::string image, bool remove, bool scrollable);
         void draw() const;
         void update();
@@ -20,7 +20,7 @@ namespace tower{
 
     protected:
         Platform(int x, int y, int w, int h, std::string image);
-        Platform(int x, int y, int w, int h, std::string image, bool);
+        //Platform(int x, int y, int w, int h, std::string image, bool);
         Platform(int x, int y, int w, int h, std::string image, bool removable, bool scrollable);
 
     private:

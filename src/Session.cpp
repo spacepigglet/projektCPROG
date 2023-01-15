@@ -101,11 +101,11 @@ namespace tower {
 	void Session::updateGame() {
 		//This code is before the update() bc update will move the platform to the top so in that case this code will never run:
 		for( Component* c: comps) {
-			if(Platform* p = dynamic_cast<Platform*>(c)) {
+			/*if(Platform* p = dynamic_cast<Platform*>(c)) {
 				if(((p->getUpperY() > WINDOW_HEIGHT + p->getHeight()) || ((p->getRightX() < 0))) && p->shouldBeRemoved()) {
 						remove(p);
 				}
-			}
+			}*/
 			c->update();
 		}
 		//player is allowed 50 points outside window. More than that-> game over
