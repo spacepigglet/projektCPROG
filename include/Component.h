@@ -13,8 +13,8 @@ namespace tower {
 		virtual void keyDown(const SDL_Event&) {}
 		virtual void keyUp(const SDL_Event&) {}
 		virtual void update() {}
+		virtual void scroll(const bool, const int); 
 		virtual void draw() const = 0;
-		const SDL_Rect& getRect() const {return rect;}
 		int getLeftX() const {return rect.x;}
 		int getUpperY() const {return rect.y;}
 		int getRightX() const {return rect.x + rect.w;}
@@ -22,7 +22,6 @@ namespace tower {
 		int getWidth() const {return rect.w;}
 		int getHeight() const {return rect.h;}
 		void changeHeight(int value) {rect.h += value;}
-		void scroll(const bool, const int); 
 		void setPosition(int, int);
   	void moveY(const int toMove){rect.y += toMove;}
 		void moveX(const int toMove){rect.x += toMove;}
@@ -31,6 +30,7 @@ namespace tower {
 	protected:
 		Component(int x, int y, int w, int h);
 		Component(int x, int y, int w, int h, bool scrollable);
+		const SDL_Rect& getRect() const {return rect;}
 	
 	private:
 		Component(const Component&) = delete;

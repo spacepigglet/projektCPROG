@@ -28,7 +28,7 @@ namespace tower{
 
     void Platform::update() {
       //if scrolling vertically
-      if(getUpperY() > WINDOW_HEIGHT + getHeight()) {
+      if(getUpperY() > WINDOW_HEIGHT + getHeight() + 100) {
         newX = rand() % (WINDOW_WIDTH - getRightX()); //randomize new position within limits
         newY = -getHeight();
         setPosition(newX, newY);

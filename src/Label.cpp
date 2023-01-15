@@ -25,11 +25,11 @@ namespace tower {
 		return new Label(x, y, w, h, txt, c, scrollable);
 	}
 
-	const string Label::getText() const {
+	string Label::getText() const {
 		return text;
 	}
 
-	const void Label::setText(string newText) {
+	void Label::setText(string newText) {
 		text = newText;
 		SDL_DestroyTexture(texture);
 		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), text.c_str(), color);

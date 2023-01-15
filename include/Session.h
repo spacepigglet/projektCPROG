@@ -34,7 +34,7 @@ namespace tower {
 
 	private:
 		void gameOver();
-	  	void setup_background();
+	  void setup_background();
 		void removeComponents();
 		const void processInput();
 		const void updateGame();
@@ -48,7 +48,7 @@ namespace tower {
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
-		const int nrOfPlatforms = 10;
+		const int nrOfPlatforms = 12;
 		int platformMinWidth;
 		int platformMaxWidth;
 		const int platformHeight = 10;
@@ -61,14 +61,12 @@ namespace tower {
 		std::vector<Platform*> platforms;
 		std::vector<Enemy*> enemies;
 	
-		Background* bg1 ;
-		Background* bg2 ;
+		Background* bg1;
+		Background* bg2;
 
 		std::string bg_Image;
 		std::string platform_image;
 		std::string enemy_image;
-
-		
 	
 	};
 
