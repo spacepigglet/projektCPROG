@@ -1,16 +1,17 @@
 
 
 #include <SDL2/SDL.h>
+#include <string>
+#include <iostream>
 
 #include "Session.h"
 #include "Button.h"
 #include "Actor.h"
 #include "Platform.h"
-#include <string>
 #include "Background.h"
 #include "ImmobileComponent.h"
 
-#include <iostream>
+
 
 /*
 *   'gResPath' is a global constant defined in "Constants.h", 

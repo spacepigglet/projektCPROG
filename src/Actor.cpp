@@ -97,12 +97,12 @@ namespace tower{
 
     void Actor:: update(){
         if(movingRight){
-            dx = xSpeed; 
-            moveX(xSpeed);
+            dx = speed; 
+            moveX(speed);
         }
         if (movingLeft){
-            dx = -xSpeed;
-            moveX(-xSpeed);
+            dx = -speed;
+            moveX(-speed);
         }else if (!movingRight && !movingLeft){
             dx = 0;
         }
@@ -127,6 +127,7 @@ namespace tower{
 
     void Actor:: reset() {
         setPosition(startX, startY);
+        speed = 8;
         dx = 0;
         dy = 0;
         dead = false;

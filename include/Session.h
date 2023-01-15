@@ -44,7 +44,7 @@ namespace tower {
 		void addEnemy();
 
 		bool quit;
-		const int scrollSpeed = 1;
+		int scrollSpeed = 1;
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;

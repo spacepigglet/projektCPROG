@@ -32,6 +32,7 @@ namespace tower{
       virtual void handleCollision(Component*);
       int getHealth() const {return health;}
       bool isDead() const {return dead;};
+      void changeSpeed(int i){speed += i;}
 
     protected:
       Actor(int x, int y, int w, int h, std::string, int);
@@ -45,7 +46,7 @@ namespace tower{
       bool isOnTopOfPlatform = false;
       int dx, dy;
       bool movingRight = false, movingLeft = false, movingUp = false, movingDown = false;
-      const int xSpeed = 8;
+      int speed = 8;
       bool dead = false;
       SDL_Texture* texture;
       std::string image;

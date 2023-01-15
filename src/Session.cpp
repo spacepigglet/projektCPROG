@@ -1,7 +1,5 @@
 #include "Session.h"
 
-
-
 #define FPS 60
 using namespace std;
 namespace tower {
@@ -277,6 +275,7 @@ namespace tower {
 		//setup for restart
 		initPlatforms(platform_image);
 		initEnemies(enemy_image);
+		scrollSpeed = 1;
 		player->reset();
 		add(player);
 	}
@@ -295,9 +294,15 @@ namespace tower {
 			updateGame();
 			generateOutput();
 
-			if (delay > 0)
+			if (delay > 0){
 				SDL_Delay(delay);
-		
+			}
+			if(nextTick % 1000 == 0){
+				scrollSpeed ++;
+			}
+			if(nextTick % 2000 == 0){
+				player->changeSpeed(1);
+			}
 		}
 
 		gameOver();
@@ -310,6 +315,7 @@ namespace tower {
 			if (delay > 0)
 				SDL_Delay(delay);
 		}
+		
 	}
 
 	Session::~Session() {
