@@ -7,7 +7,7 @@ namespace tower {
 	class Component
 	{
 	public:
-		virtual ~Component();
+		virtual ~Component() {}
 		virtual void mouseDown(const SDL_Event&) {}
 		virtual void mouseUp(const SDL_Event&) {}
 		virtual void keyDown(const SDL_Event&) {}
@@ -21,10 +21,10 @@ namespace tower {
 		int getLowerY() const {return rect.y + rect.h;}
 		int getWidth() const {return rect.w;}
 		int getHeight() const {return rect.h;}
-		void scroll(bool, int); 
+		void scroll(const bool, const int); 
 		void setPosition(int, int);
-  	void moveY(int toMove){rect.y += toMove;}
-		void moveX(int toMove){rect.x += toMove;}
+  	void moveY(const int toMove){rect.y += toMove;}
+		void moveX(const int toMove){rect.x += toMove;}
   	virtual void handleCollision(Component*) {}
 		
 	protected:

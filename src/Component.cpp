@@ -6,9 +6,6 @@ namespace tower {
 	
 	Component::Component(int x, int y, int w, int h, bool scrollable) : rect{ x,y,w,h }, isScrollable(scrollable) {}
 
-	Component::~Component() {}
-
-
 	void Component::horizontalScroll(int toScroll) {
 		moveX(-toScroll);
 	}
@@ -24,7 +21,6 @@ namespace tower {
 			else
 				verticalScroll(toScroll);
 		}
-		
 	}
 
   void Component::setPosition(int x, int y) {

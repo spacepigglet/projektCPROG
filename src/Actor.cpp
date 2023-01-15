@@ -57,8 +57,8 @@ namespace tower{
     void Actor::collisionWithPlatform(Platform* p) {
         if(getLowerY() > p->getUpperY() && getLowerY() < p->getLowerY()  && 
         getLeftX() < p->getRightX() && getRightX() > p->getLeftX()) {
-            if(dy > 0) {
-                isOnTopOfPlatform = true;
+            if(dy > 0) { //moving down on top of platform
+                isOnTopOfPlatform = true;  //standing on platform, can jump now
                 movingDown = false;
                 dy = 0;
                 isJumping = false;
@@ -70,10 +70,10 @@ namespace tower{
     void Actor::collisionWithEnemy(Enemy* e) {
          if(movingUp) {
             hurting();
-        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) {
+        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) { //coming from above
             e->die();
             dy = -7;
-        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){
+        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){ //collision with enemy left side
             hurting();
             setPosition(e->getLeftX() - getWidth(), getUpperY());
         } else if ((getLeftX() < e->getRightX() && (getLeftX() > e->getLeftX()))) {
@@ -85,7 +85,7 @@ namespace tower{
     void Actor::hurting() {
         if(invincibility == 0) {
             health--;
-            invincibility = 60;
+            invincibility = 60; //can't get hur again for another 60 ticks
         }
     }
 
@@ -120,6 +120,7 @@ namespace tower{
         if (health <= 0){
             dead = true;
         }
+        
         if(invincibility > 0) {
             invincibility--;
         }
