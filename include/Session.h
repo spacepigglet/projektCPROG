@@ -19,8 +19,7 @@
 
 namespace tower {
 
-	class Session
-	{
+	class Session {
 	public:
 		Session();
 		void add(Component* c);
@@ -28,7 +27,6 @@ namespace tower {
 		void set_background(std::string);
 		void run();
 		~Session();
-		//const std::vector<MobileComponent*> getComps() const {return mobileComps;}
 		void setPlatformWidthRange(int, int); 
 		void initPlatforms(std::string);
 		void initEnemies(std::string);
@@ -42,8 +40,6 @@ namespace tower {
 		void addEnemy();
 		void isQuitting(bool q) {quit = q;}
 
-		//bool quit;
-
 	private:
 		bool quit;
 		void gameOver();
@@ -51,21 +47,16 @@ namespace tower {
 		void setup_lives();
 		void removeComponents();
 		std::vector<Component*> tempComps;
-		//std::vector<MobileComponent*> tempMobileComps;
-		
 		std::vector<Component*> comps;
 		std::vector<Component*> removedComps;
-		//std::vector<MobileComponent*> removedMobileComps;
 		std::vector<Enemy*> removedEnemies;
 		std::vector<Platform*> removedPlatforms;
-		//std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
 		std::vector<Platform*> platformChunk1;
 		std::vector<Platform*> platformChunk2;
 		std::vector<Enemy*> enemies;
-		//void collisionDetection();
 		
-		int scrollSpeed = 1;
+		const int scrollSpeed = 1;
 		Background* bg1 ;
 		Background* bg2 ;
 		std::string bg_Image;
@@ -74,17 +65,13 @@ namespace tower {
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
-		int nrOfPlatforms = 10;
+		const int nrOfPlatforms = 10;
 		int platformMinWidth;
 		int platformMaxWidth;
-		int platformHeight = 10;
+		const int platformHeight = 10;
 		Actor* player;
 		Label* number_of_lives;
 		Platform* startPlatform;
-		
-		//void (*fpek)() ;
-		//typedef void (*func_t)(int); // pointer to function with no args and void return
-        //func_t fptr; // variable of pointer to function
 
 	};
 

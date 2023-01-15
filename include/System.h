@@ -24,7 +24,7 @@ namespace tower {
 		std::string bg = "images/space-background-vector-21179778.jpg";
 	};
 	
-	extern System sys; //säger: "det finns en definition av system som heter sys, men inte här!" finns i cpp
+	extern System sys; //says: there'a a definition of the system calles sys, but not here -> exists in cpp
 	extern int WINDOW_HEIGHT;
 	extern int WINDOW_WIDTH;
 }

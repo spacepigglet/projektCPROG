@@ -65,8 +65,9 @@ namespace tower {
 	void Button::mouseDown(const SDL_Event& eve) {
 		SDL_Point p = { eve.button.x, eve.button.y };
 		if (SDL_PointInRect(&p, &getRect()))
-			isDown = true;
+		isDown = true;
 	}
+	
 	void Button::mouseUp(const SDL_Event& eve) {
 		SDL_Point p = { eve.button.x, eve.button.y };
 		if (SDL_PointInRect(&p, &getRect()) && isDown)

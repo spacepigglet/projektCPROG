@@ -14,7 +14,6 @@ namespace tower {
     public:
       ~Background();
       static Background* getInstance(int x, int y, int w, int h, std::string image);
-      //void update();
       void draw() const;
       void verticalScroll(int);
       void horizontalScroll(int);
