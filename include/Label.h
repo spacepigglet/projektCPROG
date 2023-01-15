@@ -12,7 +12,6 @@ namespace tower {
 		void draw() const;
 		std::string getText() const;
 		void setText(std::string newText);
-		//virtual void update(); 
 		~Label();
 		SDL_Color getColor() {return color;}
 		void setColor(SDL_Color c);

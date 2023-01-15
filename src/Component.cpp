@@ -2,18 +2,11 @@
 
 namespace tower {
 
-	Component::Component(int x, int y, int w, int h) :rect{ x,y,w,h } {
-
-	}
+	Component::Component(int x, int y, int w, int h) :rect{ x,y,w,h } {}
 	
-	Component::Component(int x, int y, int w, int h, bool scrollable) :
-		rect{ x,y,w,h }, isScrollable(scrollable) {
-		
-	}
+	Component::Component(int x, int y, int w, int h, bool scrollable) : rect{ x,y,w,h }, isScrollable(scrollable) {}
 
-	Component::~Component()
-	{
-	}
+	Component::~Component() {}
 
 
 	void Component::horizontalScroll(int toScroll) {
@@ -38,9 +31,5 @@ namespace tower {
 		rect.x = x;
 		rect.y = y;
 	}
-
-	/* void Component:: draw() const {
-		SDL_RenderCopy(sys.get_ren(), texture, NULL, &rect);
-    } */
 
 }

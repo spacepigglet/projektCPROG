@@ -12,11 +12,11 @@ platform = p;
 }
 
 Enemy* Enemy::getInstance(int x, int y, int w, int h, std::string image, Platform* p, bool scrollable){
-    return new Enemy(x, y, w, h, image, p, scrollable);
+  return new Enemy(x, y, w, h, image, p, scrollable);
 }
 
 Enemy* Enemy::getInstance(int x, int y, int w, int h, std::string image, Platform* p){
-    return new Enemy(x, y, w, h, image, p);
+  return new Enemy(x, y, w, h, image, p, true);
 }
 
 void Enemy::draw() const{
@@ -58,7 +58,7 @@ void Enemy::addOnPlatform(Platform* p) {
 
 
 Enemy:: ~Enemy(){
-    SDL_DestroyTexture(texture);
+  SDL_DestroyTexture(texture);
 }
 
 }

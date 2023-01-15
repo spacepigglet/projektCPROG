@@ -27,8 +27,7 @@ namespace tower {
 	void Label::setText(std::string newText) {
 		text = newText;
 		SDL_DestroyTexture(texture);
-		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(),
-			text.c_str(), color);
+		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), text.c_str(), color);
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
 	}
@@ -36,8 +35,7 @@ namespace tower {
 	void Label::setColor(SDL_Color newColor) {
 		color = newColor;
 		SDL_DestroyTexture(texture);
-		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(),
-			text.c_str(), color);
+		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), text.c_str(), color);
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
 	}
@@ -46,10 +44,8 @@ namespace tower {
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
 	}
 
-	Label::~Label()
-	{
+	Label::~Label() {
 		SDL_DestroyTexture(texture);
 	}
-	
 	
 }

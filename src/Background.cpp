@@ -7,32 +7,27 @@ namespace tower{
   }
   
   Background:: ~Background(){
-        SDL_DestroyTexture(texture);
-    }
+    SDL_DestroyTexture(texture);
+  }
 
   Background* Background::getInstance(int x, int y, int w, int h, std::string image){
-        return new Background(x, y, w, h, image);
-    }
-
-
- /*void Background::update() {
-  moveY(scrollSpeed);
-  }*/
+    return new Background(x, y, w, h, image);
+  }
 
   void Background::verticalScroll(int toScroll) {
     if(getUpperY() >= getHeight()){
       setPosition(0, -getHeight());
-    } else
-        moveY(toScroll);
-
+    } else {
+      moveY(toScroll);
+    }
   }
 
   void Background::horizontalScroll(int toScroll) {
     if(getRightX() <= 0){
       setPosition(getWidth(), 0);
-    } else
-        moveX(-toScroll);
-
+    } else {
+      moveX(-toScroll);
+    }
   }
 
   void Background::draw() const {

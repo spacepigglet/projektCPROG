@@ -22,23 +22,15 @@ namespace tower {
 		int getWidth() {return rect.w;}
 		int getHeight() {return rect.h;}
 
-		void scroll(bool horizontal, int toScroll); 
+		void scroll(bool, int); 
 		void setPosition(int, int);
-  		void moveY(int toMove){rect.y += toMove;}
+  	void moveY(int toMove){rect.y += toMove;}
 		void moveX(int toMove){rect.x += toMove;}
-  		virtual void handleCollision(Component*) {}
+  	virtual void handleCollision(Component*) {}
 		
 	protected:
 		Component(int x, int y, int w, int h);
 		Component(int x, int y, int w, int h, bool scrollable);
- 
- 
-		/* //constructor for image
-		Component(int x, int y, int w, int h, std::string image); //int leftX, int upperY, int rightX , int lowerY
-		Component(int x, int y, int w, int h, std::string image, bool scrollable); 
-		//constructor for text
-		Component(int x, int y, int w, int h, std::string txt, SDL_Color c);
-		Component(int x, int y, int w, int h, std::string txt, SDL_Color c, bool scrollable); */
 		
 	 	SDL_Texture* texture;
 		SDL_Rect rect;
@@ -52,7 +44,7 @@ namespace tower {
 		const Component& operator=(const Component&) = delete;
 
 		virtual void verticalScroll(int);
-  		virtual void horizontalScroll(int);
+  	virtual void horizontalScroll(int);
 		bool isScrollable = true;
 	
 	};

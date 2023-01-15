@@ -2,10 +2,8 @@
 
 namespace tower {
 
-
 	System::System() {
 		std::cout << "*** System::System()\n";
-		
 		SDL_Init(SDL_INIT_EVERYTHING);
 		win = SDL_CreateWindow("Tower game", SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
@@ -32,7 +30,7 @@ namespace tower {
 		return font;
 	}
 	
-	System sys; // Statiskt globalt objekt (definierad utanför funktioner.)
+	System sys; // global object (defined outside class)
 	int WINDOW_WIDTH = 1080;
 	int WINDOW_HEIGHT = 720;
 }

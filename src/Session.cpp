@@ -282,9 +282,7 @@ namespace tower {
 	}
 
 	void Session::reset(){
-		//reset/clean up
 		comps.clear(); //deletes pointers in vector, not objects
-		//mobileComps.clear();
 		for (Platform* p : platforms) {
 			remove(p);
 		}
@@ -310,8 +308,8 @@ namespace tower {
 		Uint32 nextTick;
 		int delay;
 		while (!quit) {
-			nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
-			delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
+			nextTick = SDL_GetTicks() +  tickInterval; //millisec since the library started
+			delay = nextTick - SDL_GetTicks(); //time left before next loop will run
 			processInput();
 			updateGame();
 			generateOutput();
@@ -319,13 +317,13 @@ namespace tower {
 			if (delay > 0)
 				SDL_Delay(delay);
 		
-		} //yttre while
+		}
 
 
 		gameOver();
-		while (quit){
-			nextTick = SDL_GetTicks() +  tickInterval; //GetTicks ger antal millisec sedan biblioteket startades
-			delay = nextTick - SDL_GetTicks(); //får veta om det finns tid kvar innan nästa varv ska göras
+		while (quit) {
+			nextTick = SDL_GetTicks() +  tickInterval;
+			delay = nextTick - SDL_GetTicks();
 			processInput();
 			generateOutput();
 
@@ -334,15 +332,12 @@ namespace tower {
 		}
 	}
 
-	Session::~Session()
-	{
-		//SDL_DestroyTexture(bg_tex);
+	Session::~Session() {
 		delete bg1;
 		delete bg2;
 	}
 
 	Session ses;
-
 }
 
 	

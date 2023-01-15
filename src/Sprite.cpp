@@ -8,10 +8,6 @@ Sprite::Sprite(int x, int y, string imagePath) { //width, height for scaling
   image = imagePath;
 }
 
-// Sprite::Sprite() {
-  
-// }
-
 void Sprite::moveUp(int steg) {
 }
 
