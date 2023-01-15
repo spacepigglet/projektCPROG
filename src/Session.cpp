@@ -124,7 +124,6 @@ namespace tower {
 		}
 		removeComponents(); 
 		addEnemy();
-
 		scroll(); 
 		
 	}
@@ -168,8 +167,9 @@ namespace tower {
 			SDL_RenderPresent(sys.get_ren());
 	}
 
-	const void Session::initPlatforms(std::string image) {
+	const void Session::initPlatforms(std::string image, int nr_of_platforms) {
 	    platform_image = image;
+			nrOfPlatforms = nr_of_platforms;
 		for(int i = 0; i<nrOfPlatforms; i++) { 
 			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; 
 			int y = 20 + (i * platformGapY); //distance between platforms in y-dir
@@ -190,7 +190,7 @@ namespace tower {
     //Sublass Button to override perform
 	class RestartButton: public Button {
 		public:
-		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}
+		RestartButton(Session* ses) :Button(WINDOW_WIDTH/6, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}
 		void perform(Button* source) override{
 			session->isQuitting(false);
 			session->reset();
@@ -202,7 +202,7 @@ namespace tower {
 
 	class QuitButton: public Button {
 		public:
-		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit", "marble.jpg", false), session(ses)  {}
+		QuitButton(Session* ses) :Button(WINDOW_WIDTH*2/4, WINDOW_HEIGHT/2, 200, 100, "Quit", "marble.jpg", false), session(ses)  {}
 		void perform(Button* source) override{
 			session->isQuitting(false);
 		}
@@ -273,9 +273,8 @@ namespace tower {
 		removeComponents();
 	
 		//setup for restart
-		initPlatforms(platform_image);
+		initPlatforms(platform_image, nrOfPlatforms);
 		initEnemies(enemy_image);
-		scrollSpeed = 1;
 		player->reset();
 		add(player);
 	}
@@ -283,7 +282,6 @@ namespace tower {
 	//main gameloop
 	void Session::run() {
 		setup_background();
-
 		const int tickInterval = 1000/FPS;
 		Uint32 nextTick;
 		int delay;
@@ -296,12 +294,6 @@ namespace tower {
 
 			if (delay > 0){
 				SDL_Delay(delay);
-			}
-			if(nextTick % 1000 == 0){
-				scrollSpeed ++;
-			}
-			if(nextTick % 2000 == 0){
-				player->changeSpeed(1);
 			}
 		}
 

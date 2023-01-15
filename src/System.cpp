@@ -31,6 +31,6 @@ namespace tower {
 	}
 	
 	System sys; // global object (defined outside class)
-	int WINDOW_WIDTH = 1080;
+	int WINDOW_WIDTH = 720;
 	int WINDOW_HEIGHT = 720;
 }

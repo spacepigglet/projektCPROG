@@ -25,7 +25,7 @@ namespace tower {
 		void set_background(const std::string);
 		void run();
 		void setPlatformWidthRange(int, int); 
-		const void initPlatforms(const std::string);
+		const void initPlatforms(const std::string, int);
 		const void initEnemies(const std::string);
 		void set_scroll_horizontal(bool isHorizontal);
 		void setPlatformImage(std::string);
@@ -48,7 +48,7 @@ namespace tower {
 		bool isScrolledHorizontally;
 		int bg2_start_pos_x;
 		int bg2_start_pos_y;
-		const int nrOfPlatforms = 12;
+		int nrOfPlatforms;
 		int platformMinWidth;
 		int platformMaxWidth;
 		const int platformHeight = 10;

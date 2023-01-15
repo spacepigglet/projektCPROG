@@ -32,7 +32,6 @@ namespace tower{
       virtual void handleCollision(Component*);
       int getHealth() const {return health;}
       bool isDead() const {return dead;};
-      void changeSpeed(int i){speed += i;}
 
     protected:
       Actor(int x, int y, int w, int h, std::string, int);
