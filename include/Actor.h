@@ -1,6 +1,6 @@
 #ifndef ACTOR_H
 #define ACTOR_H
-#include "MobileComponent.h"
+
 #include "Component.h"
 #include "Constants.h"
 #include "System.h"
@@ -12,7 +12,7 @@
 #include <vector>
 
 namespace tower{
-  class Actor : public MobileComponent {
+  class Actor : public Component {
     public:
     ~Actor();
     static Actor* getInstance(int x, int y, int w, int h, std::string image, int no_lives);
@@ -25,7 +25,7 @@ namespace tower{
     void keyUp(const SDL_Event&);
     void collisionWithPlatform(Platform*);
     void collisionWithEnemy(Enemy*);
-    void handleCollision(MobileComponent*);
+    void handleCollision(Component*);
     int getHealth() {return health;}
     bool isDead() {return dead;};
 

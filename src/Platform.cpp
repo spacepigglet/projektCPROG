@@ -3,11 +3,15 @@
 
 namespace tower{
     
-    Platform::Platform(int x, int y, int w, int h, std::string image) : MobileComponent(x,y,w,h, image), toBeRemoved(false) { // x, y, (x+w), (y+h+1)
+    Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h), isToBeRemoved(false) { // x, y, (x+w), (y+h+1)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
-    Platform::Platform(int x, int y, int w, int h, std::string image, bool isEnabled) : MobileComponent(x,y,w,h, image), toBeRemoved(isEnabled) { // x, y, (x+w), (y+h+1)
+    Platform::Platform(int x, int y, int w, int h, std::string image, bool toRemove) : Component(x,y,w,h), isToBeRemoved(toRemove) { // x, y, (x+w), (y+h+1)
+		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+    }
+
+    Platform::Platform(int x, int y, int w, int h, std::string image, bool toRemove, bool scrollable) : Component(x,y,w,h, scrollable), isToBeRemoved(toRemove) { // x, y, (x+w), (y+h+1)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
     }
 
@@ -15,8 +19,12 @@ namespace tower{
         return new Platform(x, y, w, h, image);
     }
 
-    Platform* Platform::getInstance(int x, int y, int w, int h, std::string image, bool isEnabled){
-        return new Platform(x, y, w, h, image, isEnabled);
+    Platform* Platform::getInstance(int x, int y, int w, int h, std::string image, bool removable){
+        return new Platform(x, y, w, h, image, removable);
+    }
+
+    Platform* Platform::getInstance(int x, int y, int w, int h, std::string image, bool removable, bool scrollable){
+        return new Platform(x, y, w, h, image, removable, scrollable);
     }
 
      void Platform:: draw() const {

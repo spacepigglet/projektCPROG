@@ -2,7 +2,7 @@
 
 namespace tower {
 
-MobileComponent::MobileComponent(int x, int y, int w, int h, std::string img) : Component(x,y,w,h), image(img) {}
+/* MobileComponent::MobileComponent(int x, int y, int w, int h, std::string img) : Component(x,y,w,h), image(img) {}
 
 void MobileComponent::horizontalScroll(int toScroll) {
 		moveX(-toScroll);
@@ -24,7 +24,7 @@ void MobileComponent::horizontalScroll(int toScroll) {
 		rect.y = y;
 	}
 
-  MobileComponent::~MobileComponent() {}
+  MobileComponent::~MobileComponent() {} */
   
 
 }

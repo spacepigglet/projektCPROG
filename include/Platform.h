@@ -1,31 +1,33 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 #include "Constants.h"
-#include "MobileComponent.h"
+#include "Component.h"
 #include "System.h"
 #include <string>
 #include <SDL2/SDL_image.h>
 
 namespace tower{
-    class Platform : public MobileComponent{
+    class Platform : public Component{
     public:
         static Platform* getInstance(int x, int y, int w, int h, std::string image);
         static Platform* getInstance(int x, int y, int w, int h, std::string image, bool);
+        static Platform* getInstance(int x, int y, int w, int h, std::string image, bool remove, bool scrollable);
         void draw() const;
         void update();
         void collisionDetection(const Component*);
         ~Platform();
-        bool shouldBeRemoved() {return toBeRemoved;}
+        bool shouldBeRemoved() {return isToBeRemoved;}
 
     protected:
         Platform(int x, int y, int w, int h, std::string image);
         Platform(int x, int y, int w, int h, std::string image, bool);
+        Platform(int x, int y, int w, int h, std::string image, bool removable, bool scrollable);
 
     private:
         SDL_Texture* texture;
         std::string image;
         int newX, newY;
-        bool toBeRemoved;
+        bool isToBeRemoved;
     };
 }
 #endif

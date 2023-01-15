@@ -8,12 +8,12 @@
 using namespace std;
 //TEST COMMIT IGEN
 namespace tower{
-    Actor::Actor(int x, int y, int w, int h, std::string image, int no_lives) : MobileComponent(x,y,w,h, image), startHealth(no_lives), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
+    Actor::Actor(int x, int y, int w, int h, std::string image, int no_lives) : Component(x,y,w,h), startHealth(no_lives), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
         health = startHealth;
     }
 
-     Actor* Actor::getInstance(int x, int y, int w, int h, std::string image, int no_lives){
+    Actor* Actor::getInstance(int x, int y, int w, int h, std::string image, int no_lives){
         return new Actor(x, y, w, h, image,no_lives);
     }
 
@@ -40,11 +40,11 @@ namespace tower{
         }
     }
 
-    void Actor::handleCollision(MobileComponent* mc) {
-        if(Enemy* e = dynamic_cast<Enemy*>(mc)){
+    void Actor::handleCollision(Component* c) {
+        if(Enemy* e = dynamic_cast<Enemy*>(c)){
             collisionWithEnemy(e);
         }
-        if(Platform* p = dynamic_cast<Platform*>(mc)) {
+        if(Platform* p = dynamic_cast<Platform*>(c)) {
             collisionWithPlatform(p);
         }
     }
@@ -83,11 +83,6 @@ namespace tower{
             invincibility = 60; //can't get hur again for another 60 ticks
         }
     }
-
-    Actor:: ~Actor(){
-        SDL_DestroyTexture(texture);
-    }
-
 
     void Actor::jump(){
         if (!isJumping && isOnTopOfPlatform){ //can't jump when in air
@@ -136,6 +131,10 @@ namespace tower{
 
     void Actor:: draw() const {
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
+    }
+
+    Actor:: ~Actor(){
+        SDL_DestroyTexture(texture);
     }
 
 }

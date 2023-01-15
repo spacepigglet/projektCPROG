@@ -16,9 +16,10 @@ namespace tower {
 
 	void Session::add(Component* c) {
 		comps.push_back(c);
+		/*
 		if(MobileComponent* m = dynamic_cast<MobileComponent*>(c)){ //bra lösning? platformar är rörliga och de är många...
       mobileComps.push_back(m);
-		}
+		}*/
 		if(Enemy* e = dynamic_cast<Enemy*>(c)){
        enemies.push_back(e);
 		}
@@ -33,9 +34,9 @@ namespace tower {
 
 	void Session::remove(Component* c) { //anropas t.ex. i Enemy.cp
 		removedComps.push_back(c);
-		if(MobileComponent* mc = dynamic_cast<MobileComponent*>(c)) {
+		/* if(MobileComponent* mc = dynamic_cast<MobileComponent*>(c)) {
 			removedMobileComps.push_back(mc);
-		}
+		} */
 		if(Platform* p = dynamic_cast<Platform*>(c)) {
 			removedPlatforms.push_back(p);
 		}
@@ -113,10 +114,11 @@ namespace tower {
 				quit = true;
 		}
 
-		for(unsigned int i = 0; i<mobileComps.size()-1; i++) {
-			MobileComponent* current = mobileComps[i];
-			for(unsigned int j = i+1; j<mobileComps.size(); j++) {
-				MobileComponent* next = mobileComps[j];
+
+		for(unsigned int i = 0; i<comps.size()-1; i++) {
+			Component* current = comps[i];
+			for(unsigned int j = i+1; j<comps.size(); j++) {
+				Component* next = comps[j];
 				if(Collision::collision(current, next)) {
 					current->handleCollision(next); //generalisera i mobilecomponent
 					next->handleCollision(current);
@@ -164,7 +166,7 @@ namespace tower {
 	}
 	removedPlatforms.clear();
 
-	for(MobileComponent* mc: removedMobileComps) {
+	/* for(MobileComponent* mc: removedMobileComps) {
 			for(std::vector<MobileComponent*>::iterator it=mobileComps.begin(); it != mobileComps.end();) {
 				if(*it == mc) {
 						it = mobileComps.erase(it);
@@ -173,7 +175,7 @@ namespace tower {
 				}
 			}
 	}
-	removedMobileComps.clear();
+	removedMobileComps.clear(); */
 
 	for(Enemy* e: removedEnemies) {
 			for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
@@ -205,8 +207,8 @@ namespace tower {
 		
 		bg1->scroll(isScrolledHorizontally, scrollSpeed);
 		bg2->scroll(isScrolledHorizontally, scrollSpeed);
-		for( MobileComponent* m: mobileComps) {
-			m->scroll(isScrolledHorizontally, scrollSpeed);
+		for( Component* c: comps) {
+			c->scroll(isScrolledHorizontally, scrollSpeed);
 		}
 		
 		
@@ -282,7 +284,7 @@ namespace tower {
 	void Session::reset(){
 		//reset/clean up
 		comps.clear(); //deletes pointers in vector, not objects
-		mobileComps.clear();
+		//mobileComps.clear();
 		for (Platform* p : platforms) {
 			remove(p);
 		}

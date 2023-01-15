@@ -6,12 +6,12 @@
 namespace tower {
 class ImmobileComponent : public Component {
 
-  public:
+  /* public:
   virtual void draw() const = 0;
   ~ImmobileComponent();
 
   protected:
-  ImmobileComponent(int, int, int, int);
+  ImmobileComponent(int, int, int, int); */
 
 };
 }

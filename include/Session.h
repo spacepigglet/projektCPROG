@@ -10,7 +10,7 @@
 #include "Collision.h"
 #include <iostream>
 #include "Actor.h"
-#include "MobileComponent.h"
+//#include "MobileComponent.h"
 #include <cstdlib>
 #include "Button.h"
 #include "Label.h"
@@ -28,7 +28,7 @@ namespace tower {
 		void set_background(std::string);
 		void run();
 		~Session();
-		const std::vector<MobileComponent*> getComps() const {return mobileComps;}
+		//const std::vector<MobileComponent*> getComps() const {return mobileComps;}
 		void setPlatformWidthRange(int, int); 
 		void initPlatforms(std::string);
 		void initEnemies(std::string);
@@ -51,14 +51,14 @@ namespace tower {
 		void setup_lives();
 		void removeComponents();
 		std::vector<Component*> tempComps;
-		std::vector<MobileComponent*> tempMobileComps;
+		//std::vector<MobileComponent*> tempMobileComps;
 		
 		std::vector<Component*> comps;
 		std::vector<Component*> removedComps;
-		std::vector<MobileComponent*> removedMobileComps;
+		//std::vector<MobileComponent*> removedMobileComps;
 		std::vector<Enemy*> removedEnemies;
 		std::vector<Platform*> removedPlatforms;
-		std::vector<MobileComponent*> mobileComps;
+		//std::vector<MobileComponent*> mobileComps;
 		std::vector<Platform*> platforms;
 		std::vector<Platform*> platformChunk1;
 		std::vector<Platform*> platformChunk2;

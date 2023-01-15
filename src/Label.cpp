@@ -21,15 +21,6 @@ namespace tower {
 		SDL_FreeSurface(surf);
 	}
 
-	void Label::draw() const {
-		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
-	}
-
-	Label::~Label()
-	{
-		SDL_DestroyTexture(texture);
-	}
-
 	string Label::getText() const {
 		return text;
 	}
@@ -49,6 +40,15 @@ namespace tower {
 			text.c_str(), color);
 		texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
+	}
+
+	void Label::draw() const {
+		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
+	}
+
+	Label::~Label()
+	{
+		SDL_DestroyTexture(texture);
 	}
 	
 	

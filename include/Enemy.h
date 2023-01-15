@@ -2,14 +2,15 @@
 #define ENEMY_H
 
 #include "Collision.h"
-#include "MobileComponent.h"
+#include "Component.h"
 #include "Platform.h"
 
 namespace tower {
-class Enemy : public MobileComponent {
+class Enemy : public Component {
   public:
     ~Enemy();
     static Enemy* getInstance(int x, int y, int w, int h, std::string image, Platform*);
+    static Enemy* getInstance(int x, int y, int w, int h, std::string image, Platform*, bool scrollable);
     void update();
     void draw() const;
     void addOnPlatform(Platform*);
@@ -18,6 +19,7 @@ class Enemy : public MobileComponent {
 
   protected:
     Enemy(int x, int y, int w, int h, std::string image, Platform*);
+    Enemy(int x, int y, int w, int h, std::string image, Platform*, bool scrollable);
 
   private:
     void dying();

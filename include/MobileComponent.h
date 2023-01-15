@@ -5,7 +5,7 @@
 #include <string>
 
 namespace tower {
-class MobileComponent : public Component {
+/* class MobileComponent : public Component {
   public:
 
   virtual void draw() const = 0;
@@ -24,9 +24,9 @@ class MobileComponent : public Component {
   private:
   virtual void verticalScroll(int);
   virtual void horizontalScroll(int);
-  std::string image;
+  std::string image; 
 
-};
+};*/
 
 }
 
