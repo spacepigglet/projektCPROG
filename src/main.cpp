@@ -8,6 +8,7 @@
 #include "Platform.h"
 #include <string>
 #include "Background.h"
+#include "ImmobileComponent.h"
 
 #include <iostream>
 
@@ -23,15 +24,15 @@ using namespace tower;
 
 class HealthLabel : public Label {
 	public:
-	HealthLabel(int x, int y, int w, int h, std::string txt, SDL_Color color, Actor* a);
+	HealthLabel(int x, int y, int w, int h, std::string txt, SDL_Color color, Actor* a, bool scrollable);
 	void update();
 
 	private:
 	Actor* player;
 };
 
-HealthLabel::HealthLabel(int x, int y, int w, int h, std::string txt, SDL_Color color, Actor* a):
-	Label(x,y,w,h,txt,color), player(a){
+HealthLabel::HealthLabel(int x, int y, int w, int h, std::string txt, SDL_Color color, Actor* a, bool scrollable):
+	Label(x,y,w,h,txt,color,scrollable), player(a){
 
 	}
 void HealthLabel::update(){
@@ -48,9 +49,12 @@ int main(int argc, char** argv) {
 	Actor* a = Actor::getInstance(WINDOW_WIDTH/2 - 35, 0, 70, 100, "images/spacepig_transparent.png", 3);
 	//ses.set_scroll_horizontal(true);
 	
-	HealthLabel* health_lbl = new HealthLabel(WINDOW_WIDTH-20, 10, 20, 20, to_string(a->getHealth()), {255,255,255}, a);
+	HealthLabel* health_lbl = new HealthLabel(WINDOW_WIDTH-30, 10, 25, 25, to_string(a->getHealth()), {255,255,255}, a, false);
 	ses.add(health_lbl);
 	
+	ImmobileComponent* heart= ImmobileComponent::getInstance(WINDOW_WIDTH-75, -5, 50, 50, "images/heart.png", false);
+	ses.add(heart);
+
 	ses.set_background("images/space-background-vector-21179778.jpg");
 
 	//ses.setPlatformImage("images/marble.jpg");
