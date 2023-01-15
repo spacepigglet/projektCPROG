@@ -46,24 +46,24 @@ int main(int argc, char** argv) {
 	std::cout << "*** main()\n";
 
 	Session ses;
-	Actor* a = Actor::getInstance(WINDOW_WIDTH/2 - 35, 0, 70, 100, "images/spacepig_transparent.png", 3);
+	Actor* a = Actor::getInstance(WINDOW_WIDTH/2 - 35, 0, 70, 100, "spacepig_transparent.png", 3);
 	//ses.set_scroll_horizontal(true);
 	
 	HealthLabel* health_lbl = new HealthLabel(WINDOW_WIDTH-30, 10, 25, 25, to_string(a->getHealth()), {255,255,255}, a, false);
 	ses.add(health_lbl);
 	
-	ImmobileComponent* heart= ImmobileComponent::getInstance(WINDOW_WIDTH-75, -5, 50, 50, "images/heart.png", false);
+	ImmobileComponent* heart= ImmobileComponent::getInstance(WINDOW_WIDTH-75, -5, 50, 50, "heart.png", false);
 	ses.add(heart);
 
-	ses.set_background("images/space-background-vector-21179778.jpg");
+	ses.set_background("space-background-vector-21179778.jpg");
 
 	//ses.setPlatformImage("images/marble.jpg");
 
 	//ses.add(a); //temp bcz needs to be added after platforms for rendering
 	//Platform* start = Platform::getInstance(WINDOW_WIDTH/2 - 250, 500, 500, 10, "images/marble.jpg", true);
 	//ses.add(start);
-	ses.initPlatforms("images/marble.jpg");
-	ses.initEnemies("images/enemy-orange.png");
+	ses.initPlatforms("marble.jpg");
+	ses.initEnemies("enemy-orange.png");
 	ses.add(a);
 	
 

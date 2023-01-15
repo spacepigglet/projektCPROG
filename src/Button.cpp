@@ -14,7 +14,7 @@ namespace tower {
 
 		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 0, 0, 255);
 		//SDL_RenderFillRect(sys.get_ren(), &getRect());
-		buttonIcon_texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/marble.jpg").c_str() );
+		buttonIcon_texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + "marble.jpg").c_str() );
 		//downIcon = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + "images/marble.jpg").c_str() );
 	}
 
@@ -28,7 +28,7 @@ namespace tower {
 		SDL_Surface* surf = TTF_RenderText_Solid(sys.get_font(), txt.c_str(), { 0,0,0 });
 		text_texture = SDL_CreateTextureFromSurface(sys.get_ren(), surf);
 		SDL_FreeSurface(surf);
-		buttonIcon_texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+		buttonIcon_texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
 	
 	}
 

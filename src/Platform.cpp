@@ -4,11 +4,11 @@
 namespace tower{
     
     Platform::Platform(int x, int y, int w, int h, std::string image) : Component(x,y,w,h), isToBeRemoved(false) { // x, y, (x+w), (y+h+1)
-		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
     }
     
     Platform::Platform(int x, int y, int w, int h, std::string image, bool toRemove, bool scrollable) : Component(x,y,w,h, scrollable), isToBeRemoved(toRemove) { // x, y, (x+w), (y+h+1)
-		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
+		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
     }
 
     Platform* Platform::getInstance(int x, int y, int w, int h, std::string image){
