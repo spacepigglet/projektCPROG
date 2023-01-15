@@ -16,9 +16,12 @@
 #include "Label.h"
 #include "ImmobileComponent.h"
 
+
 #include "Enemy.h"
 
 namespace tower {
+	class RestartButton;
+	class QuitButton;
 
 	class Session {
 	public:
@@ -72,9 +75,30 @@ namespace tower {
 		Actor* player;
 		Label* number_of_lives;
 		Platform* startPlatform;
-		Label* health;
-		ImmobileComponent* life;
+		RestartButton* restartButton;
+		QuitButton* quitButton;
+		
+	};
 
+
+	class RestartButton: public Button {
+	public:
+	RestartButton(Session* ses);
+	void perform(Button* source) override;
+	~RestartButton();
+	private:
+	Session* session;
+	};
+
+
+
+class QuitButton: public Button {
+	public:
+	QuitButton(Session* ses);
+	void perform(Button* source) override;
+	~QuitButton();
+	private:
+	Session* session;
 	};
 
 	extern Session ses;

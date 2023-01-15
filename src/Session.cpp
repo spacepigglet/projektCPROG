@@ -11,7 +11,8 @@ namespace tower {
 		bg_Image = "space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
 		setPlatformWidthRange(100, 250);
-		//fptr= verticalScroll();
+		restartButton = new RestartButton(this);
+		quitButton = new QuitButton(this);
 	}
 
 	void Session::add(Component* c) {
@@ -26,10 +27,9 @@ namespace tower {
 		if(Actor* a = dynamic_cast<Actor*>(c)){
       player = a;
 		}
-		
 	}
 
-	void Session::addToRemove(Component* c) { //anropas t.ex. i Enemy.cp
+	void Session::addToRemove(Component* c) {
 		removedComps.push_back(c);
 		if(Platform* p = dynamic_cast<Platform*>(c)) {
 			removedPlatforms.push_back(p);
@@ -187,39 +187,36 @@ namespace tower {
 			add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
 		}
 	}
-//Session ses;
-	class RestartButton: public Button {
-		public:
-		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}
-		void perform(Button* source) override{
-			session->isQuitting(false);
-			session->reset();
-			session->run();
-		}
-		private:
-		Session* session;
-	};
 
-	class QuitButton: public Button {
-		public:
-		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit", "marble.jpg", false), session(ses)  {}
-		void perform(Button* source) override{
-			session->isQuitting(false);
-		}
-		private:
-		Session* session;
-	};
+
+
+	RestartButton::RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}
+	
+	void RestartButton::perform(Button* source) {
+		session->isQuitting(false);
+		session->reset();
+		session->run();
+	}
+	
+	RestartButton::~RestartButton() {}
+
+	QuitButton::QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit", "marble.jpg", false), session(ses)  {}
+	
+	void QuitButton::perform(Button* source) {
+		session->isQuitting(false);
+	}
+	
+	QuitButton::~QuitButton() {}
 
 	void Session::gameOver(){
-		
-		RestartButton* restartButton = new RestartButton(this);
-		QuitButton* quitButton = new QuitButton(this);
+		/*restartButton = new RestartButton(this);
+		quitButton = new QuitButton(this);*/
 		add(restartButton);
 		add(quitButton);
 	}
 
-	void Session::removeComponents() {
 
+	void Session::removeComponents() {
 		for(Platform* p: removedPlatforms) {
 			for(std::vector<Platform*>::iterator it=platforms.begin(); it != platforms.end();) {
 				if(*it == p) {
@@ -228,10 +225,10 @@ namespace tower {
 					it++;
 				}
 			}
-	}
-	removedPlatforms.clear();
+		}
+		removedPlatforms.clear();
 
-	for(Enemy* e: removedEnemies) {
+		for(Enemy* e: removedEnemies) {
 			for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
 				if(*it == e) {
 						it = enemies.erase(it); 
@@ -239,10 +236,10 @@ namespace tower {
 					it++;
 				}
 			}
-	}
-	removedEnemies.clear();
+		}
+		removedEnemies.clear();
 
-	for(Component* c: removedComps) {
+		for(Component* c: removedComps) {
 			for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
 				if(*it == c) {
 						delete *it;
@@ -255,22 +252,67 @@ namespace tower {
 		removedComps.clear();
 }
 
-	void Session::reset(){
-		//comps.clear(); //deletes pointers in vector, not objects
-		for (Platform* p : platforms) {
-			addToRemove(p);
-		}
-		platforms.clear();
-		for(Enemy* e: enemies) {
-			addToRemove(e);
-		}
-		enemies.clear();
-		removeComponents();
 
+
+	void Session::reset(){
+		//This is here to prevent game crash, this version of reset will restart the game without the 
+		//objects created by the implementation 
+		//This will not delete the objects, memory leak
+		//comps.clear(); //deletes pointers in vector, not objects
+		/*platforms.clear();
+		enemies.clear();*/
+		//comps.clear();
+		for(Component* c: comps) {
+			if(Actor* a = dynamic_cast<Actor*>(c)) {
+				std::cout << "Actor" << std::endl;
+			}
+			else if(Platform* p  = dynamic_cast<Platform*>(c)) {
+				addToRemove(p);
+			}
+			else if(Enemy* e = dynamic_cast<Enemy*>(c)) {
+				addToRemove(e);
+			}
+			
+			else {
+				std::cout << "Hello " << std::endl;
+			}
+		}
+
+				auto iterator = comps.begin();
+				while (iterator != comps.end()) {
+					if(RestartButton* r = dynamic_cast<RestartButton*>(*iterator)) {
+ 					iterator = comps.erase(iterator); 
+				} else if( QuitButton* q = dynamic_cast<QuitButton*>(*iterator)) {
+					iterator = comps.erase(iterator);
+				} else {
+					++iterator; 
+					}
+				}
+
+		
+			/*for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
+				if(RestartButton* r = dynamic_cast<RestartButton*>(*it)) {
+ 					it = comps.erase(it); 
+				} else if( QuitButton* q = dynamic_cast<QuitButton*>(*it)) {
+					it = comps.erase(it);
+				}	else {
+					it++;
+				}
+			}*/
+		
+
+		/*for(Component* c: comps) {
+			addToRemove(c);
+		}
+		comps.clear();*/
+		//enemies.clear();
+	//This code seems to cause issues but may be related to other code related to Buttons...
 
 		remove(comps.begin(), comps.end(), player);
-	
-
+		remove(comps.begin(), comps.end(), restartButton);
+		remove(comps.begin(), comps.end(), quitButton);
+		
+		removeComponents();
 		initPlatforms(platform_image);
 		initEnemies(enemy_image);
 		player->reset();
@@ -280,7 +322,6 @@ namespace tower {
 //main gameloop
 	void Session::run() {
 		setup_background();
-
 		const int tickInterval = 1000/FPS;
 		Uint32 nextTick;
 		int delay;

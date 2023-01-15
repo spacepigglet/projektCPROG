@@ -19,7 +19,7 @@ namespace tower {
 		void mouseUp(const SDL_Event&);
 		void draw() const;
 		virtual void perform(Button* source) {}
-		~Button();
+		virtual ~Button();
 	protected:
 		Button(int x, int y, int w, int h, std::string txt);
 		Button(int x, int y, int w, int h, std::string txt, std::string image);
