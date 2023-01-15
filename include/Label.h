@@ -14,7 +14,7 @@ namespace tower {
 		const std::string getText() const;
 		const void setText(std::string newText);
 		~Label();
-		const SDL_Color getColor() const {return color;}
+		SDL_Color getColor() const {return color;}
 		const void setColor(SDL_Color c);
 	protected:
 		Label(int, int, int, int, std::string , SDL_Color);

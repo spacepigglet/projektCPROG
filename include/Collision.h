@@ -9,8 +9,7 @@ using namespace tower;
 
 class Collision {
   public:
-  static bool collision(Component* a, Component* b);
-
+    static bool collision(Component* a, Component* b);
 };
 
 #endif

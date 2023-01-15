@@ -1,12 +1,8 @@
-//#include "Sprite.h"
 #include "Actor.h"
-#include "Enemy.h"
 #include "Collision.h"
 #include <vector>
 
-#define FPS 60
 using namespace std;
-//TEST COMMIT IGEN
 namespace tower{
     Actor::Actor(int x, int y, int w, int h, std::string image, int no_lives) : Component(x,y,w,h, true), startHealth(no_lives), startX(x), startY(y) { //(x+10), (y+10), (x+w-10), (y+h)
 		texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
@@ -61,8 +57,8 @@ namespace tower{
     void Actor::collisionWithPlatform(Platform* p) {
         if(getLowerY() > p->getUpperY() && getLowerY() < p->getLowerY()  && 
         getLeftX() < p->getRightX() && getRightX() > p->getLeftX()) {
-            if(dy > 0) { //moving down on top of platform
-                isOnTopOfPlatform = true;  //standing on platform, can jump now
+            if(dy > 0) {
+                isOnTopOfPlatform = true;
                 movingDown = false;
                 dy = 0;
                 isJumping = false;
@@ -74,10 +70,10 @@ namespace tower{
     void Actor::collisionWithEnemy(Enemy* e) {
          if(movingUp) {
             hurting();
-        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) { //coming from above
+        } else if(movingDown && (getLowerY() > e->getUpperY()) && (getLowerY() < e->getLowerY())) {
             e->die();
             dy = -7;
-        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){ //collision with enemy left side
+        } else if((getRightX() > e->getLeftX()) && (getRightX() < e->getRightX())){
             hurting();
             setPosition(e->getLeftX() - getWidth(), getUpperY());
         } else if ((getLeftX() < e->getRightX() && (getLeftX() > e->getLeftX()))) {
@@ -89,7 +85,7 @@ namespace tower{
     void Actor::hurting() {
         if(invincibility == 0) {
             health--;
-            invincibility = 60; //can't get hur again for another 60 ticks
+            invincibility = 60;
         }
     }
 
