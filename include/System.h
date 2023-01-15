@@ -21,7 +21,6 @@ namespace tower {
 		SDL_Window* win;
 		SDL_Renderer* ren;
 		TTF_Font* font;
-		std::string bg = "images/space-background-vector-21179778.jpg";
 	};
 	
 	extern System sys; //says: there'a a definition of the system calles sys, but not here -> exists in cpp

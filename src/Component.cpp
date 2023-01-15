@@ -2,7 +2,7 @@
 
 namespace tower {
 
-	Component::Component(int x, int y, int w, int h) :rect{ x,y,w,h } {}
+	Component::Component(int x, int y, int w, int h) :rect{ x,y,w,h }, isScrollable(true) {}
 	
 	Component::Component(int x, int y, int w, int h, bool scrollable) : rect{ x,y,w,h }, isScrollable(scrollable) {}
 
