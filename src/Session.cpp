@@ -252,7 +252,7 @@ namespace tower {
 //Session ses;
 	class RestartButton: public Button {
 		public:
-		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart"), session(ses) {}
+		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "/images/marble.jpg", false), session(ses) {}
 		void perform(Button* source) override{
 			session->isQuitting(false);
 			session->reset();
@@ -264,7 +264,7 @@ namespace tower {
 
 	class QuitButton: public Button {
 		public:
-		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit"), session(ses)  {}
+		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit", "/images/marble.jpg", false), session(ses)  {}
 		void perform(Button* source) override{
 			session->isQuitting(false);
 		}
