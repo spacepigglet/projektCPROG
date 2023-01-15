@@ -8,7 +8,7 @@ namespace tower {
 
 	Session::Session() : quit(false) {
 		std::cout << "*** Session::Session()\n";
-		bg_Image = "images/space-background-vector-21179778.jpg";
+		bg_Image = "space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
 		setPlatformWidthRange(100, 250);
 		//fptr= verticalScroll();
@@ -190,7 +190,7 @@ namespace tower {
 //Session ses;
 	class RestartButton: public Button {
 		public:
-		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart"), session(ses) {}
+		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}
 		void perform(Button* source) override{
 			session->isQuitting(false);
 			session->reset();
@@ -202,7 +202,7 @@ namespace tower {
 
 	class QuitButton: public Button {
 		public:
-		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit"), session(ses)  {}
+		QuitButton(Session* ses) :Button(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, 200, 100, "Quit", "marble.jpg", false), session(ses)  {}
 		void perform(Button* source) override{
 			session->isQuitting(false);
 		}

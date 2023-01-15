@@ -2,13 +2,13 @@
 namespace tower {
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p, bool scrollable): Component(x,y,w,h, scrollable) { // x, y, (x+w), (y+h+1)
-  texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
-  platform = p;
+texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
+platform = p;
 }
 
 Enemy::Enemy(int x, int y, int w, int h, std::string image, Platform* p) : Component(x,y,w,h) { // x, y, (x+w), (y+h+1)
-  texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath + image).c_str() );
-  platform = p;
+texture = IMG_LoadTexture(sys.get_ren(), (constants::gResPath_images + image).c_str() );
+platform = p;
 }
 
 Enemy* Enemy::getInstance(int x, int y, int w, int h, std::string image, Platform* p, bool scrollable){
