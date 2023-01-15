@@ -27,10 +27,6 @@ namespace tower{
       SDL_DestroyTexture(texture);
     }
 
-    void Platform::collisionDetection(const Component* other){
-        
-    }
-
     void Platform::update() {
       //if scrolling vertically
       if(getUpperY() > WINDOW_HEIGHT + getHeight()) {

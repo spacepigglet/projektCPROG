@@ -13,7 +13,6 @@ namespace tower{
         static Platform* getInstance(int x, int y, int w, int h, std::string image, bool remove, bool scrollable);
         void draw() const;
         void update();
-        void collisionDetection(const Component*);
         ~Platform();
         bool shouldBeRemoved() const {return isToBeRemoved;}
 

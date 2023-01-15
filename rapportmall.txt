@@ -1,9 +1,45 @@
 CPROG Rapport för Programmeringsprojektet
-[Gruppnummer: ??? ]
-[Gruppmedlemmar: ??? (namn och personnummer för varje medlem)]
+[Gruppnummer: 33 ]
+[Gruppmedlemmar: Anamda Sjöberg och Jessica Borg  (namn och personnummer för varje medlem)]
 
-Skriv en kortfattad instruktion för hur programmeringsprojektet skall byggas och testas, vilka krav som måste vara uppfyllda, sökvägar till resursfiler(bildfiler/ljudfiler/typsnitt mm), samt vad en spelare förväntas göra i spelet, hur figurernas rörelser kontrolleras, mm.
+Skriv en kortfattad instruktion för hur programmeringsprojektet skall byggas och testas, vilka krav som måste vara uppfyllda, 
+sökvägar till resursfiler(bildfiler/ljudfiler/typsnitt mm), samt vad en spelare förväntas göra i spelet, 
+hur figurernas rörelser kontrolleras, mm.
 Om avsteg gjorts från kraven på Filstruktur, så måste också detta motiveras och beskrivas i rapporten.
+
+För att bygga och testa detta programmeringsprojekt, måste följande krav vara uppfyllda:
+- Version av C++: C++17
+
+- En installation av SDL- och SDL2-bibliotek på datorn, inklusive alla nödvändiga komponenter
+
+
+För att bygga projektet:
+1. Öppna projektet i den valda programmeringsmiljön.
+2. Konfigurera projektet för att inkludera SDL-biblioteken och sökvägarna till resursfilerna.
+(innebär att man måste göra några inställningar i projektets konfigurationsfiler för att göra det möjligt för kompilatorn 
+att hitta och använda SDL-biblioteken samt sökvägar till projektets resursfiler (bilder, ljud, typsnitt etc.))
+3. Skriv in kommandot: "make" i terminalen, då utförs det som står i Makefile
+4. Skriva in kommandot: "./build/debug/play.exe (BUILD_DIR/OBJ_NAME i Makefile)
+
+
+En spelare förväntas göra följande i spelet:
+I detta spel ska spelaren använda tangentbordet (piltangenter + SPACE) för att styra spelobjektets(??) rörelser i en värld
+där skärmen hela tiden scrollar vertikalt eller horisontellt. Plattformarna scrollar tillsammans med spelet
+vilket gör att du som spelare hela tiden måste vara alert på plattformarnas rörelse. 
+
+(Ju längre tid du spelar desto snabbare
+kommer spelet att scrolla, vilket gör spelet svårare och svårare...)
+
+Uppgiften i spelet är att hela tiden hålla sig vid liv genom att hoppa mellan plattformarna och undvika
+de farliga fienderna som dyker upp på plattformarna då och då. Genom att hoppa på fienderna kan du döda dem men om du 
+rör vid en fiende förlorar du ett liv och när dina liv är slut förlorar du spelet. 
+Om du hamnar för långt utanför skärmens höjd eller bredd förlorar du hela spelet.
+
+Så var redo för ett äventyr ;) Var beredd på att kämpa dig genom en svår och farlig värld där 
+varje hopp är en kamp för överlevnad... du duu duuuuuu!
+
+
+
 
 Fyll i 'check-listan', så att du visar att du tagit hänsyn till respektive krav, skriv också en kort kommentar om på vilket sätt du/gruppen anser att kravet tillgodosetts, och/eller var i koden kravet uppfylls.
 

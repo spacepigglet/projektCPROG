@@ -35,7 +35,7 @@ namespace tower {
       enemyDirection *= -1;
     }
 
-    if(getRightX() < 0 || getUpperY() > WINDOW_HEIGHT - getHeight()) { //if enemy is outside screen
+    if(getRightX() < 0 || getUpperY() > WINDOW_HEIGHT + getHeight()) { //if enemy is outside screen
       alive = false;
     }
   }
