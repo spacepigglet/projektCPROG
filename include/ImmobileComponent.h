@@ -11,7 +11,7 @@ namespace tower {
 class ImmobileComponent : public Component {
 
   public:
-  virtual void draw() const;
+  void draw() const;
   ~ImmobileComponent();
   static ImmobileComponent* getInstance(int, int, int, int, std::string);
   static ImmobileComponent* getInstance(int, int, int, int, std::string, bool);

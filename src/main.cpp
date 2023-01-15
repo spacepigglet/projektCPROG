@@ -47,7 +47,6 @@ int main(int argc, char** argv) {
 
 	Session ses;
 	Actor* a = Actor::getInstance(WINDOW_WIDTH/2 - 35, 0, 70, 100, "spacepig_transparent.png", 3);
-	//ses.set_scroll_horizontal(true);
 	
 	HealthLabel* health_lbl = new HealthLabel(WINDOW_WIDTH-30, 10, 25, 25, to_string(a->getHealth()), {255,255,255}, a, false);
 	ses.add(health_lbl);
@@ -57,15 +56,10 @@ int main(int argc, char** argv) {
 
 	ses.set_background("space-background-vector-21179778.jpg");
 
-	//ses.setPlatformImage("images/marble.jpg");
-
-	//ses.add(a); //temp bcz needs to be added after platforms for rendering
-	//Platform* start = Platform::getInstance(WINDOW_WIDTH/2 - 250, 500, 500, 10, "images/marble.jpg", true);
-	//ses.add(start);
 	ses.initPlatforms("marble.jpg");
 	ses.initEnemies("enemy-orange.png");
+
 	ses.add(a);
-	
 
 	ses.run();
 	
