@@ -18,21 +18,21 @@ namespace tower{
       static Actor* getInstance(int x, int y, int w, int h, std::string, int);
       static Actor* getInstance(int x, int y, int w, int h, std::string, int, bool);
       void draw() const;
-      void update();
+      virtual void update();
       virtual void jump();
-      void hurting();
-      void reset();
+      virtual void hurting();
+      virtual void reset();
       void keyDown(const SDL_Event&);
       void keyUp(const SDL_Event&);
-      void collisionWithPlatform(Platform*);
-      void collisionWithEnemy(Enemy*);
-      void handleCollision(Component*);
-      const int getHealth() const {return health;}
-      const bool isDead() const {return dead;};
+      virtual void collisionWithPlatform(Platform*);
+      virtual void collisionWithEnemy(Enemy*);
+      virtual void handleCollision(Component*);
+      int getHealth() const {return health;}
+      bool isDead() const {return dead;};
 
     protected:
-      Actor(int x, int y, int w, int h, std::string image, int);
-      Actor(int x, int y, int w, int h, std::string image, int, bool);
+      Actor(int x, int y, int w, int h, std::string, int);
+      Actor(int x, int y, int w, int h, std::string, int, bool);
     
     private:
       const static int GRAVITY = 1;

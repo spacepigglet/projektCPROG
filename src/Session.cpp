@@ -256,14 +256,12 @@ namespace tower {
 }
 
 	void Session::reset(){
-		//comps.clear(); //deletes pointers in vector, not objects
-		for (Platform* p : platforms) {
-			addToRemove(p);
+		comps.clear(); //deletes pointers in vector, not objects
+
+		for(Component* c : comps) {
+			addToRemove(c);
 		}
 		platforms.clear();
-		for(Enemy* e: enemies) {
-			addToRemove(e);
-		}
 		enemies.clear();
 		removeComponents();
 
