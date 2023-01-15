@@ -19,7 +19,7 @@ namespace tower{
       return new Platform(x, y, w, h, image, removable, scrollable);
     }
 
-     void Platform:: draw() const {
+    void Platform:: draw() const {
 		SDL_RenderCopy(sys.get_ren(), texture, NULL, &getRect());
     }
 
@@ -32,15 +32,14 @@ namespace tower{
     }
 
     void Platform::update() {
+      //if scrolling vertically
       if(getUpperY() > WINDOW_HEIGHT + getHeight()) {
-        newX = rand() % (WINDOW_WIDTH - getRightX());
+        newX = rand() % (WINDOW_WIDTH - getRightX()); //randomize new position within limits
         newY = -getHeight();
         setPosition(newX, newY);
-    
       }
 
-      //Om man inte scrollar vertikalt kommer aldrig koden ovan att köras
-      //Plattformarna hamnar för nära varandra i y led
+      //if scrolling horizontally
       else if(getRightX() < 0) {
         newX = WINDOW_WIDTH;
         newY = rand() % (WINDOW_WIDTH - getRightX());

@@ -11,31 +11,31 @@ namespace tower {
 		bg_Image = "space-background-vector-21179778.jpg";
 		set_scroll_horizontal(false);
 		setPlatformWidthRange(100, 250);
-		//fptr= verticalScroll();
+		
 	}
 
 	void Session::add(Component* c) {
 		comps.push_back(c);
 		
 		if(Enemy* e = dynamic_cast<Enemy*>(c)){
-       enemies.push_back(e);
+       		enemies.push_back(e);
 		}
 		if(Platform* p = dynamic_cast<Platform*>(c)){
-      platforms.push_back(p);
+      		platforms.push_back(p);
 		}
 		if(Actor* a = dynamic_cast<Actor*>(c)){
-      player = a;
+      		player = a;
 		}
 		
 	}
 
 	void Session::addToRemove(Component* c) { //anropas t.ex. i Enemy.cp
-		removedComps.push_back(c);
+		compsToRemove.push_back(c);
 		if(Platform* p = dynamic_cast<Platform*>(c)) {
-			removedPlatforms.push_back(p);
+			platformsToRemove.push_back(p);
 		}
 		if(Enemy* e = dynamic_cast<Enemy*>(c)) {
-			removedEnemies.push_back(e);
+			enemiesToRemove.push_back(e);
 		}
 	}
 
@@ -55,6 +55,7 @@ namespace tower {
 
 	void Session::set_scroll_horizontal(bool isHorizontal) {
       isScrolledHorizontally = isHorizontal;
+	  //background has different starting position depending on scroll direction
 	  if(isHorizontal){
 		  bg2_start_pos_x = WINDOW_WIDTH;
 		  bg2_start_pos_y = 0;
@@ -81,7 +82,6 @@ namespace tower {
 			case SDL_KEYDOWN:
 				for (Component* c : comps)
 					c->keyDown(eve);
-					
 				break;
 			case SDL_KEYUP:
 				for (Component* c : comps)
@@ -102,13 +102,13 @@ namespace tower {
 				quit = true;
 		}
 
-
+		//check if collision occurs
 		for(unsigned int i = 0; i<comps.size()-1; i++) {
 			Component* current = comps[i];
 			for(unsigned int j = i+1; j<comps.size(); j++) {
 				Component* next = comps[j];
 				if(Collision::collision(current, next)) {
-					current->handleCollision(next); //generalisera i mobilecomponent
+					current->handleCollision(next); 
 					next->handleCollision(current);
 				}
 			}
@@ -118,20 +118,21 @@ namespace tower {
 			quit = true;
 		}
 			
+		//is an Enemy dead?
 		for(Enemy* e : enemies) {
 			if(!(e->isAlive())) {
 				addToRemove(e);
 			}
 		}
-		removeComponents();
+		removeComponents(); 
 		addEnemy();
 
-		scroll();  //utkommenterat pga jobbigt haha
+		scroll(); 
 		
 	}
 
 	void Session::addEnemy() {
-		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) {
+		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) { //enemy added to about every other platform
 			if(platforms[i]->getUpperY() == 0) {
 				add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
 			} else if(platforms[i]->getLeftX() == WINDOW_WIDTH) { //horizontal scroll
@@ -149,7 +150,6 @@ namespace tower {
 			c->scroll(isScrolledHorizontally, scrollSpeed);
 		}
 		
-		
 	}
 
 	void Session::setPlatformWidthRange(int min, int max) {
@@ -158,8 +158,9 @@ namespace tower {
 	 }
 
 	const void Session::generateOutput(){
-		//SDL_SetRenderDrawColor(sys.get_ren(), 255, 255, 255, 255);
+		
 			SDL_RenderClear(sys.get_ren());
+			//background handled separately from other components to ensure it is drawn first 
 			bg1->draw();
 			bg2->draw();
 			for (Component* c : comps) {
@@ -173,7 +174,7 @@ namespace tower {
 	    platform_image = image;
 		for(int i = 0; i<nrOfPlatforms; i++) { 
 			int platformGapY = WINDOW_HEIGHT / nrOfPlatforms; 
-			int y = 20 + (i * platformGapY); //distance between platforms in y-led 
+			int y = 20 + (i * platformGapY); //distance between platforms in y-dir
 			
 			int width = (rand() % (platformMaxWidth- platformMinWidth + 1)) + platformMinWidth; //random nr between min and max platform width
 			int x = rand() % (WINDOW_WIDTH - width); //random nr within window
@@ -183,11 +184,12 @@ namespace tower {
 
 	const void Session::initEnemies(std::string image) {
 		enemy_image = image;
-		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) {
+		for(unsigned int i = 0; i<(platforms.size()-2); i+=2) { //enemiey position based on platforms
 			add(Enemy::getInstance(platforms[i]->getLeftX(), platforms[i]->getUpperY() - 50, 50, 50, enemy_image, platforms[i]));
 		}
 	}
-//Session ses;
+
+//Sublass Button to override perform
 	class RestartButton: public Button {
 		public:
 		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}
@@ -218,9 +220,11 @@ namespace tower {
 		add(quitButton);
 	}
 
+	// All components that should be removed are deleted, and their pointers removed from all vectors
 	void Session::removeComponents() {
 
-		for(Platform* p: removedPlatforms) {
+		//remove pointers in vector<Platform*>  to platforms that will be deleted
+		for(Platform* p: platformsToRemove) {
 			for(std::vector<Platform*>::iterator it=platforms.begin(); it != platforms.end();) {
 				if(*it == p) {
 						it = platforms.erase(it);
@@ -228,54 +232,56 @@ namespace tower {
 					it++;
 				}
 			}
-	}
-	removedPlatforms.clear();
-
-	for(Enemy* e: removedEnemies) {
-			for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
-				if(*it == e) {
-						it = enemies.erase(it); 
-				} else {
-					it++;
-				}
-			}
-	}
-	removedEnemies.clear();
-
-	for(Component* c: removedComps) {
-			for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
-				if(*it == c) {
-						delete *it;
-						it = comps.erase(it); 
-				} else {
-					it++;
-				}
-			}
 		}
-		removedComps.clear();
+		platformsToRemove.clear();
+
+		//remove pointers in vector<Enemies*> to enemies that will be deleted
+		for(Enemy* e: enemiesToRemove) {
+				for(std::vector<Enemy*>::iterator it=enemies.begin(); it != enemies.end();) {
+					if(*it == e) {
+							it = enemies.erase(it); 
+					} else {
+						it++;
+					}
+				}
+		}
+		enemiesToRemove.clear();
+
+		//remove pointers in vector<Component*> to components that will be deleted. Also deletes said component.
+		for(Component* c: compsToRemove) {
+				for(std::vector<Component*>::iterator it=comps.begin(); it != comps.end();) {
+					if(*it == c) {
+							delete *it;
+							it = comps.erase(it); 
+					} else {
+						it++;
+					}
+				}
+			}
+		compsToRemove.clear();
 }
 
+	//This does not work exactly as it should, but we did not have time to fix it before the deadline.
+	//Component added to Session by implementation will not be part of the reset...
 	void Session::reset(){
-		comps.clear(); //deletes pointers in vector, not objects
-
+		
 		for(Component* c : comps) {
 			addToRemove(c);
-		}
+		} 
+		
+		comps.clear(); //deletes pointers in vector, not objects
 		platforms.clear();
 		enemies.clear();
 		removeComponents();
-
-
-		remove(comps.begin(), comps.end(), player);
 	
-
+		//setup for restart
 		initPlatforms(platform_image);
 		initEnemies(enemy_image);
 		player->reset();
 		add(player);
 	}
 
-//main gameloop
+	//main gameloop
 	void Session::run() {
 		setup_background();
 
@@ -294,9 +300,8 @@ namespace tower {
 		
 		}
 
-
 		gameOver();
-		while (quit) {
+		while (quit) { //quitting loop to decide if quit or restart
 			nextTick = SDL_GetTicks() +  tickInterval;
 			delay = nextTick - SDL_GetTicks();
 			processInput();
@@ -310,9 +315,16 @@ namespace tower {
 	Session::~Session() {
 		delete bg1;
 		delete bg2;
+		delete player;
+		
+		for (Component* c : comps){
+			delete c;
+		}
+		comps.clear();
+		cout << "~Session" << endl;
 	}
 
-	Session ses;
+	
 }
 
 	
