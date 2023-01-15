@@ -1,5 +1,4 @@
 #include "Platform.h"
-#include "Enemy.h"
 
 namespace tower{
     

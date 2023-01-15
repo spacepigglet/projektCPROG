@@ -1,6 +1,6 @@
 #include "Session.h"
-#include "Enemy.h"
-#include <algorithm>
+
+
 
 #define FPS 60
 using namespace std;
@@ -189,7 +189,7 @@ namespace tower {
 		}
 	}
 
-//Sublass Button to override perform
+    //Sublass Button to override perform
 	class RestartButton: public Button {
 		public:
 		RestartButton(Session* ses) :Button(WINDOW_WIDTH/4, WINDOW_HEIGHT/2, 200, 100, "Restart", "marble.jpg", false), session(ses) {}

@@ -4,7 +4,6 @@
 #include <vector>
 #include <SDL2/SDL.h>
 #include <iostream>
-#include <cstdlib>
 
 #include "System.h"
 #include "Component.h"
